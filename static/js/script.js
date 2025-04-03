@@ -9,6 +9,31 @@ document.addEventListener('DOMContentLoaded', function() {
     // Hide the plan container and export buttons initially
     planContainer.classList.add('d-none');
     
+    // Handle domain toggles
+    const domainToggles = document.querySelectorAll('.domain-toggle');
+    if (domainToggles.length > 0) {
+        domainToggles.forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                const domainId = this.getAttribute('data-domain-id');
+                const contentSection = document.getElementById(`domain_content_${domainId}`);
+                
+                if (this.checked) {
+                    // Enable domain
+                    contentSection.classList.remove('disabled');
+                    contentSection.querySelectorAll('input').forEach(input => {
+                        input.disabled = false;
+                    });
+                } else {
+                    // Disable domain
+                    contentSection.classList.add('disabled');
+                    contentSection.querySelectorAll('input').forEach(input => {
+                        input.disabled = true;
+                    });
+                }
+            });
+        });
+    }
+    
     // Handle form submission to generate a case plan
     if (riskForm) {
         riskForm.addEventListener('submit', function(e) {
@@ -20,6 +45,12 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Get form data
             const formData = new FormData(riskForm);
+            
+            // Add domain toggle states to the form data
+            domainToggles.forEach(toggle => {
+                const domainId = toggle.getAttribute('data-domain-id');
+                formData.append(`include_${domainId}`, toggle.checked);
+            });
             
             // Send request to server
             fetch('/generate_plan', {
@@ -394,53 +425,33 @@ document.addEventListener('DOMContentLoaded', function() {
         const elementsToRemove = tempDiv.querySelectorAll('.add-item-section, .btn-group, .no-print');
         elementsToRemove.forEach(el => el.remove());
         
-        // Filter out unchecked tasks and remove all buttons
+        // Process tasks and remove all buttons
         const removeButtons = tempDiv.querySelectorAll('.remove-btn');
         removeButtons.forEach(button => button.remove());
         
-        // Find all list items with tasks
+        // Find all list items with tasks 
         const listItems = tempDiv.querySelectorAll('li.list-group-item');
         listItems.forEach(item => {
             const checkbox = item.querySelector('input[type="checkbox"]');
             if (checkbox) {
-                if (!checkbox.checked) {
-                    // Remove unchecked tasks
-                    item.remove();
-                } else {
-                    // Convert checkbox to a checked symbol for the PDF
-                    const span = document.createElement('span');
+                // Convert checkboxes to symbols based on their state
+                const span = document.createElement('span');
+                if (checkbox.checked) {
                     span.innerHTML = '✓ ';
                     span.style.fontWeight = 'bold';
-                    checkbox.parentNode.replaceChild(span, checkbox);
-                }
-            }
-        });
-        
-        // Remove empty domains (if all tasks were removed)
-        const domains = tempDiv.querySelectorAll('.domain-section');
-        domains.forEach(domain => {
-            const objectiveContainers = domain.querySelectorAll('.objective-container');
-            let hasContent = false;
-            
-            objectiveContainers.forEach(objContainer => {
-                const tasks = objContainer.querySelectorAll('.task-item');
-                if (tasks.length > 0) {
-                    hasContent = true;
                 } else {
-                    // Remove objectives with no tasks
-                    objContainer.remove();
+                    span.innerHTML = '☐ ';
                 }
-            });
-            
-            if (!hasContent) {
-                domain.remove();
+                checkbox.parentNode.replaceChild(span, checkbox);
             }
         });
         
-        // Apply print-friendly styles
+        // Keep all domains and objectives for the PDF
+        
+        // Apply print-friendly styles - remove borders and set everything to black/white
         const cards = tempDiv.querySelectorAll('.card');
         cards.forEach(card => {
-            card.style.border = '1px solid #ddd';
+            card.style.border = 'none';
             card.style.borderRadius = '0';
             card.style.boxShadow = 'none';
             card.style.marginBottom = '15px';
@@ -449,10 +460,36 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const cardHeaders = tempDiv.querySelectorAll('.card-header');
         cardHeaders.forEach(header => {
-            header.style.backgroundColor = '#f8f9fa';
+            header.style.backgroundColor = '#fff';
+            header.style.border = 'none';
             header.style.color = '#000';
             header.style.fontWeight = 'bold';
-            header.style.borderBottom = '1px solid #ddd';
+            header.style.paddingBottom = '10px';
+            header.style.borderBottom = '1px solid #000';
+        });
+        
+        // Convert all text to black
+        const allElements = tempDiv.querySelectorAll('*');
+        allElements.forEach(el => {
+            el.style.color = '#000';
+            if (el.classList.contains('badge')) {
+                el.style.backgroundColor = '#fff';
+                el.style.border = '1px solid #000';
+                el.style.padding = '2px 5px';
+            }
+        });
+        
+        // Remove all borders from list items
+        const listItems = tempDiv.querySelectorAll('.list-group-item');
+        listItems.forEach(item => {
+            item.style.border = 'none';
+            item.style.padding = '5px 0';
+        });
+        
+        // Remove list-group styling
+        const listGroups = tempDiv.querySelectorAll('.list-group');
+        listGroups.forEach(list => {
+            list.style.border = 'none';
         });
         
         // Add signature blocks at the end

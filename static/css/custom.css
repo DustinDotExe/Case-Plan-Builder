@@ -10,6 +10,12 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+/* Styles for domain toggling */
+.domain-content.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 /* Main container for dashboard cards */
 .domain-section {
     transition: all 0.3s ease;

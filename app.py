@@ -178,6 +178,11 @@ def generate_plan():
             domain_name = domain['name']
             domain_id = domain['id']
             
+            # Check if domain is toggled to be included
+            include_domain = form_data.get(f"include_{domain_id}", "false")
+            if include_domain.lower() in ("false", "0", ""):
+                continue
+                
             # Get the selected risk level for this domain
             selected_risk = form_data.get(f"risk_{domain_id}", "")
             

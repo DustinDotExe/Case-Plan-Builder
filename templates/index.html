@@ -32,11 +32,18 @@
                         {% for domain in domains %}
                         <div class="col-md-6 col-lg-4 mb-3">
                             <div class="card h-100">
-                                <div class="card-header">
+                                <div class="card-header d-flex justify-content-between align-items-center">
                                     <h5 class="card-title">{{ domain.name }}</h5>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input domain-toggle" type="checkbox" 
+                                               id="domain_toggle_{{ domain.id }}" 
+                                               data-domain-id="{{ domain.id }}"
+                                               checked>
+                                        <label class="form-check-label" for="domain_toggle_{{ domain.id }}">Include</label>
+                                    </div>
                                 </div>
                                 <div class="card-body">
-                                    <div class="form-group">
+                                    <div class="form-group domain-content" id="domain_content_{{ domain.id }}">
                                         <label class="form-label">Risk Level:</label>
                                         <div class="btn-group w-100" role="group" aria-label="Risk level selection">
                                             <input type="radio" class="btn-check" name="risk_{{ domain.id }}" id="{{ domain.id }}_low" value="Low">
