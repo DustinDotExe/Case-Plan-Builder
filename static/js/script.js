@@ -1,3 +1,6 @@
+// Define exportToPDF function globally
+let exportToPDF;
+
 document.addEventListener('DOMContentLoaded', function() {
     // Elements - safely get them as they may not exist on all pages
     const generateBtn = document.getElementById('generate-plan-btn');
@@ -519,7 +522,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Function to export the case plan to PDF
-    function exportToPDF() {
+    // Assign exportToPDF to the global variable we defined at the top
+    exportToPDF = function() {
         // Show a loading message
         showAlert('Preparing PDF...', 'info');
         

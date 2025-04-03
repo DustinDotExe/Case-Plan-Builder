@@ -122,30 +122,19 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // PDF Export functionality
+    // The 'exportToPDF' function in script.js might not be loaded immediately
+    // So we need to make sure we attach the event listener at the right time
     document.getElementById('exportPdfBtn').addEventListener('click', function() {
-        // Use the exportToPDF function from script.js
-        // This ensures consistent PDF formatting across the entire application
-        exportToPDF();
+        // Check if exportToPDF function exists and use it
+        if (typeof exportToPDF === 'function') {
+            exportToPDF();
+        } else {
+            // Fallback if function isn't available
+            showAlert('PDF export functionality is not loaded properly. Please try refreshing the page.', 'danger');
+        }
     });
     
-    function showAlert(message, type = 'info') {
-        const alertsContainer = document.getElementById('alerts-container');
-        const alertElement = document.createElement('div');
-        
-        alertElement.className = `alert alert-${type} alert-dismissible fade show`;
-        alertElement.innerHTML = `
-            ${message}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        `;
-        
-        alertsContainer.appendChild(alertElement);
-        
-        // Automatically dismiss after 5 seconds
-        setTimeout(() => {
-            const bsAlert = bootstrap.Alert.getOrCreateInstance(alertElement);
-            bsAlert.close();
-        }, 5000);
-    }
+    // Use showAlert function from script.js
 });
 </script>
 {% endblock %}
