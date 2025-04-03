@@ -399,22 +399,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Get plan title - handle both formats
-        let planTitle = 'Case_Plan';
+        let planTitle = 'Case Plan';
         const planTitleElement = document.querySelector('#plan-content h2, h1.mb-1');
         if (planTitleElement) {
             planTitle = planTitleElement.textContent;
         }
         
+        // Get current date
+        const currentDate = new Date().toLocaleDateString();
+        
         const fileName = `${planTitle.replace(/\s+/g, '_')}_${clientName.replace(/\s+/g, '_')}.pdf`;
         
-        // For view_plan.html, use the plan-container instead of plan-content
-        let contentToCapture = planContent;
-        const planContainer = document.getElementById('plan-container');
-        if (planContainer && !planContainer.classList.contains('d-none')) {
-            contentToCapture = planContainer;
-        }
-        
-        // Create a simplified version of the content for PDF export
+        // Create a clean simplified div for PDF export
         const tempDiv = document.createElement('div');
         tempDiv.className = 'pdf-export-container';
         tempDiv.style.padding = '20px';
@@ -426,86 +422,134 @@ document.addEventListener('DOMContentLoaded', function() {
         tempDiv.style.width = '800px'; // Fixed width for more consistent results
         tempDiv.style.fontFamily = 'Arial, Helvetica, sans-serif';
         
-        // Clone the content
-        tempDiv.innerHTML = contentToCapture.innerHTML;
+        // Create header with title, client name, and date
+        const header = document.createElement('div');
+        header.innerHTML = `
+            <h1 style="font-size: 24px; margin-bottom: 15px;">${planTitle}</h1>
+            <p style="margin-bottom: 5px;"><strong>Client Name:</strong> ${clientName}</p>
+            <p style="margin-bottom: 25px;"><strong>Date:</strong> ${currentDate}</p>
+            <hr style="margin-bottom: 25px; border: none; border-top: 1px solid #000;">
+        `;
+        tempDiv.appendChild(header);
         
-        // Remove interactive elements and apply print styles
-        const elementsToRemove = tempDiv.querySelectorAll('.add-item-section, .btn-group, .no-print');
-        elementsToRemove.forEach(el => el.remove());
+        // Create a clean container for domains
+        const domainContainer = document.createElement('div');
         
-        // Process tasks and remove all buttons
-        const removeButtons = tempDiv.querySelectorAll('.remove-btn');
-        removeButtons.forEach(button => button.remove());
+        // Get all domains from the rendered plan
+        const renderedDomains = document.querySelectorAll('.domain-section');
         
-        // Find all list items with tasks 
-        const listItems = tempDiv.querySelectorAll('li.list-group-item');
-        listItems.forEach(item => {
-            const checkbox = item.querySelector('input[type="checkbox"]');
-            if (checkbox) {
-                // Convert checkboxes to symbols based on their state
-                const span = document.createElement('span');
-                if (checkbox.checked) {
-                    span.innerHTML = '✓ ';
-                    span.style.fontWeight = 'bold';
-                } else {
-                    span.innerHTML = '☐ ';
-                }
-                checkbox.parentNode.replaceChild(span, checkbox);
+        // Process each domain
+        renderedDomains.forEach(originalDomain => {
+            const domainEl = document.createElement('div');
+            domainEl.style.marginBottom = '30px';
+            
+            // Get domain name and risk level
+            const domainName = originalDomain.querySelector('h3')?.textContent || 'Domain';
+            const riskLevel = originalDomain.querySelector('.badge')?.textContent || '';
+            
+            // Create domain header
+            domainEl.innerHTML = `
+                <h2 style="font-size: 20px; margin-bottom: 10px; font-weight: bold;">${domainName} <span style="font-size: 16px; font-weight: normal;">(${riskLevel})</span></h2>
+            `;
+            
+            // Process goals if present
+            const goalsSection = originalDomain.querySelector('.goals-section');
+            if (goalsSection) {
+                const goalsTitle = document.createElement('h3');
+                goalsTitle.textContent = 'Goals';
+                goalsTitle.style.fontSize = '16px';
+                goalsTitle.style.marginTop = '15px';
+                goalsTitle.style.marginBottom = '10px';
+                goalsTitle.style.fontWeight = 'bold';
+                domainEl.appendChild(goalsTitle);
+                
+                const goalsList = document.createElement('ul');
+                goalsList.style.listStyleType = 'disc';
+                goalsList.style.paddingLeft = '20px';
+                goalsList.style.marginBottom = '15px';
+                
+                const goals = goalsSection.querySelectorAll('.list-group-item .editable');
+                goals.forEach(goal => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = goal.textContent;
+                    listItem.style.marginBottom = '5px';
+                    goalsList.appendChild(listItem);
+                });
+                
+                domainEl.appendChild(goalsList);
             }
-        });
-        
-        // Keep all domains and objectives for the PDF
-        
-        // Apply print-friendly styles - remove borders and set everything to black/white
-        const cards = tempDiv.querySelectorAll('.card');
-        cards.forEach(card => {
-            card.style.border = 'none';
-            card.style.borderRadius = '0';
-            card.style.boxShadow = 'none';
-            card.style.marginBottom = '15px';
-            card.style.backgroundColor = '#fff';
-        });
-        
-        const cardHeaders = tempDiv.querySelectorAll('.card-header');
-        cardHeaders.forEach(header => {
-            header.style.backgroundColor = '#fff';
-            header.style.border = 'none';
-            header.style.color = '#000';
-            header.style.fontWeight = 'bold';
-            header.style.paddingBottom = '10px';
-            header.style.borderBottom = '1px solid #000';
-        });
-        
-        // Convert all text to black
-        const allElements = tempDiv.querySelectorAll('*');
-        allElements.forEach(el => {
-            el.style.color = '#000';
-            if (el.classList.contains('badge')) {
-                el.style.backgroundColor = '#fff';
-                el.style.border = '1px solid #000';
-                el.style.padding = '2px 5px';
+            
+            // Process objectives if present
+            const objectivesSection = originalDomain.querySelector('.objectives-section');
+            if (objectivesSection) {
+                const objectivesTitle = document.createElement('h3');
+                objectivesTitle.textContent = 'Objectives';
+                objectivesTitle.style.fontSize = '16px';
+                objectivesTitle.style.marginTop = '15px';
+                objectivesTitle.style.marginBottom = '10px';
+                objectivesTitle.style.fontWeight = 'bold';
+                domainEl.appendChild(objectivesTitle);
+                
+                const objectivesList = document.createElement('ul');
+                objectivesList.style.listStyleType = 'disc';
+                objectivesList.style.paddingLeft = '20px';
+                objectivesList.style.marginBottom = '15px';
+                
+                const objectives = objectivesSection.querySelectorAll('.list-group-item .editable');
+                objectives.forEach(objective => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = objective.textContent;
+                    listItem.style.marginBottom = '5px';
+                    objectivesList.appendChild(listItem);
+                });
+                
+                domainEl.appendChild(objectivesList);
             }
+            
+            // Process tasks if present
+            const tasksSection = originalDomain.querySelector('.tasks-section');
+            if (tasksSection) {
+                const tasksTitle = document.createElement('h3');
+                tasksTitle.textContent = 'Tasks';
+                tasksTitle.style.fontSize = '16px';
+                tasksTitle.style.marginTop = '15px';
+                tasksTitle.style.marginBottom = '10px';
+                tasksTitle.style.fontWeight = 'bold';
+                domainEl.appendChild(tasksTitle);
+                
+                const tasksList = document.createElement('ul');
+                tasksList.style.listStyleType = 'none';
+                tasksList.style.paddingLeft = '5px';
+                tasksList.style.marginBottom = '15px';
+                
+                const taskItems = tasksSection.querySelectorAll('.list-group-item');
+                taskItems.forEach(taskItem => {
+                    const listItem = document.createElement('li');
+                    const checkbox = taskItem.querySelector('input[type="checkbox"]');
+                    const taskText = taskItem.querySelector('.editable').textContent;
+                    
+                    listItem.innerHTML = checkbox && checkbox.checked 
+                        ? `<span style="margin-right: 10px;">✓</span>${taskText}`
+                        : `<span style="margin-right: 10px;">☐</span>${taskText}`;
+                    
+                    listItem.style.marginBottom = '5px';
+                    tasksList.appendChild(listItem);
+                });
+                
+                domainEl.appendChild(tasksList);
+            }
+            
+            domainContainer.appendChild(domainEl);
         });
         
-        // Remove all borders from list items
-        const listGroupItems = tempDiv.querySelectorAll('.list-group-item');
-        listGroupItems.forEach(item => {
-            item.style.border = 'none';
-            item.style.padding = '5px 0';
-        });
-        
-        // Remove list-group styling
-        const listGroups = tempDiv.querySelectorAll('.list-group');
-        listGroups.forEach(list => {
-            list.style.border = 'none';
-        });
+        tempDiv.appendChild(domainContainer);
         
         // Add signature blocks at the end
         const signatureSection = document.createElement('div');
         signatureSection.style.marginTop = '30px';
         signatureSection.style.pageBreakInside = 'avoid';
         signatureSection.innerHTML = `
-            <h4 style="margin-top: 50px; margin-bottom: 20px;">Agreement Signatures</h4>
+            <h3 style="margin-top: 50px; margin-bottom: 20px; font-size: 18px; font-weight: bold;">Agreement Signatures</h3>
             <div style="display: flex; justify-content: space-between;">
                 <div style="width: 45%;">
                     <div style="border-bottom: 1px solid #000; height: 40px;"></div>
@@ -546,21 +590,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 const pdfWidth = pdf.internal.pageSize.getWidth();
                 const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
                 
-                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-                
-                // If the content is longer than a page, add more pages
-                if (pdfHeight > pdf.internal.pageSize.getHeight()) {
-                    let remainingHeight = pdfHeight;
-                    let position = -pdf.internal.pageSize.getHeight();
+                // If content fits on a single page
+                if (pdfHeight <= pdf.internal.pageSize.getHeight()) {
+                    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                } else {
+                    // For multi-page content, we need to slice the image
+                    const pageHeight = pdf.internal.pageSize.getHeight();
+                    let heightLeft = pdfHeight;
+                    let position = 0;
+                    let page = 1;
                     
-                    while (remainingHeight > 0) {
-                        position += pdf.internal.pageSize.getHeight();
-                        remainingHeight -= pdf.internal.pageSize.getHeight();
-                        
-                        if (remainingHeight > 0) {
-                            pdf.addPage();
-                            pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
-                        }
+                    // Add first page
+                    pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
+                    heightLeft -= pageHeight;
+                    
+                    // Add subsequent pages
+                    while (heightLeft > 0) {
+                        position = -pageHeight * page;
+                        pdf.addPage();
+                        pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
+                        heightLeft -= pageHeight;
+                        page++;
                     }
                 }
                 
