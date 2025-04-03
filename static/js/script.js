@@ -317,56 +317,110 @@ document.addEventListener('DOMContentLoaded', function() {
         showAlert('Preparing PDF...', 'info');
         
         const planContent = document.getElementById('plan-content');
-        const clientName = document.getElementById('client-name').value || 'Client';
-        const planTitle = document.querySelector('#plan-content h2').textContent || 'Case_Plan';
-        const fileName = `${planTitle.replace(/\s+/g, '_')}_${clientName.replace(/\s+/g, '_')}.pdf`;
         
-        // Create a copy of the content to manipulate for PDF export
-        const printContent = planContent.cloneNode(true);
-        
-        // Remove the add item buttons from the PDF
-        const addItemSections = printContent.querySelectorAll('.add-item-section');
-        addItemSections.forEach(section => section.remove());
-        
-        // Use html2canvas and jsPDF to generate the PDF
-        html2canvas(printContent, {
-            scale: 2,
-            logging: false,
-            useCORS: true
-        }).then(canvas => {
-            const imgData = canvas.toDataURL('image/png');
-            const pdf = new jspdf.jsPDF({
-                orientation: 'portrait',
-                unit: 'mm',
-                format: 'a4'
-            });
-            
-            const imgProps = pdf.getImageProperties(imgData);
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-            
-            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-            
-            // If the content is longer than a page, add more pages
-            if (pdfHeight > pdf.internal.pageSize.getHeight()) {
-                let remainingHeight = pdfHeight;
-                let position = -pdf.internal.pageSize.getHeight();
-                
-                while (remainingHeight > 0) {
-                    position += pdf.internal.pageSize.getHeight();
-                    remainingHeight -= pdf.internal.pageSize.getHeight();
-                    
-                    if (remainingHeight > 0) {
-                        pdf.addPage();
-                        pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
-                    }
+        // Get client name - handle both formats (initial generation and view page)
+        let clientName = 'Client';
+        const clientNameInput = document.getElementById('client-name');
+        if (clientNameInput && clientNameInput.value) {
+            clientName = clientNameInput.value;
+        } else {
+            // Try to find it in the plan view format
+            const clientInfoText = document.querySelector('p.text-muted');
+            if (clientInfoText && clientInfoText.textContent.includes('Client:')) {
+                const clientMatch = clientInfoText.textContent.match(/Client:\s*([^|]+)/);
+                if (clientMatch && clientMatch[1]) {
+                    clientName = clientMatch[1].trim();
                 }
             }
-            
-            pdf.save(fileName);
-            showAlert('PDF has been downloaded.', 'success');
+        }
+        
+        // Get plan title - handle both formats
+        let planTitle = 'Case_Plan';
+        const planTitleElement = document.querySelector('#plan-content h2, h1.mb-1');
+        if (planTitleElement) {
+            planTitle = planTitleElement.textContent;
+        }
+        
+        const fileName = `${planTitle.replace(/\s+/g, '_')}_${clientName.replace(/\s+/g, '_')}.pdf`;
+        
+        // For view_plan.html, use the plan-container instead of plan-content
+        let contentToCapture = planContent;
+        const planContainer = document.getElementById('plan-container');
+        if (planContainer && !planContainer.classList.contains('d-none')) {
+            contentToCapture = planContainer;
+        }
+        
+        // Create a simplified version of the content for PDF export
+        const tempDiv = document.createElement('div');
+        tempDiv.className = 'pdf-export-container';
+        tempDiv.style.padding = '20px';
+        tempDiv.style.backgroundColor = '#fff';
+        tempDiv.style.color = '#000';
+        tempDiv.style.position = 'absolute';
+        tempDiv.style.left = '-9999px';
+        tempDiv.style.top = '0';
+        tempDiv.style.width = '800px'; // Fixed width for more consistent results
+        
+        // Clone the content
+        tempDiv.innerHTML = contentToCapture.innerHTML;
+        
+        // Remove interactive elements
+        const elementsToRemove = tempDiv.querySelectorAll('.add-item-section, .btn-group, .no-print');
+        elementsToRemove.forEach(el => el.remove());
+        
+        // Append to body temporarily
+        document.body.appendChild(tempDiv);
+        
+        // Use html2canvas and jsPDF to generate the PDF
+        html2canvas(tempDiv, {
+            scale: 2,
+            logging: false,
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: '#ffffff'
+        }).then(canvas => {
+            try {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jspdf.jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+                
+                const imgProps = pdf.getImageProperties(imgData);
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+                
+                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                
+                // If the content is longer than a page, add more pages
+                if (pdfHeight > pdf.internal.pageSize.getHeight()) {
+                    let remainingHeight = pdfHeight;
+                    let position = -pdf.internal.pageSize.getHeight();
+                    
+                    while (remainingHeight > 0) {
+                        position += pdf.internal.pageSize.getHeight();
+                        remainingHeight -= pdf.internal.pageSize.getHeight();
+                        
+                        if (remainingHeight > 0) {
+                            pdf.addPage();
+                            pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
+                        }
+                    }
+                }
+                
+                pdf.save(fileName);
+                showAlert('PDF has been downloaded.', 'success');
+            } catch (error) {
+                console.error('Error in PDF generation:', error);
+                showAlert('Error creating PDF. Please try again.', 'danger');
+            } finally {
+                // Remove the temporary element
+                document.body.removeChild(tempDiv);
+            }
         }).catch(err => {
             console.error('Error generating PDF:', err);
+            document.body.removeChild(tempDiv);
             showAlert('Error generating PDF. Please try again.', 'danger');
         });
     }
