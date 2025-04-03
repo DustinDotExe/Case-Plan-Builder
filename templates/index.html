@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h1 class="card-title h4 mb-0">IRAS Risk Assessment</h1>
+            </div>
+            <div class="card-body">
+                <p class="card-text mb-4">
+                    Select the risk level for each domain to generate a customized case plan.
+                </p>
+                
+                <form id="risk-form">
+                    <div class="row">
+                        {% for domain in domains %}
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h5 class="card-title">{{ domain.name }}</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label class="form-label">Risk Level:</label>
+                                        <div class="btn-group w-100" role="group" aria-label="Risk level selection">
+                                            <input type="radio" class="btn-check" name="risk_{{ domain.id }}" id="{{ domain.id }}_low" value="Low">
+                                            <label class="btn btn-outline-success" for="{{ domain.id }}_low">Low</label>
+                                            
+                                            <input type="radio" class="btn-check" name="risk_{{ domain.id }}" id="{{ domain.id }}_medium" value="Medium">
+                                            <label class="btn btn-outline-warning" for="{{ domain.id }}_medium">Medium</label>
+                                            
+                                            <input type="radio" class="btn-check" name="risk_{{ domain.id }}" id="{{ domain.id }}_high" value="High">
+                                            <label class="btn btn-outline-danger" for="{{ domain.id }}_high">High</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <button type="submit" id="generate-plan-btn" class="btn btn-primary btn-lg">
+                            <i class="bi bi-file-earmark-text"></i> Generate Case Plan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="plan-container" class="d-none">
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h2 class="card-title h4 mb-0">Case Plan</h2>
+            <div id="export-controls" class="btn-group no-print">
+                <button id="export-btn" class="btn btn-primary">
+                    <i class="bi bi-file-earmark-pdf"></i> Export PDF
+                </button>
+                <button id="print-btn" class="btn btn-secondary">
+                    <i class="bi bi-printer"></i> Print
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div id="plan-content" class="plan-content"></div>
+        </div>
+        <div class="card-footer text-center no-print">
+            <p class="text-muted mb-0">
+                <i class="bi bi-info-circle"></i> All content is editable. Click on any text to modify it.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
