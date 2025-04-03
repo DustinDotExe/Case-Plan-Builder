@@ -1,408 +1,616 @@
 {
   "domains": [
     {
-      "id": "substance_abuse",
-      "name": "Substance Abuse",
+      "id": "criminal_history",
+      "name": "Criminal History",
       "templates": [
         {
           "risk_level": "Low",
           "goals": [
-            "Maintain abstinence from substance use",
-            "Identify and develop healthy coping mechanisms for stress"
+            "Maintain law-abiding behavior",
+            "Develop awareness of risk factors for criminal behavior"
           ],
           "objectives": [
-            "Client will attend weekly check-ins to monitor sobriety",
-            "Client will develop a list of 3-5 triggers and appropriate responses"
+            "Client will identify triggers related to past criminal behavior",
+            "Client will develop strategies to avoid high-risk situations"
           ],
           "tasks": [
-            "Attend weekly check-ins with case manager",
-            "Complete substance abuse self-assessment",
-            "Identify 3 healthy alternatives to substance use",
-            "Attend one educational session on substance abuse"
+            "Complete criminal thinking assessment",
+            "Identify 3 specific situations or triggers that contributed to past offenses",
+            "Document plan for avoiding high-risk situations",
+            "Meet with case manager monthly for check-ins"
           ]
         },
         {
           "risk_level": "Medium",
           "goals": [
-            "Reduce frequency and amount of substance use",
-            "Develop insight into patterns of substance use",
-            "Establish a support network for maintaining sobriety"
+            "Address criminogenic factors related to past offenses",
+            "Develop prosocial problem-solving skills",
+            "Establish pattern of compliance with legal requirements"
           ],
           "objectives": [
-            "Client will attend weekly substance abuse counseling",
-            "Client will identify personal triggers and develop avoidance strategies",
-            "Client will demonstrate knowledge of community resources"
+            "Client will demonstrate understanding of offense patterns",
+            "Client will practice alternative responses to criminogenic triggers",
+            "Client will comply with all supervision requirements"
           ],
           "tasks": [
-            "Attend twice-weekly individual counseling sessions",
-            "Complete substance abuse assessment with treatment provider",
-            "Attend one NA/AA meeting per week",
-            "Practice identified coping skills daily and maintain a journal",
-            "Submit to random drug testing as required",
-            "Create a list of emergency contacts for support"
+            "Attend biweekly criminal thinking intervention sessions",
+            "Complete offense cycle worksheet with counselor",
+            "Develop written relapse prevention plan for criminal behavior",
+            "Practice problem-solving skills in supervised settings",
+            "Maintain compliance with all court/supervision requirements",
+            "Document personal triggers and alternative responses"
           ]
         },
         {
           "risk_level": "High",
           "goals": [
-            "Achieve sobriety through intensive treatment",
-            "Address underlying causes of substance abuse",
-            "Establish long-term recovery plan"
+            "Interrupt established patterns of criminal behavior",
+            "Address persistent criminogenic factors",
+            "Establish new behavioral responses and thinking patterns",
+            "Develop comprehensive recidivism prevention plan"
           ],
           "objectives": [
-            "Client will actively participate in intensive substance abuse treatment",
-            "Client will demonstrate understanding of addiction cycle",
-            "Client will develop a comprehensive relapse prevention plan"
+            "Client will actively participate in intensive intervention programming",
+            "Client will demonstrate cognitive restructuring related to criminal thinking",
+            "Client will implement comprehensive crime prevention strategies"
           ],
           "tasks": [
-            "Complete substance abuse assessment and follow all recommendations",
-            "Attend intensive outpatient program (IOP) 3x weekly",
-            "Attend NA/AA meetings at least 3x weekly",
-            "Submit to random drug/alcohol testing as required",
-            "Meet with case manager weekly to monitor progress",
-            "Complete relapse prevention workbook",
-            "Identify and engage with a sponsor",
-            "Develop written aftercare plan with treatment team"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "mental_health",
-      "name": "Mental Health",
-      "templates": [
-        {
-          "risk_level": "Low",
-          "goals": [
-            "Maintain stable mental health",
-            "Develop stress management techniques"
-          ],
-          "objectives": [
-            "Client will identify personal stressors and coping strategies",
-            "Client will utilize self-help resources as needed"
-          ],
-          "tasks": [
-            "Complete mental health self-assessment",
-            "Identify 3 personal stressors and healthy responses",
-            "Practice mindfulness or relaxation techniques daily",
-            "Maintain regular sleep schedule"
-          ]
-        },
-        {
-          "risk_level": "Medium",
-          "goals": [
-            "Improve mental health stability through consistent treatment",
-            "Develop effective symptom management strategies"
-          ],
-          "objectives": [
-            "Client will attend regular mental health counseling",
-            "Client will develop personalized symptom management plan",
-            "Client will comply with medication regimen if prescribed"
-          ],
-          "tasks": [
-            "Attend biweekly mental health counseling sessions",
-            "Complete mental health assessment with provider",
-            "Develop written crisis response plan",
-            "Take medications as prescribed and report side effects",
-            "Identify 3 warning signs of decompensation and appropriate responses",
-            "Attend one psychoeducational group per month"
-          ]
-        },
-        {
-          "risk_level": "High",
-          "goals": [
-            "Stabilize acute mental health symptoms",
-            "Establish consistent treatment engagement",
-            "Develop comprehensive symptom management plan"
-          ],
-          "objectives": [
-            "Client will actively participate in intensive mental health treatment",
-            "Client will demonstrate medication compliance if prescribed",
-            "Client will utilize crisis resources appropriately when needed"
-          ],
-          "tasks": [
-            "Complete comprehensive mental health evaluation",
-            "Attend weekly individual therapy sessions",
-            "Attend psychiatric appointments as scheduled",
-            "Take medications as prescribed and monitor for side effects",
-            "Develop detailed crisis plan with treatment team",
-            "Practice identified coping skills daily and document effectiveness",
-            "Identify 3 supportive individuals who can assist during crises",
-            "Meet with case manager weekly to monitor progress"
+            "Attend weekly cognitive-behavioral interventions",
+            "Complete criminal history assessment with specialist",
+            "Participate in intensive supervision as required",
+            "Document daily high-risk situations and successful strategies",
+            "Attend appropriate specialized intervention (anger management, etc.)",
+            "Develop detailed offense prevention plan with counselor",
+            "Meet weekly with case manager to review progress",
+            "Practice new cognitive and behavioral skills daily"
           ]
         }
       ]
     },
     {
       "id": "education_employment",
-      "name": "Education/Employment",
+      "name": "Education and Employment",
       "templates": [
         {
           "risk_level": "Low",
           "goals": [
             "Maintain current employment or educational status",
-            "Explore opportunities for advancement"
+            "Develop long-term career/educational goals",
+            "Enhance employment stability"
           ],
           "objectives": [
-            "Client will maintain regular attendance at work/school",
-            "Client will identify career/educational goals"
+            "Client will maintain consistent attendance and performance",
+            "Client will identify advancement opportunities",
+            "Client will develop professional skills"
           ],
           "tasks": [
-            "Maintain regular attendance at current employment/education",
-            "Identify one professional/educational development goal",
-            "Research one opportunity for skill enhancement",
-            "Update resume/educational portfolio"
+            "Maintain daily attendance log for work/school",
+            "Create written career/educational goal plan",
+            "Identify one professional development opportunity",
+            "Update resume or educational portfolio",
+            "Research potential advancement pathways"
           ]
         },
         {
           "risk_level": "Medium",
           "goals": [
-            "Secure stable employment or education placement",
-            "Develop vocational/educational skills",
-            "Improve employability"
+            "Secure stable employment or educational enrollment",
+            "Address barriers to employment/education success",
+            "Develop marketable skills and qualifications"
           ],
           "objectives": [
-            "Client will create employment/education action plan",
-            "Client will address barriers to employment/education",
-            "Client will develop job readiness skills"
+            "Client will complete vocational/educational assessment",
+            "Client will develop employment/education action plan",
+            "Client will address specific barriers to success"
           ],
           "tasks": [
-            "Complete vocational/educational assessment",
-            "Create resume with employment specialist",
-            "Apply for 3 jobs per week or research 3 educational programs",
-            "Practice interview skills with employment counselor",
-            "Attend one job skills workshop",
-            "Address identified barriers (transportation, childcare, etc.)",
-            "Complete job readiness training if available"
+            "Complete vocational interest and skills assessment",
+            "Meet with employment counselor biweekly",
+            "Apply for 3 jobs weekly or research educational programs",
+            "Attend job skills workshop or educational orientation",
+            "Create structured schedule for job search activities",
+            "Address specific barriers (transportation, childcare, etc.)",
+            "Practice interview skills or educational readiness",
+            "Develop plan to explain criminal history to employers if needed"
           ]
         },
         {
           "risk_level": "High",
           "goals": [
-            "Establish basic employability/educational foundation",
+            "Establish basic educational/employment foundation",
             "Address significant barriers to employment/education",
-            "Develop long-term vocational/educational plan"
+            "Connect with specialized employment/education resources",
+            "Develop comprehensive career/education plan"
           ],
           "objectives": [
-            "Client will complete comprehensive vocational/educational assessment",
-            "Client will address identified barriers to employment/education",
-            "Client will develop basic job readiness skills"
+            "Client will access specialized employment/education resources",
+            "Client will address fundamental skill deficits",
+            "Client will establish consistent work/education habits"
           ],
           "tasks": [
-            "Meet with vocational/educational specialist for assessment",
+            "Complete comprehensive vocational and educational assessment",
             "Enroll in GED program or basic skills training if needed",
-            "Attend weekly job readiness classes",
-            "Create structured daily schedule for job search/educational activities",
-            "Apply for necessary accommodations or support services",
-            "Complete career interest inventory",
-            "Develop plan to address employment barriers (criminal history, skill deficits, etc.)",
-            "Meet with case manager weekly to review progress"
+            "Attend weekly meetings with vocational specialist",
+            "Apply for specialized employment programs (transitional employment, etc.)",
+            "Complete basic computer literacy training if needed",
+            "Address documentation barriers (ID, certifications, etc.)",
+            "Participate in hands-on skills training program",
+            "Create detailed weekly schedule for employment/education activities",
+            "Develop plan to address employment barriers (criminal history, skill gaps)"
           ]
         }
       ]
     },
     {
-      "id": "family_relationships",
-      "name": "Family/Social Relationships",
-      "templates": [
-        {
-          "risk_level": "Low",
-          "goals": [
-            "Maintain healthy family/social relationships",
-            "Enhance communication skills"
-          ],
-          "objectives": [
-            "Client will identify supportive relationships",
-            "Client will practice effective communication strategies"
-          ],
-          "tasks": [
-            "Identify at least 3 positive support people",
-            "Practice active listening skills in one interaction daily",
-            "Schedule regular contact with supportive family/friends",
-            "Identify one area for relationship improvement"
-          ]
-        },
-        {
-          "risk_level": "Medium",
-          "goals": [
-            "Improve family/social functioning",
-            "Address relationship conflicts constructively",
-            "Expand prosocial support network"
-          ],
-          "objectives": [
-            "Client will participate in family/relationship counseling if appropriate",
-            "Client will learn and apply conflict resolution skills",
-            "Client will develop new prosocial relationships"
-          ],
-          "tasks": [
-            "Attend biweekly family/relationship counseling sessions",
-            "Practice identified communication skills in family interactions",
-            "Participate in one prosocial community activity weekly",
-            "Complete relationship assessment with counselor",
-            "Develop plan for addressing specific relationship challenges",
-            "Create boundary plan for problematic relationships",
-            "Identify and connect with one community support group"
-          ]
-        },
-        {
-          "risk_level": "High",
-          "goals": [
-            "Establish healthy boundaries in relationships",
-            "Address significant relationship dysfunction",
-            "Develop essential interpersonal skills",
-            "Create healthy support network"
-          ],
-          "objectives": [
-            "Client will participate in intensive relationship/family counseling",
-            "Client will demonstrate understanding of healthy relationship patterns",
-            "Client will practice interpersonal skills in supervised settings"
-          ],
-          "tasks": [
-            "Attend weekly family/relationship therapy sessions",
-            "Complete relationship/family assessment with therapist",
-            "Develop safety plan if domestic violence is present",
-            "Attend weekly interpersonal skills group",
-            "Practice communication skills daily with documentation",
-            "Create written boundary plan for all key relationships",
-            "Identify and connect with at least 2 prosocial community organizations",
-            "Meet with case manager weekly to review relationship progress"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "housing",
-      "name": "Housing",
-      "templates": [
-        {
-          "risk_level": "Low",
-          "goals": [
-            "Maintain current stable housing",
-            "Address minor housing concerns"
-          ],
-          "objectives": [
-            "Client will maintain housing payments/requirements",
-            "Client will resolve any minor housing issues"
-          ],
-          "tasks": [
-            "Budget for monthly housing expenses",
-            "Address any maintenance or housing quality issues",
-            "Review lease/housing agreement for compliance",
-            "Develop emergency housing plan"
-          ]
-        },
-        {
-          "risk_level": "Medium",
-          "goals": [
-            "Stabilize current housing situation",
-            "Prepare for transition to more appropriate housing if needed",
-            "Address housing affordability issues"
-          ],
-          "objectives": [
-            "Client will resolve issues threatening housing stability",
-            "Client will develop housing transition plan if needed",
-            "Client will access available housing assistance"
-          ],
-          "tasks": [
-            "Apply for housing assistance programs if eligible",
-            "Develop payment plan for any rental arrears",
-            "Meet with housing counselor to review options",
-            "Complete housing budget worksheet",
-            "Address any lease/code violations",
-            "Research 3 alternative housing options if current housing is unstable",
-            "Contact 2 rental references or prepare rental application materials"
-          ]
-        },
-        {
-          "risk_level": "High",
-          "goals": [
-            "Secure safe, stable housing",
-            "Address imminent homelessness or unsafe housing",
-            "Develop long-term housing stability plan"
-          ],
-          "objectives": [
-            "Client will access emergency housing resources if needed",
-            "Client will apply for appropriate housing programs",
-            "Client will address barriers to housing"
-          ],
-          "tasks": [
-            "Meet with housing specialist twice weekly",
-            "Apply for emergency housing assistance",
-            "Contact shelter resources if facing imminent homelessness",
-            "Complete housing applications for 3 appropriate programs",
-            "Address documentation needs (ID, Social Security card, etc.)",
-            "Develop plan to address housing barriers (eviction history, criminal record, etc.)",
-            "Create housing budget with financial counselor",
-            "Attend housing search workshop if available"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "financial",
-      "name": "Financial Management",
+      "id": "financial_situation",
+      "name": "Financial Situation",
       "templates": [
         {
           "risk_level": "Low",
           "goals": [
             "Maintain financial stability",
-            "Improve financial literacy"
+            "Enhance financial management skills",
+            "Plan for future financial goals"
           ],
           "objectives": [
-            "Client will create and maintain monthly budget",
-            "Client will identify one area for financial improvement"
+            "Client will develop and maintain a budget",
+            "Client will identify areas for financial improvement",
+            "Client will establish savings goals"
           ],
           "tasks": [
-            "Create monthly income and expense budget",
-            "Track expenses for one month",
-            "Research one financial literacy resource",
-            "Review credit report"
+            "Create detailed monthly budget and expense tracking system",
+            "Review current financial obligations and prioritize payments",
+            "Research one financial literacy resource or workshop",
+            "Identify one specific financial goal and steps to achieve it",
+            "Review credit report and identify any areas for improvement"
           ]
         },
         {
           "risk_level": "Medium",
           "goals": [
-            "Address financial instability issues",
-            "Develop money management skills",
-            "Create debt reduction plan"
+            "Stabilize current financial situation",
+            "Develop effective money management skills",
+            "Address outstanding financial obligations",
+            "Establish legal income adequacy"
           ],
           "objectives": [
-            "Client will establish functional budget",
-            "Client will address priority financial obligations",
-            "Client will develop plan for outstanding debts"
+            "Client will create and implement financial action plan",
+            "Client will develop strategies to increase income/reduce expenses",
+            "Client will address problematic financial patterns"
           ],
           "tasks": [
-            "Meet with financial counselor to create budget",
-            "Prioritize debts and develop payment plan",
-            "Apply for eligible benefits or assistance",
-            "Open bank account if needed",
-            "Attend money management workshop",
-            "Create system for tracking expenses",
-            "Develop plan to address specific financial challenges"
+            "Meet with financial counselor to create detailed budget",
+            "Develop payment plan for outstanding debts or obligations",
+            "Apply for eligible benefits or assistance programs",
+            "Research and pursue legitimate income enhancement opportunities",
+            "Open appropriate banking accounts if needed",
+            "Attend financial literacy workshop",
+            "Document weekly income and expenses",
+            "Create plan to address specific financial challenges (debt, credit issues)"
           ]
         },
         {
           "risk_level": "High",
           "goals": [
-            "Address critical financial crisis",
-            "Establish basic money management system",
+            "Address immediate financial crisis situations",
+            "Establish basic income adequacy through legal means",
             "Connect with financial assistance resources",
-            "Develop long-term financial stability plan"
+            "Interrupt patterns of financial instability",
+            "Develop sustainable financial management system"
           ],
           "objectives": [
-            "Client will address immediate financial emergencies",
-            "Client will develop basic budgeting skills",
-            "Client will access appropriate financial assistance"
+            "Client will access emergency financial resources as needed",
+            "Client will establish consistent legal income source",
+            "Client will develop basic money management skills",
+            "Client will address critical financial obligations"
           ],
           "tasks": [
-            "Meet with financial counselor weekly",
-            "Apply for emergency financial assistance for critical needs",
-            "Apply for all eligible benefits (SNAP, TANF, etc.)",
-            "Address utility shutoffs or other immediate financial crises",
-            "Create simple weekly budget for essential expenses",
-            "Develop system for prioritizing bills and expenses",
-            "Attend financial literacy classes weekly",
-            "Open bank account with direct deposit if applicable"
+            "Meet weekly with financial case manager",
+            "Apply for emergency financial assistance programs",
+            "Complete benefits eligibility screening and applications",
+            "Develop crisis response plan for financial emergencies",
+            "Create basic needs budget focusing on essential expenses",
+            "Address critical financial obligations (child support, restitution, etc.)",
+            "Connect with appropriate employment resources for immediate income",
+            "Attend intensive financial literacy program",
+            "Develop plan to transition away from illegal income sources"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "family_social_support",
+      "name": "Family and Social Support",
+      "templates": [
+        {
+          "risk_level": "Low",
+          "goals": [
+            "Maintain positive family and social relationships",
+            "Strengthen prosocial support network",
+            "Enhance communication skills"
+          ],
+          "objectives": [
+            "Client will identify supportive relationships",
+            "Client will practice effective communication strategies",
+            "Client will engage regularly with prosocial supports"
+          ],
+          "tasks": [
+            "Create map of current social support network",
+            "Identify at least 3 prosocial, supportive individuals",
+            "Practice communication skills in daily interactions",
+            "Schedule regular contact with supportive family/friends",
+            "Identify and plan participation in one community activity"
+          ]
+        },
+        {
+          "risk_level": "Medium",
+          "goals": [
+            "Address relationship conflicts or challenges",
+            "Expand prosocial support network",
+            "Develop healthy relationship boundaries",
+            "Reduce negative social influences"
+          ],
+          "objectives": [
+            "Client will work to resolve family/social conflicts",
+            "Client will increase positive social connections",
+            "Client will establish boundaries with negative influences"
+          ],
+          "tasks": [
+            "Attend family or relationship counseling as appropriate",
+            "Complete family/social assessment with counselor",
+            "Develop written plan for addressing specific relationship challenges",
+            "Practice conflict resolution skills in supervised settings",
+            "Identify and connect with one community support group",
+            "Create boundary plan for problematic relationships",
+            "Schedule weekly prosocial recreational activities",
+            "Document implementation of new relationship skills"
+          ]
+        },
+        {
+          "risk_level": "High",
+          "goals": [
+            "Address serious relationship dysfunction",
+            "Establish healthy relationship patterns",
+            "Develop essential interpersonal skills",
+            "Create functional support network",
+            "Reduce isolation or negative social influences"
+          ],
+          "objectives": [
+            "Client will participate in intensive relationship interventions",
+            "Client will establish boundaries with criminogenic relationships",
+            "Client will develop new prosocial connections",
+            "Client will practice healthy relationship skills"
+          ],
+          "tasks": [
+            "Attend weekly family/relationship therapy sessions",
+            "Complete comprehensive relationship assessment",
+            "Develop safety plan if domestic violence is present",
+            "Attend weekly interpersonal skills group",
+            "Identify and address family criminogenic factors",
+            "Practice communication skills daily with documentation",
+            "Create detailed plan for reducing contact with negative peers",
+            "Connect with at least 2 prosocial community organizations",
+            "Develop structured plan for family reintegration if appropriate"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "neighborhood_problems",
+      "name": "Neighborhood Problems",
+      "templates": [
+        {
+          "risk_level": "Low",
+          "goals": [
+            "Navigate neighborhood challenges safely",
+            "Access available community resources",
+            "Maintain awareness of environmental risks"
+          ],
+          "objectives": [
+            "Client will identify neighborhood resources and risks",
+            "Client will develop strategies for safely navigating community",
+            "Client will connect with positive community elements"
+          ],
+          "tasks": [
+            "Create map of neighborhood resources and risk areas",
+            "Identify 3 positive community resources or activities",
+            "Develop routine for safely navigating high-risk areas",
+            "Research one community improvement initiative",
+            "Connect with one positive neighborhood organization"
+          ]
+        },
+        {
+          "risk_level": "Medium",
+          "goals": [
+            "Mitigate impact of high-risk neighborhood factors",
+            "Increase engagement with positive community elements",
+            "Develop comprehensive safety strategies",
+            "Access resources despite neighborhood limitations"
+          ],
+          "objectives": [
+            "Client will implement neighborhood safety plan",
+            "Client will actively engage with prosocial community resources",
+            "Client will reduce exposure to neighborhood criminogenic factors"
+          ],
+          "tasks": [
+            "Develop detailed safety plan for daily activities",
+            "Identify alternative routes/times for necessary travel",
+            "Connect with at least 2 positive community resources",
+            "Research transportation options to access resources outside neighborhood",
+            "Document specific neighborhood risk factors and avoidance strategies",
+            "Schedule activities during lower-risk times",
+            "Explore options for community involvement or improvement",
+            "Meet with case manager to review neighborhood navigation strategies"
+          ]
+        },
+        {
+          "risk_level": "High",
+          "goals": [
+            "Address critical safety concerns in current environment",
+            "Explore housing relocation options if appropriate",
+            "Minimize exposure to neighborhood criminogenic factors",
+            "Create robust safety and resource access plans",
+            "Develop strategies for resisting neighborhood pressures"
+          ],
+          "objectives": [
+            "Client will implement comprehensive safety protocols",
+            "Client will access resources despite neighborhood barriers",
+            "Client will explore housing alternatives if appropriate",
+            "Client will minimize time in high-risk locations"
+          ],
+          "tasks": [
+            "Meet weekly with case manager to review neighborhood challenges",
+            "Create detailed daily schedule minimizing exposure to high-risk areas",
+            "Research housing relocation options and resources",
+            "Develop emergency response plans for neighborhood situations",
+            "Connect with resources outside immediate neighborhood",
+            "Arrange transportation to necessary services and prosocial activities",
+            "Document specific criminogenic pressures and resistance strategies",
+            "Apply for housing assistance or relocation programs if appropriate",
+            "Identify safe spaces and support contacts in neighborhood"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "substance_use",
+      "name": "Substance Use",
+      "templates": [
+        {
+          "risk_level": "Low",
+          "goals": [
+            "Maintain abstinence or moderate use within legal limits",
+            "Understand relationship between substance use and risk",
+            "Develop healthy coping alternatives"
+          ],
+          "objectives": [
+            "Client will monitor substance use patterns",
+            "Client will identify triggers for problematic use",
+            "Client will develop healthy stress management techniques"
+          ],
+          "tasks": [
+            "Complete substance use self-assessment",
+            "Maintain log of substance use patterns and triggers",
+            "Develop list of 3-5 healthy alternatives to substance use",
+            "Research connection between substance use and criminal behavior",
+            "Practice mindfulness or stress reduction techniques daily",
+            "Attend one educational session on substance use"
+          ]
+        },
+        {
+          "risk_level": "Medium",
+          "goals": [
+            "Reduce substance use frequency and quantity",
+            "Address patterns of problematic substance use",
+            "Develop skills to manage cravings and triggers",
+            "Establish support for moderation or abstinence"
+          ],
+          "objectives": [
+            "Client will participate in appropriate level of substance treatment",
+            "Client will identify and manage personal triggers",
+            "Client will develop relapse prevention strategies",
+            "Client will establish support network for recovery"
+          ],
+          "tasks": [
+            "Complete comprehensive substance use assessment",
+            "Attend substance abuse counseling as recommended",
+            "Participate in one recovery support group weekly",
+            "Document daily triggers and coping responses",
+            "Develop written relapse prevention plan",
+            "Submit to random drug/alcohol testing as required",
+            "Practice refusal skills and trigger management",
+            "Identify 3 people who can provide recovery support",
+            "Create plan for managing high-risk situations"
+          ]
+        },
+        {
+          "risk_level": "High",
+          "goals": [
+            "Establish abstinence or significant use reduction",
+            "Engage in appropriate intensive treatment",
+            "Address underlying factors contributing to use",
+            "Develop comprehensive recovery management plan",
+            "Establish strong recovery support system"
+          ],
+          "objectives": [
+            "Client will participate in intensive substance use treatment",
+            "Client will demonstrate understanding of addiction patterns",
+            "Client will implement daily recovery management strategies",
+            "Client will establish recovery-focused social network"
+          ],
+          "tasks": [
+            "Complete comprehensive substance use disorder assessment",
+            "Attend recommended level of treatment (IOP, residential, etc.)",
+            "Participate in recovery support groups 3x weekly",
+            "Meet with addictions counselor weekly",
+            "Develop detailed relapse prevention plan",
+            "Practice recovery skills daily with documentation",
+            "Submit to random substance testing as required",
+            "Connect with recovery mentor or sponsor",
+            "Address co-occurring issues (mental health, trauma, etc.)",
+            "Create structured daily schedule to support recovery",
+            "Identify and engage with drug-free recreational activities"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "peer_associations",
+      "name": "Peer Associations",
+      "templates": [
+        {
+          "risk_level": "Low",
+          "goals": [
+            "Maintain positive peer relationships",
+            "Strengthen boundaries with potentially negative influences",
+            "Increase time spent with prosocial peers"
+          ],
+          "objectives": [
+            "Client will identify characteristics of prosocial vs. antisocial peers",
+            "Client will evaluate current peer relationships",
+            "Client will increase engagement with positive peer influences"
+          ],
+          "tasks": [
+            "Create inventory of current peer relationships",
+            "Identify 3 prosocial peers and plan regular contact",
+            "Document time spent with different peer groups",
+            "Develop strategies for maintaining boundaries with negative peers",
+            "Research one prosocial community activity or group"
+          ]
+        },
+        {
+          "risk_level": "Medium",
+          "goals": [
+            "Reduce association with criminally-involved peers",
+            "Establish new prosocial peer relationships",
+            "Develop skills to resist negative peer influence",
+            "Increase structured activities with positive peers"
+          ],
+          "objectives": [
+            "Client will reduce time spent with antisocial peers",
+            "Client will actively pursue prosocial relationships",
+            "Client will practice peer refusal and boundary-setting skills"
+          ],
+          "tasks": [
+            "Document weekly peer interactions and time allocation",
+            "Develop specific plan for reducing contact with antisocial peers",
+            "Attend at least one structured prosocial activity weekly",
+            "Practice refusal skills for criminal opportunities",
+            "Identify and connect with one community group or activity",
+            "Role-play responses to negative peer pressure with counselor",
+            "Create schedule prioritizing time with prosocial individuals",
+            "Develop strategies for explaining lifestyle changes to current peers"
+          ]
+        },
+        {
+          "risk_level": "High",
+          "goals": [
+            "Establish significant boundaries with criminally-involved peers",
+            "Develop completely new prosocial peer network",
+            "Build skills to resist criminal peer influence",
+            "Create structured routine with minimal exposure to negative peers",
+            "Establish meaningful prosocial activities and relationships"
+          ],
+          "objectives": [
+            "Client will minimize or eliminate contact with antisocial peers",
+            "Client will establish relationships with entirely new peer groups",
+            "Client will develop strong skills to counter negative influences",
+            "Client will build identity separate from criminal peer network"
+          ],
+          "tasks": [
+            "Meet weekly with counselor to review peer associations",
+            "Develop comprehensive plan for disengaging from criminal peers",
+            "Document daily peer interactions and influences",
+            "Attend structured prosocial activities 3x weekly",
+            "Participate in peer influence resistance skills group",
+            "Connect with at least 2 community organizations or groups",
+            "Develop new daily routine avoiding locations of negative peer contact",
+            "Practice explanation and boundary scripts for former peers",
+            "Create crisis plan for managing unexpected peer encounters",
+            "Identify mentor or role model for prosocial development"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "criminal_attitudes",
+      "name": "Criminal Attitudes and Behavioral Patterns",
+      "templates": [
+        {
+          "risk_level": "Low",
+          "goals": [
+            "Strengthen prosocial thinking patterns",
+            "Increase awareness of cognitive distortions",
+            "Develop skills for responsible decision-making"
+          ],
+          "objectives": [
+            "Client will identify thinking patterns that contributed to past behavior",
+            "Client will practice prosocial thinking alternatives",
+            "Client will apply structured decision-making process"
+          ],
+          "tasks": [
+            "Complete criminal thinking assessment",
+            "Identify 3 specific thinking errors from past situations",
+            "Practice cognitive self-monitoring daily",
+            "Document examples of prosocial thinking and choices",
+            "Complete decision-making worksheet for upcoming choices",
+            "Read materials on cognitive restructuring"
+          ]
+        },
+        {
+          "risk_level": "Medium",
+          "goals": [
+            "Modify established patterns of criminal thinking",
+            "Address impulsivity and poor decision-making",
+            "Develop prosocial attitudes and values",
+            "Establish patterns of responsible behavior"
+          ],
+          "objectives": [
+            "Client will participate in cognitive restructuring interventions",
+            "Client will practice impulse control techniques",
+            "Client will demonstrate prosocial thinking in various situations",
+            "Client will take responsibility for past criminal behavior"
+          ],
+          "tasks": [
+            "Attend weekly cognitive behavioral therapy sessions",
+            "Complete thinking reports for challenging situations",
+            "Practice STOP technique for impulse control daily",
+            "Document examples of cognitive distortions and corrections",
+            "Role-play prosocial responses to provocative situations",
+            "Complete moral reasoning exercises with counselor",
+            "Develop personal prosocial value statement",
+            "Practice perspective-taking exercises weekly",
+            "Apply structured problem-solving model to current challenges"
+          ]
+        },
+        {
+          "risk_level": "High",
+          "goals": [
+            "Transform entrenched criminal thinking patterns",
+            "Develop comprehensive cognitive restructuring skills",
+            "Address deep-seated antisocial attitudes and values",
+            "Establish patterns of consistent prosocial behavior",
+            "Develop internal controls for aggression and impulsivity"
+          ],
+          "objectives": [
+            "Client will actively engage in intensive cognitive interventions",
+            "Client will demonstrate fundamental shifts in thinking patterns",
+            "Client will incorporate prosocial values into identity",
+            "Client will consistently apply self-regulation techniques"
+          ],
+          "tasks": [
+            "Participate in intensive cognitive restructuring program",
+            "Attend specialized groups (anger management, criminal thinking)",
+            "Complete daily cognitive self-monitoring logs",
+            "Meet with cognitive behavioral specialist weekly",
+            "Practice aggression interruption techniques daily",
+            "Role-play high-risk situations with increasing difficulty",
+            "Develop comprehensive personal change plan",
+            "Complete victim impact or empathy development exercises",
+            "Practice prosocial problem-solving in various contexts",
+            "Identify and challenge core criminal beliefs and attitudes",
+            "Document evidence of cognitive and behavioral changes"
           ]
         }
       ]
