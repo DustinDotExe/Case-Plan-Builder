@@ -61,11 +61,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 formData.append(`include_${domainId}`, toggle.checked);
             });
             
+            // Get CSRF token from the form
+            const csrfToken = document.querySelector('input[name="csrf_token"]')?.value;
+            
             // Send request to server
             fetch('/generate_plan', {
                 method: 'POST',
-                body: formData,
-                // CSRF protection is handled by the token in the formData
+                headers: {
+                    'X-CSRFToken': csrfToken
+                },
+                body: formData
             })
             .then(response => response.json())
             .then(data => {
