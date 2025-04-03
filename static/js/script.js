@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Elements
+    // Elements - safely get them as they may not exist on all pages
     const generateBtn = document.getElementById('generate-plan-btn');
     const riskForm = document.getElementById('risk-form');
     const planContainer = document.getElementById('plan-container');
@@ -7,8 +7,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const printBtn = document.getElementById('print-btn');
     const savePlanBtn = document.getElementById('save-plan-btn');
 
-    // Hide the plan container and export buttons initially
-    planContainer.classList.add('d-none');
+    // Hide the plan container and export buttons initially - only if they exist
+    if (planContainer && window.location.pathname === '/') {
+        planContainer.classList.add('d-none');
+    }
     
     // Handle domain toggles
     const domainToggles = document.querySelectorAll('.domain-toggle');
@@ -78,11 +80,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     showAlert('Error: ' + data.error, 'danger');
                 } else {
                     displayCasePlan(data);
-                    planContainer.classList.remove('d-none');
-                    document.getElementById('export-controls').classList.remove('d-none');
                     
-                    // Scroll to the plan container
-                    planContainer.scrollIntoView({ behavior: 'smooth' });
+                    // Only manipulate the DOM if these elements exist
+                    if (planContainer) {
+                        planContainer.classList.remove('d-none');
+                        
+                        // Scroll to the plan container
+                        planContainer.scrollIntoView({ behavior: 'smooth' });
+                    }
+                    
+                    const exportControls = document.getElementById('export-controls');
+                    if (exportControls) {
+                        exportControls.classList.remove('d-none');
+                    }
                 }
             })
             .catch(error => {
