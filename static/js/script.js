@@ -525,27 +525,59 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const planContent = document.getElementById('plan-content');
         
-        // Get client name - handle both formats (initial generation and view page)
+        // Handle client name retrieval from any page format
         let clientName = 'Client';
+        // Check from form input (create page)
         const clientNameInput = document.getElementById('client-name');
         if (clientNameInput && clientNameInput.value) {
             clientName = clientNameInput.value;
         } else {
-            // Try to find it in the plan view format
-            const clientInfoText = document.querySelector('p.text-muted');
-            if (clientInfoText && clientInfoText.textContent.includes('Client:')) {
-                const clientMatch = clientInfoText.textContent.match(/Client:\s*([^|]+)/);
-                if (clientMatch && clientMatch[1]) {
-                    clientName = clientMatch[1].trim();
+            // Check client name from dashboard form (index page)
+            const clientNameField = document.getElementById('client_name');
+            if (clientNameField && clientNameField.value) {
+                clientName = clientNameField.value;
+            } else {
+                // Check from view page format (view_plan page)
+                const clientInfoText = document.querySelector('p.text-muted');
+                if (clientInfoText && clientInfoText.textContent.includes('Client:')) {
+                    const clientMatch = clientInfoText.textContent.match(/Client:\s*([^|]+)/);
+                    if (clientMatch && clientMatch[1]) {
+                        clientName = clientMatch[1].trim();
+                    }
+                } else {
+                    // Check from edit page input field (edit_plan page)
+                    const editClientName = document.getElementById('clientName');
+                    if (editClientName && editClientName.value) {
+                        clientName = editClientName.value;
+                    }
                 }
             }
         }
         
-        // Get plan title - handle both formats
+        // Handle plan title retrieval from any page format
         let planTitle = 'Case Plan';
-        const planTitleElement = document.querySelector('#plan-content h2, h1.mb-1');
-        if (planTitleElement) {
-            planTitle = planTitleElement.textContent;
+        // Check from plan-content h2 (create page)
+        const planContentTitle = document.querySelector('#plan-content h2');
+        if (planContentTitle) {
+            planTitle = planContentTitle.textContent;
+        } else {
+            // Check from h1.mb-1 (view_plan page)
+            const viewTitle = document.querySelector('h1.mb-1');
+            if (viewTitle) {
+                planTitle = viewTitle.textContent;
+            } else {
+                // Check from plan title field (index page)
+                const planTitleField = document.getElementById('plan_title');
+                if (planTitleField && planTitleField.value) {
+                    planTitle = planTitleField.value;
+                } else {
+                    // Check from edit page input field (edit_plan page)
+                    const editPlanTitle = document.getElementById('planTitle');
+                    if (editPlanTitle && editPlanTitle.value) {
+                        planTitle = editPlanTitle.value;
+                    }
+                }
+            }
         }
         
         // Get current date
@@ -580,8 +612,18 @@ document.addEventListener('DOMContentLoaded', function() {
         // Create a clean container for domains
         const domainContainer = document.createElement('div');
         
-        // Get all domains from the rendered plan
-        const renderedDomains = document.querySelectorAll('.domain-section');
+        // Get all domains from any plan structure (view_plan, edit_plan, or landing page)
+        // First try the standard selector from the landing page
+        let renderedDomains = document.querySelectorAll('.domain-section');
+        
+        // If no domains found, try the view_plan page format
+        if (!renderedDomains.length) {
+            // In view_plan page, domains might be in #plan-container
+            const planContainer = document.getElementById('plan-container');
+            if (planContainer) {
+                renderedDomains = planContainer.querySelectorAll('.card');
+            }
+        }
         
         // Process each domain
         renderedDomains.forEach(originalDomain => {
@@ -589,8 +631,29 @@ document.addEventListener('DOMContentLoaded', function() {
             domainEl.style.marginBottom = '30px';
             
             // Get domain name and risk level
-            const domainName = originalDomain.querySelector('h3')?.textContent || 'Domain';
-            const riskLevel = originalDomain.querySelector('.badge')?.textContent || '';
+            let domainName, riskLevel;
+            
+            // Try formats from different pages
+            
+            // Format from main page (domain-section with h3)
+            const domainTitle = originalDomain.querySelector('h3, .card-header');
+            if (domainTitle) {
+                domainName = domainTitle.textContent.trim();
+                
+                // Clean up domain title if it contains risk level (view_plan format)
+                if (domainName.includes('(') && domainName.includes(')')) {
+                    const parts = domainName.split('(');
+                    domainName = parts[0].trim();
+                    riskLevel = parts[1].replace(')', '').trim();
+                } else {
+                    // Try to get risk level from badge
+                    const badge = originalDomain.querySelector('.badge');
+                    riskLevel = badge ? badge.textContent.trim() : '';
+                }
+            } else {
+                domainName = 'Domain';
+                riskLevel = '';
+            }
             
             // Create domain header
             domainEl.innerHTML = `
@@ -598,8 +661,29 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             
             // Process goals if present
-            const goalsSection = originalDomain.querySelector('.goals-section');
+            let goalsSection = originalDomain.querySelector('.goals-section');
+            let goals = [];
+            
+            // Different formats for goals depending on the page
             if (goalsSection) {
+                // Main page format
+                goals = goalsSection.querySelectorAll('.list-group-item .editable');
+            } else {
+                // View_plan format - look for headers and lists
+                const headers = originalDomain.querySelectorAll('h5, .card-title');
+                
+                headers.forEach(header => {
+                    if (header.textContent.toLowerCase().includes('goal')) {
+                        // Get the next list if it exists
+                        let nextElement = header.nextElementSibling;
+                        if (nextElement && (nextElement.tagName === 'UL' || nextElement.tagName === 'OL')) {
+                            goals = nextElement.querySelectorAll('li');
+                        }
+                    }
+                });
+            }
+            
+            if (goals.length > 0) {
                 const goalsTitle = document.createElement('h3');
                 goalsTitle.textContent = 'Goals';
                 goalsTitle.style.fontSize = '16px';
@@ -613,7 +697,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 goalsList.style.paddingLeft = '20px';
                 goalsList.style.marginBottom = '15px';
                 
-                const goals = goalsSection.querySelectorAll('.list-group-item .editable');
                 goals.forEach(goal => {
                     const listItem = document.createElement('li');
                     listItem.textContent = goal.textContent;
@@ -625,8 +708,29 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             // Process objectives if present
-            const objectivesSection = originalDomain.querySelector('.objectives-section');
+            let objectivesSection = originalDomain.querySelector('.objectives-section');
+            let objectives = [];
+            
+            // Different formats for objectives depending on the page
             if (objectivesSection) {
+                // Main page format
+                objectives = objectivesSection.querySelectorAll('.list-group-item .editable');
+            } else {
+                // View_plan format - look for headers and lists
+                const headers = originalDomain.querySelectorAll('h5, .card-title');
+                
+                headers.forEach(header => {
+                    if (header.textContent.toLowerCase().includes('objective')) {
+                        // Get the next list if it exists
+                        let nextElement = header.nextElementSibling;
+                        if (nextElement && (nextElement.tagName === 'UL' || nextElement.tagName === 'OL')) {
+                            objectives = nextElement.querySelectorAll('li');
+                        }
+                    }
+                });
+            }
+            
+            if (objectives.length > 0) {
                 const objectivesTitle = document.createElement('h3');
                 objectivesTitle.textContent = 'Objectives';
                 objectivesTitle.style.fontSize = '16px';
@@ -640,7 +744,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 objectivesList.style.paddingLeft = '20px';
                 objectivesList.style.marginBottom = '15px';
                 
-                const objectives = objectivesSection.querySelectorAll('.list-group-item .editable');
                 objectives.forEach(objective => {
                     const listItem = document.createElement('li');
                     listItem.textContent = objective.textContent;
@@ -652,8 +755,29 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             // Process tasks if present
-            const tasksSection = originalDomain.querySelector('.tasks-section');
+            let tasksSection = originalDomain.querySelector('.tasks-section');
+            let taskItems = [];
+            
+            // Different formats for tasks depending on the page
             if (tasksSection) {
+                // Main page format
+                taskItems = tasksSection.querySelectorAll('.list-group-item');
+            } else {
+                // View_plan format - look for headers and lists
+                const headers = originalDomain.querySelectorAll('h5, .card-title');
+                
+                headers.forEach(header => {
+                    if (header.textContent.toLowerCase().includes('task')) {
+                        // Get the next list if it exists
+                        let nextElement = header.nextElementSibling;
+                        if (nextElement && (nextElement.tagName === 'UL' || nextElement.tagName === 'OL')) {
+                            taskItems = nextElement.querySelectorAll('li');
+                        }
+                    }
+                });
+            }
+            
+            if (taskItems.length > 0) {
                 const tasksTitle = document.createElement('h3');
                 tasksTitle.textContent = 'Tasks';
                 tasksTitle.style.fontSize = '16px';
@@ -667,30 +791,47 @@ document.addEventListener('DOMContentLoaded', function() {
                 tasksList.style.paddingLeft = '5px';
                 tasksList.style.marginBottom = '15px';
                 
-                const taskItems = tasksSection.querySelectorAll('.list-group-item');
                 taskItems.forEach(taskItem => {
                     const listItem = document.createElement('li');
-                    const checkbox = taskItem.querySelector('input[type="checkbox"]');
-                    // Get task text safely, whether it's a plain string or an object with a 'text' property
-                    const taskTextElement = taskItem.querySelector('.editable');
+                    // Handle different formats of tasks
                     let taskText = '';
+                    let isChecked = false;
                     
+                    // Check for checkbox in main page format
+                    const checkbox = taskItem.querySelector('input[type="checkbox"]');
+                    if (checkbox) {
+                        isChecked = checkbox.checked;
+                    } else {
+                        // Check for completed status in view_plan format
+                        isChecked = taskItem.textContent.toLowerCase().includes('(completed)');
+                    }
+                    
+                    // Get task text from different formats
+                    const taskTextElement = taskItem.querySelector('.editable');
                     if (taskTextElement) {
+                        // Main page format
                         taskText = taskTextElement.textContent.trim();
-                        // If the text looks like a JSON object with 'text' property, extract just the text
-                        if (taskText.startsWith('{') && taskText.includes('text')) {
-                            try {
-                                const taskObj = JSON.parse(taskText.replace(/'/g, '"'));
-                                if (taskObj && taskObj.text) {
-                                    taskText = taskObj.text;
-                                }
-                            } catch (e) {
-                                // Keep the original text if parsing fails
+                    } else {
+                        // View_plan format
+                        taskText = taskItem.textContent.trim()
+                            .replace('(Completed)', '')
+                            .replace('(Not Completed)', '')
+                            .trim();
+                    }
+                    
+                    // Handle tasks stored as JSON objects
+                    if (taskText.startsWith('{') && taskText.includes('text')) {
+                        try {
+                            const taskObj = JSON.parse(taskText.replace(/'/g, '"'));
+                            if (taskObj && taskObj.text) {
+                                taskText = taskObj.text;
                             }
+                        } catch (e) {
+                            // Keep the original text if parsing fails
                         }
                     }
                     
-                    listItem.innerHTML = checkbox && checkbox.checked 
+                    listItem.innerHTML = isChecked 
                         ? `<span style="margin-right: 10px;">✓</span>${taskText}`
                         : `<span style="margin-right: 10px;">☐</span>${taskText}`;
                     

@@ -123,51 +123,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     // PDF Export functionality
     document.getElementById('exportPdfBtn').addEventListener('click', function() {
+        // Use the exportToPDF function from script.js
+        // This ensures consistent PDF formatting across the entire application
         exportToPDF();
     });
-    
-    function exportToPDF() {
-        // Show loading message
-        showAlert('Preparing PDF for export...', 'info');
-        
-        const { jsPDF } = window.jspdf;
-        const element = document.getElementById('plan-container');
-        
-        // Create new PDF document
-        const doc = new jsPDF('p', 'pt', 'a4');
-        const options = {
-            scale: 0.75,
-            useCORS: true,
-            scrollX: 0,
-            scrollY: 0
-        };
-        
-        // Convert HTML to canvas
-        html2canvas(element, options).then(canvas => {
-            const imgData = canvas.toDataURL('image/png');
-            const imgWidth = doc.internal.pageSize.getWidth();
-            const pageHeight = doc.internal.pageSize.getHeight();
-            const imgHeight = canvas.height * imgWidth / canvas.width;
-            let heightLeft = imgHeight;
-            let position = 0;
-            
-            // Add image to first page
-            doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-            heightLeft -= pageHeight;
-            
-            // Add new pages as needed
-            while (heightLeft >= 0) {
-                position = heightLeft - imgHeight;
-                doc.addPage();
-                doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-                heightLeft -= pageHeight;
-            }
-            
-            // Save the PDF
-            doc.save('{{ plan.title }}_{{ plan.client_name }}.pdf');
-            showAlert('PDF exported successfully!', 'success');
-        });
-    }
     
     function showAlert(message, type = 'info') {
         const alertsContainer = document.getElementById('alerts-container');
