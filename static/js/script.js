@@ -13,10 +13,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const domainToggles = document.querySelectorAll('.domain-toggle');
     if (domainToggles.length > 0) {
         domainToggles.forEach(toggle => {
+            // Set initial state - domains are disabled by default
+            const domainId = toggle.getAttribute('data-domain-id');
+            const contentSection = document.getElementById(`domain_content_${domainId}`);
+            
+            // Disable domain initially (since checkbox is unchecked by default)
+            contentSection.classList.add('disabled');
+            contentSection.querySelectorAll('input').forEach(input => {
+                input.disabled = true;
+            });
+            
+            // Handle toggle changes
             toggle.addEventListener('change', function() {
-                const domainId = this.getAttribute('data-domain-id');
-                const contentSection = document.getElementById(`domain_content_${domainId}`);
-                
                 if (this.checked) {
                     // Enable domain
                     contentSection.classList.remove('disabled');
@@ -480,8 +488,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Remove all borders from list items
-        const listItems = tempDiv.querySelectorAll('.list-group-item');
-        listItems.forEach(item => {
+        const listGroupItems = tempDiv.querySelectorAll('.list-group-item');
+        listGroupItems.forEach(item => {
             item.style.border = 'none';
             item.style.padding = '5px 0';
         });
