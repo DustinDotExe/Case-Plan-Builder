@@ -865,7 +865,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p style="margin-top: 5px; font-weight: bold;">Date</p>
                 </div>
                 <div style="width: 45%;">
-                    <<div style="borderbottom: 1px solid #000; height: 40px;"></div>
+                    <div<div style="border-bottom: 1px solid #000; height: 40px;"></div>
                     <p style="margin-top: 5px; font-weight: bold;">Probation Officer Signature</p>
                     <div style="border-bottom: 1px solid #000; height: 40px; margin-top: 20px;"></div>
                     <p style="margin-top: 5px; font-weight: bold;">Date</p>
@@ -894,44 +894,35 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
 
                 const imgProps = pdf.getImageProperties(imgData);
-                const marginX = 20; // Left and right margin in mm
                 const marginY = 20; // Top and bottom margin in mm
 
                 const pageWidth = pdf.internal.pageSize.getWidth();
                 const pageHeight = pdf.internal.pageSize.getHeight();
 
-                const usableWidth = pageWidth - (2 * marginX);
                 const usableHeight = pageHeight - (2 * marginY);
 
-                // Calculate dimensions while maintaining aspect ratio
-                let contentWidth = usableWidth;
-                let contentHeight = (imgProps.height * contentWidth) / imgProps.width;
+                const contentWidth = pageWidth;
+                const contentHeight = (imgProps.height * contentWidth) / imgProps.width;
 
-                // Adjust if content height exceeds page height
-                if (contentHeight > usableHeight) {
-                    contentHeight = usableHeight;
-                    contentWidth = (imgProps.width * contentHeight) / imgProps.height;
-
-                    // Center horizontally if content width is less than usable width
-                    const xOffset = marginX + (usableWidth - contentWidth) / 2;
+                // If content fits on a single page
+                if (contentHeight <= usableHeight) {
+                    pdf.addImage(imgData, 'PNG', 0, marginY, contentWidth, contentHeight);
+                } else {
+                    let position = marginY;
+                    let heightLeft = contentHeight;
 
                     // Add first page
-                    pdf.addImage(imgData, 'PNG', xOffset, marginY, contentWidth, contentHeight);
+                    pdf.addImage(imgData, 'PNG', 0, position, contentWidth, contentHeight);
+                    heightLeft -= usableHeight;
 
-                    let heightLeft = imgProps.height - (imgProps.height * (contentHeight / imgProps.height));
-                    let currentPosition = -(imgProps.height * (contentHeight / imgProps.height));
-
-                    // Add additional pages if needed
+                    // Add additional pages
                     while (heightLeft > 0) {
                         pdf.addPage();
-                        pdf.addImage(imgData, 'PNG', xOffset, marginY, contentWidth, contentHeight, '', 'FAST', 0, currentPosition);
-                        heightLeft -= (imgProps.height * (contentHeight / imgProps.height));
-                        currentPosition -= (imgProps.height * (contentHeight / imgProps.height));
+                        position = marginY;
+                        const heightToAdd = Math.min(heightLeft, usableHeight);
+                        pdf.addImage(imgData, 'PNG', 0, position, contentWidth, heightToAdd, '', 'FAST', 0, -(contentHeight - heightLeft));
+                        heightLeft -= heightToAdd;
                     }
-                } else {
-                    // Center horizontally if content width is less than usable width
-                    const xOffset = marginX + (usableWidth - contentWidth) / 2;
-                    pdf.addImage(imgData, 'PNG', xOffset, marginY, contentWidth, contentHeight);
                 }
 
                 pdf.save(fileName);
