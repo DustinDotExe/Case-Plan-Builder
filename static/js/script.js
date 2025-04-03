@@ -123,7 +123,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     <ul class="list-group list-group-flush">
                         ${domain.goals.map(goal => `
                             <li class="list-group-item">
-                                <div class="editable" contenteditable="true">${goal}</div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="editable" contenteditable="true">${goal}</div>
+                                    <button class="btn btn-sm btn-outline-danger remove-btn" title="Remove goal" onclick="event.preventDefault(); if(confirm('Remove this goal?')) this.closest('li').remove();">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
                             </li>
                         `).join('')}
                     </ul>
@@ -141,7 +146,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     <ul class="list-group list-group-flush">
                         ${domain.objectives.map(objective => `
                             <li class="list-group-item">
-                                <div class="editable" contenteditable="true">${objective}</div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="editable" contenteditable="true">${objective}</div>
+                                    <button class="btn btn-sm btn-outline-danger remove-btn" title="Remove objective" onclick="event.preventDefault(); if(confirm('Remove this objective?')) this.closest('li').remove();">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
                             </li>
                         `).join('')}
                     </ul>
@@ -159,9 +169,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     <ul class="list-group list-group-flush">
                         ${domain.tasks.map(task => `
                             <li class="list-group-item">
-                                <div class="d-flex align-items-center">
-                                    <input class="form-check-input me-3" type="checkbox">
-                                    <div class="editable" contenteditable="true">${task}</div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center flex-grow-1">
+                                        <input class="form-check-input me-3" type="checkbox">
+                                        <div class="editable" contenteditable="true">${task}</div>
+                                    </div>
+                                    <button class="btn btn-sm btn-outline-danger remove-btn ms-2" title="Remove task" onclick="event.preventDefault(); if(confirm('Remove this task?')) this.closest('li').remove();">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
                                 </div>
                             </li>
                         `).join('')}
@@ -259,14 +274,24 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (itemType === 'task') {
             newItem.innerHTML = `
-                <div class="d-flex align-items-center">
-                    <input class="form-check-input me-3" type="checkbox">
-                    <div class="editable" contenteditable="true">New task</div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center flex-grow-1">
+                        <input class="form-check-input me-3" type="checkbox">
+                        <div class="editable" contenteditable="true">New task</div>
+                    </div>
+                    <button class="btn btn-sm btn-outline-danger remove-btn ms-2" title="Remove task" onclick="event.preventDefault(); if(confirm('Remove this task?')) this.closest('li').remove();">
+                        <i class="bi bi-trash"></i>
+                    </button>
                 </div>
             `;
         } else {
             newItem.innerHTML = `
-                <div class="editable" contenteditable="true">New ${itemType}</div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="editable" contenteditable="true">New ${itemType}</div>
+                    <button class="btn btn-sm btn-outline-danger remove-btn" title="Remove ${itemType}" onclick="event.preventDefault(); if(confirm('Remove this ${itemType}?')) this.closest('li').remove();">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
             `;
         }
         
@@ -360,13 +385,98 @@ document.addEventListener('DOMContentLoaded', function() {
         tempDiv.style.left = '-9999px';
         tempDiv.style.top = '0';
         tempDiv.style.width = '800px'; // Fixed width for more consistent results
+        tempDiv.style.fontFamily = 'Arial, Helvetica, sans-serif';
         
         // Clone the content
         tempDiv.innerHTML = contentToCapture.innerHTML;
         
-        // Remove interactive elements
+        // Remove interactive elements and apply print styles
         const elementsToRemove = tempDiv.querySelectorAll('.add-item-section, .btn-group, .no-print');
         elementsToRemove.forEach(el => el.remove());
+        
+        // Filter out unchecked tasks and remove all buttons
+        const removeButtons = tempDiv.querySelectorAll('.remove-btn');
+        removeButtons.forEach(button => button.remove());
+        
+        // Find all list items with tasks
+        const listItems = tempDiv.querySelectorAll('li.list-group-item');
+        listItems.forEach(item => {
+            const checkbox = item.querySelector('input[type="checkbox"]');
+            if (checkbox) {
+                if (!checkbox.checked) {
+                    // Remove unchecked tasks
+                    item.remove();
+                } else {
+                    // Convert checkbox to a checked symbol for the PDF
+                    const span = document.createElement('span');
+                    span.innerHTML = '✓ ';
+                    span.style.fontWeight = 'bold';
+                    checkbox.parentNode.replaceChild(span, checkbox);
+                }
+            }
+        });
+        
+        // Remove empty domains (if all tasks were removed)
+        const domains = tempDiv.querySelectorAll('.domain-section');
+        domains.forEach(domain => {
+            const objectiveContainers = domain.querySelectorAll('.objective-container');
+            let hasContent = false;
+            
+            objectiveContainers.forEach(objContainer => {
+                const tasks = objContainer.querySelectorAll('.task-item');
+                if (tasks.length > 0) {
+                    hasContent = true;
+                } else {
+                    // Remove objectives with no tasks
+                    objContainer.remove();
+                }
+            });
+            
+            if (!hasContent) {
+                domain.remove();
+            }
+        });
+        
+        // Apply print-friendly styles
+        const cards = tempDiv.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.style.border = '1px solid #ddd';
+            card.style.borderRadius = '0';
+            card.style.boxShadow = 'none';
+            card.style.marginBottom = '15px';
+            card.style.backgroundColor = '#fff';
+        });
+        
+        const cardHeaders = tempDiv.querySelectorAll('.card-header');
+        cardHeaders.forEach(header => {
+            header.style.backgroundColor = '#f8f9fa';
+            header.style.color = '#000';
+            header.style.fontWeight = 'bold';
+            header.style.borderBottom = '1px solid #ddd';
+        });
+        
+        // Add signature blocks at the end
+        const signatureSection = document.createElement('div');
+        signatureSection.style.marginTop = '30px';
+        signatureSection.style.pageBreakInside = 'avoid';
+        signatureSection.innerHTML = `
+            <h4 style="margin-top: 50px; margin-bottom: 20px;">Agreement Signatures</h4>
+            <div style="display: flex; justify-content: space-between;">
+                <div style="width: 45%;">
+                    <div style="border-bottom: 1px solid #000; height: 40px;"></div>
+                    <p style="margin-top: 5px; font-weight: bold;">Client Signature</p>
+                    <div style="border-bottom: 1px solid #000; height: 40px; margin-top: 20px;"></div>
+                    <p style="margin-top: 5px; font-weight: bold;">Date</p>
+                </div>
+                <div style="width: 45%;">
+                    <div style="border-bottom: 1px solid #000; height: 40px;"></div>
+                    <p style="margin-top: 5px; font-weight: bold;">Probation Officer Signature</p>
+                    <div style="border-bottom: 1px solid #000; height: 40px; margin-top: 20px;"></div>
+                    <p style="margin-top: 5px; font-weight: bold;">Date</p>
+                </div>
+            </div>
+        `;
+        tempDiv.appendChild(signatureSection);
         
         // Append to body temporarily
         document.body.appendChild(tempDiv);
