@@ -223,19 +223,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 tasksSection.innerHTML = `
                     <h4>Tasks</h4>
                     <ul class="list-group list-group-flush">
-                        ${domain.tasks.map(task => `
+                        ${domain.tasks.map(task => {
+                            // Extract task text if it's an object with a 'text' property, otherwise use as is
+                            const taskText = typeof task === 'object' && task !== null && task.text ? task.text : task;
+                            const isCompleted = typeof task === 'object' && task !== null && task.completed === true;
+                            
+                            return `
                             <li class="list-group-item">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="d-flex align-items-center flex-grow-1">
-                                        <input class="form-check-input me-3" type="checkbox">
-                                        <div class="editable" contenteditable="true">${task}</div>
+                                        <input class="form-check-input me-3" type="checkbox" ${isCompleted ? 'checked' : ''}>
+                                        <div class="editable" contenteditable="true">${taskText}</div>
                                     </div>
                                     <button class="btn btn-sm btn-outline-danger remove-btn ms-2" title="Remove task" onclick="event.preventDefault(); this.closest('li').remove();">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </div>
                             </li>
-                        `).join('')}
+                            `;
+                        }).join('')}
                     </ul>
                 `;
                 domainEl.appendChild(tasksSection);
@@ -665,7 +671,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 taskItems.forEach(taskItem => {
                     const listItem = document.createElement('li');
                     const checkbox = taskItem.querySelector('input[type="checkbox"]');
-                    const taskText = taskItem.querySelector('.editable').textContent;
+                    // Get task text safely, whether it's a plain string or an object with a 'text' property
+                    const taskTextElement = taskItem.querySelector('.editable');
+                    let taskText = '';
+                    
+                    if (taskTextElement) {
+                        taskText = taskTextElement.textContent.trim();
+                        // If the text looks like a JSON object with 'text' property, extract just the text
+                        if (taskText.startsWith('{') && taskText.includes('text')) {
+                            try {
+                                const taskObj = JSON.parse(taskText.replace(/'/g, '"'));
+                                if (taskObj && taskObj.text) {
+                                    taskText = taskObj.text;
+                                }
+                            } catch (e) {
+                                // Keep the original text if parsing fails
+                            }
+                        }
+                    }
                     
                     listItem.innerHTML = checkbox && checkbox.checked 
                         ? `<span style="margin-right: 10px;">✓</span>${taskText}`

@@ -95,10 +95,18 @@
                             {% for task in domain.tasks %}
                             <li class="list-group-item border-0 ps-0 py-1 d-flex">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="task-{{ loop.index }}-{{ domain.id }}">
-                                    <label class="form-check-label" for="task-{{ loop.index }}-{{ domain.id }}">
-                                        {{ task }}
-                                    </label>
+                                    {% if task is mapping and task.text is defined %}
+                                        <input class="form-check-input" type="checkbox" id="task-{{ loop.index }}-{{ domain.id }}" 
+                                               {{ 'checked' if task.completed else '' }}>
+                                        <label class="form-check-label" for="task-{{ loop.index }}-{{ domain.id }}">
+                                            {{ task.text }}
+                                        </label>
+                                    {% else %}
+                                        <input class="form-check-input" type="checkbox" id="task-{{ loop.index }}-{{ domain.id }}">
+                                        <label class="form-check-label" for="task-{{ loop.index }}-{{ domain.id }}">
+                                            {{ task }}
+                                        </label>
+                                    {% endif %}
                                 </div>
                             </li>
                             {% endfor %}
