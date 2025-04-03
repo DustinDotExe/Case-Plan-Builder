@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const planContainer = document.getElementById('plan-container');
     const exportBtn = document.getElementById('export-btn');
     const printBtn = document.getElementById('print-btn');
+    const savePlanBtn = document.getElementById('save-plan-btn');
 
     // Hide the plan container and export buttons initially
     planContainer.classList.add('d-none');
@@ -373,6 +374,124 @@ document.addEventListener('DOMContentLoaded', function() {
         printBtn.addEventListener('click', function() {
             window.print();
         });
+    }
+    
+    // Handle save plan button
+    if (savePlanBtn) {
+        savePlanBtn.addEventListener('click', function() {
+            saveCasePlan();
+        });
+    }
+    
+    // Function to save the case plan to the database
+    function saveCasePlan() {
+        showAlert('Saving case plan...', 'info');
+        
+        // Collect plan data
+        const planData = collectPlanData();
+        
+        // Send request to server to save the plan
+        fetch('/case_plan/' + (planData.id || '0') + '/edit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(planData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showAlert('Case plan saved successfully!', 'success');
+                
+                // If there's a redirect URL, navigate there after a short delay
+                if (data.redirect_url) {
+                    setTimeout(() => {
+                        window.location.href = data.redirect_url;
+                    }, 1500);
+                }
+            } else {
+                showAlert('Error: ' + (data.message || 'Could not save the case plan'), 'danger');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showAlert('An error occurred while saving the case plan', 'danger');
+        });
+    }
+    
+    // Function to collect all plan data from the DOM
+    function collectPlanData() {
+        const planContent = document.getElementById('plan-content');
+        const clientNameInput = document.getElementById('client-name');
+        const planDateInput = document.getElementById('plan-date');
+        const planTitleElement = planContent.querySelector('h2.editable');
+        
+        // Get the plan ID if it exists (for editing existing plans)
+        const planId = planContent.getAttribute('data-plan-id');
+        
+        // Basic plan info
+        const planData = {
+            plan_title: planTitleElement ? planTitleElement.textContent : 'Case Plan',
+            client_name: clientNameInput ? clientNameInput.value : 'Client',
+            created_date: planDateInput ? planDateInput.value : new Date().toISOString().split('T')[0],
+            domains: [],
+            id: planId || null
+        };
+        
+        // Get all domains
+        const domainSections = planContent.querySelectorAll('.domain-section');
+        domainSections.forEach(domainSection => {
+            const domainName = domainSection.querySelector('h3.editable').textContent;
+            const riskLevelBadge = domainSection.querySelector('.badge');
+            const riskLevel = riskLevelBadge ? riskLevelBadge.textContent.replace(' Risk', '') : 'Medium';
+            
+            // Create domain object
+            const domain = {
+                name: domainName,
+                id: domainName.toLowerCase().replace(/[^a-z0-9]/g, '_'),
+                risk_level: riskLevel,
+                goals: [],
+                objectives: [],
+                tasks: []
+            };
+            
+            // Collect goals
+            const goalsSection = domainSection.querySelector('.goals-section');
+            if (goalsSection) {
+                const goalItems = goalsSection.querySelectorAll('.list-group-item .editable');
+                goalItems.forEach(goal => {
+                    domain.goals.push(goal.textContent);
+                });
+            }
+            
+            // Collect objectives
+            const objectivesSection = domainSection.querySelector('.objectives-section');
+            if (objectivesSection) {
+                const objectiveItems = objectivesSection.querySelectorAll('.list-group-item .editable');
+                objectiveItems.forEach(objective => {
+                    domain.objectives.push(objective.textContent);
+                });
+            }
+            
+            // Collect tasks
+            const tasksSection = domainSection.querySelector('.tasks-section');
+            if (tasksSection) {
+                const taskItems = tasksSection.querySelectorAll('.list-group-item');
+                taskItems.forEach(taskItem => {
+                    const taskText = taskItem.querySelector('.editable').textContent;
+                    const isCompleted = taskItem.querySelector('input[type="checkbox"]').checked;
+                    
+                    domain.tasks.push({
+                        text: taskText,
+                        completed: isCompleted
+                    });
+                });
+            }
+            
+            planData.domains.push(domain);
+        });
+        
+        return planData;
     }
     
     // Function to export the case plan to PDF

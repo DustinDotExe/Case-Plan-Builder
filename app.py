@@ -261,7 +261,13 @@ def view_case_plan(plan_id):
 @login_required
 def edit_case_plan(plan_id):
     """Edit a specific case plan"""
-    plan = CasePlan.query.filter_by(id=plan_id, user_id=current_user.id).first_or_404()
+    # For new plans (id=0), create a new plan object
+    if plan_id == 0:
+        plan = CasePlan(user_id=current_user.id)
+        is_new_plan = True
+    else:
+        plan = CasePlan.query.filter_by(id=plan_id, user_id=current_user.id).first_or_404()
+        is_new_plan = False
     
     if request.method == 'POST':
         # Get updated plan data
@@ -272,16 +278,44 @@ def edit_case_plan(plan_id):
             plan.plan_data = updated_plan
             
             # Update main plan info
-            plan.title = updated_plan.get('plan_title', plan.title)
-            plan.client_name = updated_plan.get('client_name', plan.client_name)
+            plan.title = updated_plan.get('plan_title', plan.title or 'Case Plan')
+            plan.client_name = updated_plan.get('client_name', plan.client_name or 'Client')
             plan.updated_at = datetime.datetime.now()
             
             # Ensure plan data has consistent client and title
             plan.plan_data['client_name'] = plan.client_name
             plan.plan_data['plan_title'] = plan.title
             
+            # For new plans, add to the database
+            if is_new_plan:
+                db.session.add(plan)
+                
+                # Only flush to get the ID before saving domain selections
+                db.session.flush()
+                
+                # Add domain selections
+                for domain in updated_plan.get('domains', []):
+                    domain_selection = DomainRiskLevel(
+                        domain_id=domain.get('id'),
+                        domain_name=domain.get('name'),
+                        risk_level=domain.get('risk_level'),
+                        case_plan_id=plan.id
+                    )
+                    db.session.add(domain_selection)
+            
             db.session.commit()
-            return jsonify({"success": True, "message": "Plan updated successfully"})
+            
+            # Return success message with redirect to view page for new plans
+            response = {
+                "success": True, 
+                "message": "Plan saved successfully"
+            }
+            
+            if is_new_plan:
+                response["redirect_url"] = url_for('view_case_plan', plan_id=plan.id)
+                response["plan_id"] = plan.id
+                
+            return jsonify(response)
         else:
             return jsonify({"success": False, "message": "Invalid plan data"}), 400
     

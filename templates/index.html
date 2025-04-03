@@ -83,6 +83,15 @@
                 <button id="print-btn" class="btn btn-secondary">
                     <i class="bi bi-printer"></i> Print
                 </button>
+                {% if current_user.is_authenticated %}
+                <button id="save-plan-btn" class="btn btn-success">
+                    <i class="bi bi-save"></i> Save Plan
+                </button>
+                {% else %}
+                <a href="{{ url_for('login') }}?next={{ url_for('index') }}" class="btn btn-outline-secondary">
+                    <i class="bi bi-box-arrow-in-right"></i> Login to Save
+                </a>
+                {% endif %}
             </div>
         </div>
         <div class="card-body">
