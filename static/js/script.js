@@ -403,12 +403,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.success) {
                 showAlert('Case plan saved successfully!', 'success');
                 
-                // If there's a redirect URL, navigate there after a short delay
-                if (data.redirect_url) {
-                    setTimeout(() => {
-                        window.location.href = data.redirect_url;
-                    }, 1500);
-                }
+                // Always redirect to the main page after saving
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 1500);
             } else {
                 showAlert('Error: ' + (data.message || 'Could not save the case plan'), 'danger');
             }

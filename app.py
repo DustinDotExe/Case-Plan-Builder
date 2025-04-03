@@ -263,11 +263,30 @@ def edit_case_plan(plan_id):
     """Edit a specific case plan"""
     # For new plans (id=0), create a new plan object
     if plan_id == 0:
-        plan = CasePlan(user_id=current_user.id)
+        plan = CasePlan(
+            user_id=current_user.id,
+            title="New Case Plan",
+            client_name="Client Name",
+            plan_data={
+                "plan_title": "New Case Plan",
+                "client_name": "Client Name",
+                "created_date": datetime.datetime.now().strftime('%Y-%m-%d'),
+                "domains": []
+            }
+        )
         is_new_plan = True
     else:
         plan = CasePlan.query.filter_by(id=plan_id, user_id=current_user.id).first_or_404()
         is_new_plan = False
+        
+        # Ensure the plan data is not None
+        if not plan.plan_data:
+            plan.plan_data = {
+                "plan_title": plan.title,
+                "client_name": plan.client_name,
+                "created_date": plan.created_at.strftime('%Y-%m-%d'),
+                "domains": []
+            }
     
     if request.method == 'POST':
         # Get updated plan data
@@ -305,15 +324,11 @@ def edit_case_plan(plan_id):
             
             db.session.commit()
             
-            # Return success message with redirect to view page for new plans
+            # Return success message with redirect to the home page
             response = {
                 "success": True, 
                 "message": "Plan saved successfully"
             }
-            
-            if is_new_plan:
-                response["redirect_url"] = url_for('view_case_plan', plan_id=plan.id)
-                response["plan_id"] = plan.id
                 
             return jsonify(response)
         else:
