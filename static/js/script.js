@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <li class="list-group-item">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="editable" contenteditable="true">${goal}</div>
-                                    <button class="btn btn-sm btn-outline-danger remove-btn" title="Remove goal" onclick="event.preventDefault(); if(confirm('Remove this goal?')) this.closest('li').remove();">
+                                    <button class="btn btn-sm btn-outline-danger remove-btn" title="Remove goal" onclick="event.preventDefault(); this.closest('li').remove();">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </div>
@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <li class="list-group-item">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="editable" contenteditable="true">${objective}</div>
-                                    <button class="btn btn-sm btn-outline-danger remove-btn" title="Remove objective" onclick="event.preventDefault(); if(confirm('Remove this objective?')) this.closest('li').remove();">
+                                    <button class="btn btn-sm btn-outline-danger remove-btn" title="Remove objective" onclick="event.preventDefault(); this.closest('li').remove();">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </div>
@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         <input class="form-check-input me-3" type="checkbox">
                                         <div class="editable" contenteditable="true">${task}</div>
                                     </div>
-                                    <button class="btn btn-sm btn-outline-danger remove-btn ms-2" title="Remove task" onclick="event.preventDefault(); if(confirm('Remove this task?')) this.closest('li').remove();">
+                                    <button class="btn btn-sm btn-outline-danger remove-btn ms-2" title="Remove task" onclick="event.preventDefault(); this.closest('li').remove();">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </div>
@@ -318,7 +318,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <input class="form-check-input me-3" type="checkbox">
                         <div class="editable" contenteditable="true">New task</div>
                     </div>
-                    <button class="btn btn-sm btn-outline-danger remove-btn ms-2" title="Remove task" onclick="event.preventDefault(); if(confirm('Remove this task?')) this.closest('li').remove();">
+                    <button class="btn btn-sm btn-outline-danger remove-btn ms-2" title="Remove task" onclick="event.preventDefault(); this.closest('li').remove();">
                         <i class="bi bi-trash"></i>
                     </button>
                 </div>
@@ -327,7 +327,7 @@ document.addEventListener('DOMContentLoaded', function() {
             newItem.innerHTML = `
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="editable" contenteditable="true">New ${itemType}</div>
-                    <button class="btn btn-sm btn-outline-danger remove-btn" title="Remove ${itemType}" onclick="event.preventDefault(); if(confirm('Remove this ${itemType}?')) this.closest('li').remove();">
+                    <button class="btn btn-sm btn-outline-danger remove-btn" title="Remove ${itemType}" onclick="event.preventDefault(); this.closest('li').remove();">
                         <i class="bi bi-trash"></i>
                     </button>
                 </div>
