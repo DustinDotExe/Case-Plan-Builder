@@ -897,27 +897,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 const pdfWidth = pdf.internal.pageSize.getWidth();
                 const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
                 
+                const marginY = 10; // Top and bottom margin in mm
+                const pageHeight = pdf.internal.pageSize.getHeight();
+                const usablePageHeight = pageHeight - 2 * marginY;
+
                 // If content fits on a single page
-                if (pdfHeight <= pdf.internal.pageSize.getHeight()) {
-                    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                if (pdfHeight <= usablePageHeight) {
+                    pdf.addImage(imgData, 'PNG', 0, marginY, pdfWidth, pdfHeight);
                 } else {
-                    // For multi-page content, we need to slice the image
-                    const pageHeight = pdf.internal.pageSize.getHeight();
+                    let position = marginY;
                     let heightLeft = pdfHeight;
-                    let position = 0;
-                    let page = 1;
-                    
+
                     // Add first page
                     pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
-                    heightLeft -= pageHeight;
-                    
-                    // Add subsequent pages
+                    heightLeft -= usablePageHeight;
+
+                    // Add additional pages
                     while (heightLeft > 0) {
-                        position = -pageHeight * page;
                         pdf.addPage();
-                        pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
-                        heightLeft -= pageHeight;
-                        page++;
+                        position -= pageHeight;
+                        pdf.addImage(imgData, 'PNG', 0, position + marginY, pdfWidth, pdfHeight);
+                        heightLeft -= usablePageHeight;
                     }
                 }
                 
