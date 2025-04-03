@@ -345,11 +345,30 @@ def delete_case_plan(plan_id):
     """Delete a specific case plan"""
     plan = CasePlan.query.filter_by(id=plan_id, user_id=current_user.id).first_or_404()
     
-    db.session.delete(plan)
-    db.session.commit()
-    
-    flash('Case plan deleted successfully', 'success')
-    return redirect(url_for('dashboard'))
+    try:
+        # Delete any related domain risk levels first
+        DomainRiskLevel.query.filter_by(case_plan_id=plan.id).delete()
+        
+        # Then delete the plan itself
+        db.session.delete(plan)
+        db.session.commit()
+        
+        # Handle both AJAX and regular form submissions
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return jsonify({"success": True, "message": "Case plan deleted successfully"})
+        else:
+            flash('Case plan deleted successfully', 'success')
+            return redirect(url_for('dashboard'))
+    except Exception as e:
+        db.session.rollback()
+        app.logger.error(f"Error deleting case plan: {str(e)}")
+        
+        # Handle both AJAX and regular form submissions for errors
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return jsonify({"success": False, "message": f"Error deleting case plan: {str(e)}"}), 500
+        else:
+            flash(f'Error deleting case plan: {str(e)}', 'danger')
+            return redirect(url_for('dashboard'))
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
