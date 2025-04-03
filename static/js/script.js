@@ -422,13 +422,15 @@ document.addEventListener('DOMContentLoaded', function() {
         tempDiv.style.width = '800px'; // Fixed width for more consistent results
         tempDiv.style.fontFamily = 'Arial, Helvetica, sans-serif';
         
-        // Create header with title, client name, and date
+        // Create header with title, client name, and date - center-aligned and larger text
         const header = document.createElement('div');
+        header.style.textAlign = 'center';
+        header.style.marginBottom = '25px';
         header.innerHTML = `
-            <h1 style="font-size: 24px; margin-bottom: 15px;">${planTitle}</h1>
-            <p style="margin-bottom: 5px;"><strong>Client Name:</strong> ${clientName}</p>
-            <p style="margin-bottom: 25px;"><strong>Date:</strong> ${currentDate}</p>
-            <hr style="margin-bottom: 25px; border: none; border-top: 1px solid #000;">
+            <h1 style="font-size: 28px; margin-bottom: 20px; font-weight: bold;">${planTitle}</h1>
+            <p style="margin-bottom: 8px; font-size: 18px;"><strong>Client Name:</strong> ${clientName}</p>
+            <p style="margin-bottom: 25px; font-size: 18px;"><strong>Date:</strong> ${currentDate}</p>
+            <hr style="margin-bottom: 30px; border: none; border-top: 1px solid #000;">
         `;
         tempDiv.appendChild(header);
         
