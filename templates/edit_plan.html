@@ -1,6 +1,8 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<div id="alerts-container" class="position-fixed top-0 end-0 p-3" style="z-index: 1050;"></div>
+
 <div class="container" id="plan-container">
     <div class="row mb-4">
         <div class="col-12">
@@ -25,6 +27,7 @@
     </div>
 
     <form id="editPlanForm">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <div class="row mb-4">
             <div class="col-md-6 mb-3">
                 <label for="planTitle" class="form-label">Plan Title</label>
@@ -450,10 +453,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Send updated plan to server
+        // Get the CSRF token from the form
+        const csrfToken = document.querySelector('input[name="csrf_token"]').value;
+        
         fetch('{{ url_for("edit_case_plan", plan_id=plan.id) }}', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
             },
             body: JSON.stringify(planData),
         })

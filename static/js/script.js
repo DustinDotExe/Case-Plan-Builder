@@ -64,7 +64,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Send request to server
             fetch('/generate_plan', {
                 method: 'POST',
-                body: formData
+                body: formData,
+                // CSRF protection is handled by the token in the formData
             })
             .then(response => response.json())
             .then(data => {
@@ -390,11 +391,15 @@ document.addEventListener('DOMContentLoaded', function() {
         // Collect plan data
         const planData = collectPlanData();
         
+        // Get the CSRF token from the meta tag
+        const csrfToken = document.querySelector('input[name="csrf_token"]')?.value;
+        
         // Send request to server to save the plan
         fetch('/case_plan/' + (planData.id || '0') + '/edit', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
             },
             body: JSON.stringify(planData)
         })
