@@ -897,19 +897,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 const pdfWidth = pdf.internal.pageSize.getWidth();
                 const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
                 
-                const marginY = 10; // Top and bottom margin in mm
+                const marginY = 20; // Top and bottom margin in mm
+                const marginX = 15; // Left and right margin in mm
                 const pageHeight = pdf.internal.pageSize.getHeight();
-                const usablePageHeight = pageHeight - 2 * marginY;
+                const usablePageHeight = pageHeight - 2 * marginY;inY;
 
                 // If content fits on a single page
                 if (pdfHeight <= usablePageHeight) {
-                    pdf.addImage(imgData, 'PNG', 0, marginY, pdfWidth, pdfHeight);
+                    pdf.addImage(imgData, 'PNG', marginX, marginY, pdfWidth - 2 * marginX, pdfHeight);
                 } else {
                     let position = marginY;
                     let heightLeft = pdfHeight;
 
                     // Add first page
-                    pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
+                    pdf.addImage(imgData, 'PNG', marginX, position, pdfWidth - 2 * marginX, pdfHeight);
                     heightLeft -= usablePageHeight;
 
                     // Add additional pages
