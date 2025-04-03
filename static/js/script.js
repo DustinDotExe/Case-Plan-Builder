@@ -56,18 +56,28 @@ document.addEventListener('DOMContentLoaded', function() {
         const planContent = document.getElementById('plan-content');
         planContent.innerHTML = '';
         
+        // Get client name and plan title from form
+        const clientName = document.getElementById('client_name').value;
+        const planTitle = document.getElementById('plan_title').value;
+        
         // Create header
         const header = document.createElement('div');
         header.classList.add('mb-4');
         header.innerHTML = `
-            <h2 class="mb-3 editable" contenteditable="true">Case Plan</h2>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="client-name" placeholder="Client Name">
-                <label for="client-name">Client Name</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="date" class="form-control" id="plan-date" value="${new Date().toISOString().split('T')[0]}">
-                <label for="plan-date">Date</label>
+            <h2 class="mb-3 editable" contenteditable="true">${planTitle}</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="client-name" placeholder="Client Name" value="${clientName}">
+                        <label for="client-name">Client Name</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input type="date" class="form-control" id="plan-date" value="${new Date().toISOString().split('T')[0]}">
+                        <label for="plan-date">Date</label>
+                    </div>
+                </div>
             </div>
             <hr>
         `;
@@ -308,7 +318,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const planContent = document.getElementById('plan-content');
         const clientName = document.getElementById('client-name').value || 'Client';
-        const fileName = `Case_Plan_${clientName.replace(/\s+/g, '_')}.pdf`;
+        const planTitle = document.querySelector('#plan-content h2').textContent || 'Case_Plan';
+        const fileName = `${planTitle.replace(/\s+/g, '_')}_${clientName.replace(/\s+/g, '_')}.pdf`;
         
         // Create a copy of the content to manipulate for PDF export
         const printContent = planContent.cloneNode(true);

@@ -13,6 +13,21 @@
                 </p>
                 
                 <form id="risk-form">
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-3">
+                            <label for="client_name" class="form-label">Client Name</label>
+                            <input type="text" class="form-control" id="client_name" name="client_name" 
+                                   placeholder="Enter client name" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="plan_title" class="form-label">Plan Title</label>
+                            <input type="text" class="form-control" id="plan_title" name="plan_title" 
+                                   placeholder="E.g., Initial Assessment, 90-Day Review" 
+                                   value="Case Plan" required>
+                        </div>
+                    </div>
+                    
+                    <h4 class="mb-3">Risk Level Assessment</h4>
                     <div class="row">
                         {% for domain in domains %}
                         <div class="col-md-6 col-lg-4 mb-3">

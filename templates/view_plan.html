@@ -1,0 +1,182 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container" id="plan-container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <div>
+                    <h1 class="mb-1">{{ plan.title }}</h1>
+                    <p class="text-muted mb-0">
+                        Client: {{ plan.client_name }} | 
+                        Created: {{ plan.created_at.strftime('%Y-%m-%d') }} | 
+                        Last Updated: {{ plan.updated_at.strftime('%Y-%m-%d') }}
+                    </p>
+                </div>
+                <div class="d-flex gap-2 mt-2 mt-md-0">
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to Dashboard
+                    </a>
+                    <a href="{{ url_for('edit_case_plan', plan_id=plan.id) }}" class="btn btn-primary">
+                        <i class="bi bi-pencil"></i> Edit Plan
+                    </a>
+                    <button id="exportPdfBtn" class="btn btn-success">
+                        <i class="bi bi-file-earmark-pdf"></i> Export PDF
+                    </button>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Case Plan Summary</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Client Information</h5>
+                            <p><strong>Name:</strong> {{ plan.client_name }}</p>
+                            <p><strong>Plan Created:</strong> {{ plan.created_at.strftime('%Y-%m-%d') }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Risk Level Overview</h5>
+                            <div class="domain-risk-badges">
+                                {% for domain in plan.plan_data.domains %}
+                                <span class="badge 
+                                    {% if domain.risk_level == 'Low' %}bg-success{% elif domain.risk_level == 'Medium' %}bg-warning{% else %}bg-danger{% endif %} me-2 mb-2">
+                                    {{ domain.name }}: {{ domain.risk_level }}
+                                </span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% for domain in plan.plan_data.domains %}
+    <div class="domain-section mb-4">
+        <div class="card shadow">
+            <div class="card-header d-flex justify-content-between align-items-center
+                {% if domain.risk_level == 'Low' %}bg-success{% elif domain.risk_level == 'Medium' %}bg-warning{% else %}bg-danger{% endif %} text-white">
+                <h4 class="mb-0">{{ domain.name }}</h4>
+                <span class="badge bg-light text-dark">{{ domain.risk_level }} Risk</span>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3 mb-md-0">
+                        <h5 class="border-bottom pb-2 mb-3">Goals</h5>
+                        <ol class="ps-3">
+                            {% for goal in domain.goals %}
+                            <li class="mb-2">{{ goal }}</li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                    
+                    <div class="col-md-4 mb-3 mb-md-0">
+                        <h5 class="border-bottom pb-2 mb-3">Objectives</h5>
+                        <ol class="ps-3">
+                            {% for objective in domain.objectives %}
+                            <li class="mb-2">{{ objective }}</li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <h5 class="border-bottom pb-2 mb-3">Tasks</h5>
+                        <ul class="list-group task-list">
+                            {% for task in domain.tasks %}
+                            <li class="list-group-item border-0 ps-0 py-1 d-flex">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="task-{{ loop.index }}-{{ domain.id }}">
+                                    <label class="form-check-label" for="task-{{ loop.index }}-{{ domain.id }}">
+                                        {{ task }}
+                                    </label>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // PDF Export functionality
+    document.getElementById('exportPdfBtn').addEventListener('click', function() {
+        exportToPDF();
+    });
+    
+    function exportToPDF() {
+        // Show loading message
+        showAlert('Preparing PDF for export...', 'info');
+        
+        const { jsPDF } = window.jspdf;
+        const element = document.getElementById('plan-container');
+        
+        // Create new PDF document
+        const doc = new jsPDF('p', 'pt', 'a4');
+        const options = {
+            scale: 0.75,
+            useCORS: true,
+            scrollX: 0,
+            scrollY: 0
+        };
+        
+        // Convert HTML to canvas
+        html2canvas(element, options).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            const imgWidth = doc.internal.pageSize.getWidth();
+            const pageHeight = doc.internal.pageSize.getHeight();
+            const imgHeight = canvas.height * imgWidth / canvas.width;
+            let heightLeft = imgHeight;
+            let position = 0;
+            
+            // Add image to first page
+            doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+            
+            // Add new pages as needed
+            while (heightLeft >= 0) {
+                position = heightLeft - imgHeight;
+                doc.addPage();
+                doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+            
+            // Save the PDF
+            doc.save('{{ plan.title }}_{{ plan.client_name }}.pdf');
+            showAlert('PDF exported successfully!', 'success');
+        });
+    }
+    
+    function showAlert(message, type = 'info') {
+        const alertsContainer = document.getElementById('alerts-container');
+        const alertElement = document.createElement('div');
+        
+        alertElement.className = `alert alert-${type} alert-dismissible fade show`;
+        alertElement.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
+        
+        alertsContainer.appendChild(alertElement);
+        
+        // Automatically dismiss after 5 seconds
+        setTimeout(() => {
+            const bsAlert = bootstrap.Alert.getOrCreateInstance(alertElement);
+            bsAlert.close();
+        }, 5000);
+    }
+});
+</script>
+{% endblock %}

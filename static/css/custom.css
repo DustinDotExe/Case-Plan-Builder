@@ -1,22 +1,23 @@
-/* Additional custom styles to supplement Bootstrap */
+/* Custom styles for the IRAS Case Plan Generator */
 
-/* Make editable content more visible when focused */
-.editable {
-    min-height: 1.5em;
-    transition: background-color 0.2s ease;
+/* Add subtle shadows to cards for depth */
+.card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.editable.editing {
-    background-color: rgba(200, 200, 200, 0.1);
-    padding: 0.25rem;
-    border-radius: 0.25rem;
-    outline: none;
+.card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Style for the domain sections */
+/* Main container for dashboard cards */
 .domain-section {
-    background-color: var(--bs-dark);
-    border-color: var(--bs-gray-700) !important;
+    transition: all 0.3s ease;
+}
+
+/* Styles for the case plan display */
+.plan-content h2, .plan-content h3, .plan-content h4 {
+    margin-bottom: 1rem;
 }
 
 .domain-header {
@@ -25,56 +26,71 @@
     align-items: center;
 }
 
-/* Print styles - hide controls when printing */
-@media print {
-    .no-print {
-        display: none !important;
+/* Domain risk level badges */
+.domain-risk-badges .badge {
+    font-size: 0.85rem;
+    padding: 0.5em 0.7em;
+}
+
+/* Add confirmation styling to delete buttons */
+.btn-danger:hover {
+    background-color: var(--bs-danger-dark);
+}
+
+/* Login and registration forms */
+.auth-form {
+    max-width: 480px;
+    margin: 2rem auto;
+}
+
+.auth-form .card {
+    border-radius: 10px;
+}
+
+/* Dashboard specific styles */
+.dashboard-card {
+    height: 100%;
+}
+
+.dashboard-card .card-footer {
+    background-color: transparent;
+    border-top: 1px solid rgba(var(--bs-secondary-rgb), 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+    .card-title {
+        font-size: 1.1rem;
     }
     
+    .btn-group-sm > .btn, .btn-sm {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* Print styles for PDF export */
+@media print {
     body {
         background-color: white;
         color: black;
     }
     
+    .card, .domain-section {
+        break-inside: avoid;
+        box-shadow: none !important;
+        border: 1px solid #ddd;
+    }
+    
     .domain-section {
-        background-color: white !important;
-        border: 1px solid #ccc !important;
-        margin-bottom: 15px !important;
         page-break-inside: avoid;
     }
     
-    .list-group-item {
-        background-color: white !important;
-        color: black !important;
-        border-color: #eee !important;
+    h1, h2, h3, h4, h5, h6 {
+        page-break-after: avoid;
     }
     
     .badge {
-        border: 1px solid #ccc !important;
-        color: black !important;
-    }
-    
-    .badge.bg-success {
-        background-color: #d4edda !important;
-    }
-    
-    .badge.bg-warning {
-        background-color: #fff3cd !important;
-    }
-    
-    .badge.bg-danger {
-        background-color: #f8d7da !important;
-    }
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .domain-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .domain-header h3 {
-        margin-bottom: 0.5rem;
+        border: 1px solid #333;
     }
 }
