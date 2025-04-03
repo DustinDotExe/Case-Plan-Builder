@@ -908,20 +908,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (contentHeight <= usableHeight) {
                     pdf.addImage(imgData, 'PNG', 0, marginY, contentWidth, contentHeight);
                 } else {
-                    let position = marginY;
-                    let heightLeft = contentHeight;
-
                     // Add first page
-                    pdf.addImage(imgData, 'PNG', 0, position, contentWidth, contentHeight);
-                    heightLeft -= usableHeight;
+                    pdf.addImage(imgData, 'PNG', 0, marginY, contentWidth, contentHeight);
 
-                    // Add additional pages
+                    // Add additional pages if needed
+                    let heightLeft = contentHeight - usableHeight;
+                    let position = -(contentHeight - heightLeft);
+
                     while (heightLeft > 0) {
                         pdf.addPage();
-                        position = marginY;
-                        const heightToAdd = Math.min(heightLeft, usableHeight);
-                        pdf.addImage(imgData, 'PNG', 0, position, contentWidth, heightToAdd, '', 'FAST', 0, -(contentHeight - heightLeft));
-                        heightLeft -= heightToAdd;
+                        pdf.addImage(imgData, 'PNG', 0, marginY, contentWidth, contentHeight, '', 'FAST', 0, position);
+                        heightLeft -= usableHeight;
+                        position -= usableHeight;
                     }
                 }
 
