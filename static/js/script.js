@@ -599,24 +599,7 @@ document.addEventListener('DOMContentLoaded', function() {
         pdf.line(margin, yPos, pageWidth - margin, yPos);
         yPos += 10;
 
-        // Get domains data
-        const domains = document.querySelectorAll('.domain-section');
-        domains.forEach(domain => {
-            const domainName = domain.querySelector('h3')?.textContent || '';
-            const riskLevel = domain.querySelector('.badge')?.textContent || '';
-
-            // Domain header
-            pdf.setFontSize(14);
-            pdf.text(domainName, margin, yPos);
-            yPos += 7;
-            
-            // Risk Level
-            pdf.setFontSize(12);
-            pdf.text(`Risk Level: ${riskLevel}`, margin, yPos);
-            yPos += 10;
-
-            // Goals
-            const goals = Array.from(domain.querySelectorAll('.goals-section .editable, .goals-section .editable-text')).map(g => g.textContent);
+        
             if (goals.length) {
                 pdf.text('Goals:', margin, yPos);
                 yPos += 7;
@@ -674,8 +657,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         // Get domains data
-        const domains = document.querySelectorAll('.domain-section');
-        domains.forEach(domain => {
+        const domainsToExport = document.querySelectorAll('.domain-section');
+        domainsToExport.forEach(domain => {
             const domainName = domain.querySelector('h3')?.textContent || '';
             const riskLevel = domain.querySelector('.badge')?.textContent || '';
 
