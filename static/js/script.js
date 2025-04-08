@@ -722,16 +722,16 @@ document.addEventListener('DOMContentLoaded', function() {
         pdf.line(leftSignatureX, yPos, leftSignatureX + signatureWidth, yPos);
         pdf.line(rightSignatureX, yPos, rightSignatureX + signatureWidth, yPos);
         
-        yPos += 5;
-        pdf.setFontSize(10);
+        yPos += 5; // Reduced from 10 to 5
+        pdf.setFontSize(12);
 
         // Add participant signature block
-        pdf.text("Participant", leftSignatureX, yPos + 5);
-        pdf.text(currentDate, leftSignatureX, yPos + 10);
+        pdf.text("Participant", leftSignatureX, yPos);
+        pdf.text(currentDate, leftSignatureX, yPos + 5);
 
         // Add probation officer signature block
-        pdf.text("Probation Officer", rightSignatureX, yPos + 5);
-        pdf.text(currentDate, rightSignatureX, yPos + 10);
+        pdf.text("Probation Officer", rightSignatureX, yPos);
+        pdf.text(currentDate, rightSignatureX, yPos + 5);
 
         // Save the PDF
         const fileName = `${planTitle.replace(/\s+/g, '_')}_${clientName.replace(/\s+/g, '_')}.pdf`;

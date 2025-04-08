@@ -8,136 +8,198 @@
           "risk_level": "Low",
           "goals": [
             "Maintain law-abiding behavior",
-            "Develop awareness of risk factors for criminal behavior"
+            "Address criminogenic risk factors and offense patterns",
+            "Develop prosocial thinking and problem-solving skills",
+            "Establish long-term compliance with legal requirements"
           ],
           "objectives": [
-            "Client will identify triggers related to past criminal behavior",
-            "Client will develop strategies to avoid high-risk situations"
+            "Client will identify personal triggers and high-risk situations",
+            "Client will develop and implement strategies to avoid recidivism",
+            "Client will demonstrate improved cognitive and behavioral responses",
+            "Client will maintain full compliance with supervision and legal obligations"
           ],
           "tasks": [
-            "Complete criminal thinking assessment",
-            "Identify 3 specific situations or triggers that contributed to past offenses",
-            "Document plan for avoiding high-risk situations",
-            "Meet with case manager monthly for check-ins"
+            "Complete a criminal thinking and history assessment",
+            "Identify and document personal triggers and offense patterns",
+            "Develop and maintain a written offense prevention and relapse plan",
+            "Attend cognitive-behavioral and criminogenic intervention sessions regularly",
+            "Practice prosocial problem-solving and cognitive restructuring techniques",
+            "Document daily or weekly high-risk situations and alternative responses",
+            "Meet consistently with case manager or counselor to review progress",
+            "Participate in specialized interventions as needed (e.g., anger management)",
+            "Maintain compliance with all court and supervision requirements",
+            "Demonstrate use of new behavioral and thinking patterns in real-life situations"
           ]
         },
         {
           "risk_level": "Medium",
           "goals": [
-            "Address criminogenic factors related to past offenses",
-            "Develop prosocial problem-solving skills",
-            "Establish pattern of compliance with legal requirements"
+            "Maintain law-abiding behavior",
+            "Address criminogenic risk factors and offense patterns",
+            "Develop prosocial thinking and problem-solving skills",
+            "Establish long-term compliance with legal requirements"
           ],
           "objectives": [
-            "Client will demonstrate understanding of offense patterns",
-            "Client will practice alternative responses to criminogenic triggers",
-            "Client will comply with all supervision requirements"
+            "Client will identify personal triggers and high-risk situations",
+            "Client will develop and implement strategies to avoid recidivism",
+            "Client will demonstrate improved cognitive and behavioral responses",
+            "Client will maintain full compliance with supervision and legal obligations"
           ],
           "tasks": [
-            "Attend biweekly criminal thinking intervention sessions",
-            "Complete offense cycle worksheet with counselor",
-            "Develop written relapse prevention plan for criminal behavior",
-            "Practice problem-solving skills in supervised settings",
-            "Maintain compliance with all court/supervision requirements",
-            "Document personal triggers and alternative responses"
+            "Complete a criminal thinking and history assessment",
+            "Identify and document personal triggers and offense patterns",
+            "Develop and maintain a written offense prevention and relapse plan",
+            "Attend cognitive-behavioral and criminogenic intervention sessions regularly",
+            "Practice prosocial problem-solving and cognitive restructuring techniques",
+            "Document daily or weekly high-risk situations and alternative responses",
+            "Meet consistently with case manager or counselor to review progress",
+            "Participate in specialized interventions as needed (e.g., anger management)",
+            "Maintain compliance with all court and supervision requirements",
+            "Demonstrate use of new behavioral and thinking patterns in real-life situations"
           ]
         },
         {
           "risk_level": "High",
           "goals": [
-            "Interrupt established patterns of criminal behavior",
-            "Address persistent criminogenic factors",
-            "Establish new behavioral responses and thinking patterns",
-            "Develop comprehensive recidivism prevention plan"
+            "Maintain law-abiding behavior",
+            "Address criminogenic risk factors and offense patterns",
+            "Develop prosocial thinking and problem-solving skills",
+            "Establish long-term compliance with legal requirements"
           ],
           "objectives": [
-            "Client will actively participate in intensive intervention programming",
-            "Client will demonstrate cognitive restructuring related to criminal thinking",
-            "Client will implement comprehensive crime prevention strategies"
+            "Client will identify personal triggers and high-risk situations",
+            "Client will develop and implement strategies to avoid recidivism",
+            "Client will demonstrate improved cognitive and behavioral responses",
+            "Client will maintain full compliance with supervision and legal obligations"
           ],
           "tasks": [
-            "Attend weekly cognitive-behavioral interventions",
-            "Complete criminal history assessment with specialist",
-            "Participate in intensive supervision as required",
-            "Document daily high-risk situations and successful strategies",
-            "Attend appropriate specialized intervention (anger management, etc.)",
-            "Develop detailed offense prevention plan with counselor",
-            "Meet weekly with case manager to review progress",
-            "Practice new cognitive and behavioral skills daily"
+            "Complete a criminal thinking and history assessment",
+            "Identify and document personal triggers and offense patterns",
+            "Develop and maintain a written offense prevention and relapse plan",
+            "Attend cognitive-behavioral and criminogenic intervention sessions regularly",
+            "Practice prosocial problem-solving and cognitive restructuring techniques",
+            "Document daily or weekly high-risk situations and alternative responses",
+            "Meet consistently with case manager or counselor to review progress",
+            "Participate in specialized interventions as needed (e.g., anger management)",
+            "Maintain compliance with all court and supervision requirements",
+            "Demonstrate use of new behavioral and thinking patterns in real-life situations"
           ]
         }
       ]
     },
     {
       "id": "education_employment",
-      "name": "Education and Employment",
+      "name": "Employment",
       "templates": [
         {
           "risk_level": "Low",
           "goals": [
-            "Maintain current employment or educational status",
-            "Develop long-term career/educational goals",
-            "Enhance employment stability"
+            "Maintain acceptable stable employment",
+            "Increase current level of academic achievement",
+            "Enhance academic performance",
+            "Increase attitudes and values supportive of education and employment",
+            "Improve behavior and compliance with rules at school/work",
+            "Develop skills to manage personal finances",
+            "Obtain a driver’s license"
           ],
           "objectives": [
-            "Client will maintain consistent attendance and performance",
-            "Client will identify advancement opportunities",
-            "Client will develop professional skills"
+            "Obtain identification and paperwork necessary for employment and/or school",
+            "Conduct active job search by submitting a certain number of applications per week",
+            "Learn and practice new skills to support stable employment and/or school",
+            "Research and apply for financial assistance from government agencies",
+            "Develop a personal budget",
+            "Consistently follow rules at work and/or school",
+            "Identify positive peers at work and/or school",
+            "Enroll and successfully complete program",
+            "Obtain assessment/evaluation",
+            "Gather and submit paperwork to obtain driving permit",
+            "Study/Take online BMV tests to prepare for driver’s license exam"
           ],
           "tasks": [
-            "Maintain daily attendance log for work/school",
-            "Create written career/educational goal plan",
-            "Identify one professional development opportunity",
-            "Update resume or educational portfolio",
-            "Research potential advancement pathways"
+            "Obtain required identification and documentation for employment, school, or driving",
+            "Conduct weekly job search by submitting applications and following up as needed",
+            "Learn and practice skills to support long-term success in work or education",
+            "Research and apply for financial aid or support from government agencies",
+            "Develop and follow a personal budget and financial plan",
+            "Maintain consistent compliance with rules and expectations at work or school",
+            "Identify and engage with positive, prosocial peers in work or educational settings",
+            "Enroll in and complete required program or training",
+            "Obtain necessary assessments or evaluations for employment, education, or support services",
+            "Prepare for and complete driving permit or license requirements, including BMV practice tests"
           ]
         },
         {
           "risk_level": "Medium",
           "goals": [
-            "Secure stable employment or educational enrollment",
-            "Address barriers to employment/education success",
-            "Develop marketable skills and qualifications"
+            "Maintain acceptable stable employment",
+            "Increase current level of academic achievement",
+            "Enhance academic performance",
+            "Increase attitudes and values supportive of education and employment",
+            "Improve behavior and compliance with rules at school/work",
+            "Develop skills to manage personal finances",
+            "Obtain a driver’s license"
           ],
           "objectives": [
-            "Client will complete vocational/educational assessment",
-            "Client will develop employment/education action plan",
-            "Client will address specific barriers to success"
+            "Obtain identification and paperwork necessary for employment and/or school",
+            "Conduct active job search by submitting a certain number of applications per week",
+            "Learn and practice new skills to support stable employment and/or school",
+            "Research and apply for financial assistance from government agencies",
+            "Develop a personal budget",
+            "Consistently follow rules at work and/or school",
+            "Identify positive peers at work and/or school",
+            "Enroll and successfully complete program",
+            "Obtain assessment/evaluation",
+            "Gather and submit paperwork to obtain driving permit",
+            "Study/Take online BMV tests to prepare for driver’s license exam"
           ],
           "tasks": [
-            "Complete vocational interest and skills assessment",
-            "Meet with employment counselor biweekly",
-            "Apply for 3 jobs weekly or research educational programs",
-            "Attend job skills workshop or educational orientation",
-            "Create structured schedule for job search activities",
-            "Address specific barriers (transportation, childcare, etc.)",
-            "Practice interview skills or educational readiness",
-            "Develop plan to explain criminal history to employers if needed"
+            "Obtain required identification and documentation for employment, school, or driving",
+            "Conduct weekly job search by submitting applications and following up as needed",
+            "Learn and practice skills to support long-term success in work or education",
+            "Research and apply for financial aid or support from government agencies",
+            "Develop and follow a personal budget and financial plan",
+            "Maintain consistent compliance with rules and expectations at work or school",
+            "Identify and engage with positive, prosocial peers in work or educational settings",
+            "Enroll in and complete required program or training",
+            "Obtain necessary assessments or evaluations for employment, education, or support services",
+            "Prepare for and complete driving permit or license requirements, including BMV practice tests"
           ]
         },
         {
           "risk_level": "High",
           "goals": [
-            "Establish basic educational/employment foundation",
-            "Address significant barriers to employment/education",
-            "Connect with specialized employment/education resources",
-            "Develop comprehensive career/education plan"
+            "Maintain acceptable stable employment",
+            "Increase current level of academic achievement",
+            "Enhance academic performance",
+            "Increase attitudes and values supportive of education and employment",
+            "Improve behavior and compliance with rules at school/work",
+            "Develop skills to manage personal finances",
+            "Obtain a driver’s license"
           ],
           "objectives": [
-            "Client will access specialized employment/education resources",
-            "Client will address fundamental skill deficits",
-            "Client will establish consistent work/education habits"
+            "Obtain identification and paperwork necessary for employment and/or school",
+            "Conduct active job search by submitting a certain number of applications per week",
+            "Learn and practice new skills to support stable employment and/or school",
+            "Research and apply for financial assistance from government agencies",
+            "Develop a personal budget",
+            "Consistently follow rules at work and/or school",
+            "Identify positive peers at work and/or school",
+            "Enroll and successfully complete program",
+            "Obtain assessment/evaluation",
+            "Gather and submit paperwork to obtain driving permit",
+            "Study/Take online BMV tests to prepare for driver’s license exam"
           ],
           "tasks": [
-            "Complete comprehensive vocational and educational assessment",
-            "Enroll in GED program or basic skills training if needed",
-            "Attend weekly meetings with vocational specialist",
-            "Apply for specialized employment programs (transitional employment, etc.)",
-            "Complete basic computer literacy training if needed",
-            "Address documentation barriers (ID, certifications, etc.)",
-            "Participate in hands-on skills training program",
-            "Create detailed weekly schedule for employment/education activities",
-            "Develop plan to address employment barriers (criminal history, skill gaps)"
+            "Obtain required identification and documentation for employment, school, or driving",
+            "Conduct weekly job search by submitting applications and following up as needed",
+            "Learn and practice skills to support long-term success in work or education",
+            "Research and apply for financial aid or support from government agencies",
+            "Develop and follow a personal budget and financial plan",
+            "Maintain consistent compliance with rules and expectations at work or school",
+            "Identify and engage with positive, prosocial peers in work or educational settings",
+            "Enroll in and complete required program or training",
+            "Obtain necessary assessments or evaluations for employment, education, or support services",
+            "Prepare for and complete driving permit or license requirements, including BMV practice tests"
           ]
         }
       ]
@@ -149,112 +211,170 @@
         {
           "risk_level": "Low",
           "goals": [
-            "Maintain financial stability",
-            "Enhance financial management skills",
-            "Plan for future financial goals"
+            "Maintain acceptable stable employment",
+            "Increase current level of academic achievement",
+            "Enhance academic performance",
+            "Increase attitudes and values supportive of education and employment",
+            "Improve behavior and compliance with rules at school/work",
+            "Develop skills to manage personal finances",
+            "Obtain a driver’s license"
           ],
           "objectives": [
-            "Client will develop and maintain a budget",
-            "Client will identify areas for financial improvement",
-            "Client will establish savings goals"
+            "Obtain identification and paperwork necessary for employment and/or school",
+            "Conduct active job search by submitting a certain number of applications per week",
+            "Learn and practice new skills to support stable employment and/or school",
+            "Research and apply for financial assistance from government agencies",
+            "Develop a personal budget",
+            "Consistently follow rules at work and/or school",
+            "Identify positive peers at work and/or school",
+            "Enroll and successfully complete program",
+            "Obtain assessment/evaluation",
+            "Gather and submit paperwork to obtain driving permit",
+            "Study/Take online BMV tests to prepare for driver’s license exam"
           ],
           "tasks": [
-            "Create detailed monthly budget and expense tracking system",
-            "Review current financial obligations and prioritize payments",
-            "Research one financial literacy resource or workshop",
-            "Identify one specific financial goal and steps to achieve it",
-            "Review credit report and identify any areas for improvement"
+            "Obtain required identification and documentation for employment, school, or driving",
+            "Conduct weekly job search by submitting applications and following up as needed",
+            "Learn and practice skills to support long-term success in work or education",
+            "Research and apply for financial aid or support from government agencies",
+            "Develop and follow a personal budget and financial plan",
+            "Maintain consistent compliance with rules and expectations at work or school",
+            "Identify and engage with positive, prosocial peers in work or educational settings",
+            "Enroll in and complete required program or training",
+            "Obtain necessary assessments or evaluations for employment, education, or support services",
+            "Prepare for and complete driving permit or license requirements, including BMV practice tests"
           ]
         },
         {
           "risk_level": "Medium",
           "goals": [
-            "Stabilize current financial situation",
-            "Develop effective money management skills",
-            "Address outstanding financial obligations",
-            "Establish legal income adequacy"
+            "Maintain acceptable stable employment",
+            "Increase current level of academic achievement",
+            "Enhance academic performance",
+            "Increase attitudes and values supportive of education and employment",
+            "Improve behavior and compliance with rules at school/work",
+            "Develop skills to manage personal finances",
+            "Obtain a driver’s license"
           ],
           "objectives": [
-            "Client will create and implement financial action plan",
-            "Client will develop strategies to increase income/reduce expenses",
-            "Client will address problematic financial patterns"
+            "Obtain identification and paperwork necessary for employment and/or school",
+            "Conduct active job search by submitting a certain number of applications per week",
+            "Learn and practice new skills to support stable employment and/or school",
+            "Research and apply for financial assistance from government agencies",
+            "Develop a personal budget",
+            "Consistently follow rules at work and/or school",
+            "Identify positive peers at work and/or school",
+            "Enroll and successfully complete program",
+            "Obtain assessment/evaluation",
+            "Gather and submit paperwork to obtain driving permit",
+            "Study/Take online BMV tests to prepare for driver’s license exam"
           ],
           "tasks": [
-            "Meet with financial counselor to create detailed budget",
-            "Develop payment plan for outstanding debts or obligations",
-            "Apply for eligible benefits or assistance programs",
-            "Research and pursue legitimate income enhancement opportunities",
-            "Open appropriate banking accounts if needed",
-            "Attend financial literacy workshop",
-            "Document weekly income and expenses",
-            "Create plan to address specific financial challenges (debt, credit issues)"
+            "Obtain required identification and documentation for employment, school, or driving",
+            "Conduct weekly job search by submitting applications and following up as needed",
+            "Learn and practice skills to support long-term success in work or education",
+            "Research and apply for financial aid or support from government agencies",
+            "Develop and follow a personal budget and financial plan",
+            "Maintain consistent compliance with rules and expectations at work or school",
+            "Identify and engage with positive, prosocial peers in work or educational settings",
+            "Enroll in and complete required program or training",
+            "Obtain necessary assessments or evaluations for employment, education, or support services",
+            "Prepare for and complete driving permit or license requirements, including BMV practice tests"
           ]
         },
         {
           "risk_level": "High",
           "goals": [
-            "Address immediate financial crisis situations",
-            "Establish basic income adequacy through legal means",
-            "Connect with financial assistance resources",
-            "Interrupt patterns of financial instability",
-            "Develop sustainable financial management system"
+            "Maintain acceptable stable employment",
+            "Increase current level of academic achievement",
+            "Enhance academic performance",
+            "Increase attitudes and values supportive of education and employment",
+            "Improve behavior and compliance with rules at school/work",
+            "Develop skills to manage personal finances",
+            "Obtain a driver’s license"
           ],
           "objectives": [
-            "Client will access emergency financial resources as needed",
-            "Client will establish consistent legal income source",
-            "Client will develop basic money management skills",
-            "Client will address critical financial obligations"
+            "Obtain identification and paperwork necessary for employment and/or school",
+            "Conduct active job search by submitting a certain number of applications per week",
+            "Learn and practice new skills to support stable employment and/or school",
+            "Research and apply for financial assistance from government agencies",
+            "Develop a personal budget",
+            "Consistently follow rules at work and/or school",
+            "Identify positive peers at work and/or school",
+            "Enroll and successfully complete program",
+            "Obtain assessment/evaluation",
+            "Gather and submit paperwork to obtain driving permit",
+            "Study/Take online BMV tests to prepare for driver’s license exam"
           ],
           "tasks": [
-            "Meet weekly with financial case manager",
-            "Apply for emergency financial assistance programs",
-            "Complete benefits eligibility screening and applications",
-            "Develop crisis response plan for financial emergencies",
-            "Create basic needs budget focusing on essential expenses",
-            "Address critical financial obligations (child support, restitution, etc.)",
-            "Connect with appropriate employment resources for immediate income",
-            "Attend intensive financial literacy program",
-            "Develop plan to transition away from illegal income sources"
+            "Obtain required identification and documentation for employment, school, or driving",
+            "Conduct weekly job search by submitting applications and following up as needed",
+            "Learn and practice skills to support long-term success in work or education",
+            "Research and apply for financial aid or support from government agencies",
+            "Develop and follow a personal budget and financial plan",
+            "Maintain consistent compliance with rules and expectations at work or school",
+            "Identify and engage with positive, prosocial peers in work or educational settings",
+            "Enroll in and complete required program or training",
+            "Obtain necessary assessments or evaluations for employment, education, or support services",
+            "Prepare for and complete driving permit or license requirements, including BMV practice tests"
           ]
         }
       ]
     },
     {
       "id": "family_social_support",
-      "name": "Family and Social Support",
+      "name": "Social Support",
       "templates": [
         {
           "risk_level": "Low",
           "goals": [
-            "Maintain positive family and social relationships",
-            "Strengthen prosocial support network",
-            "Enhance communication skills"
+            "Increase number of positive family and/or friend supports",
+            "Develop healthy relationships with family and/or social supports",
+            "Reduce conflict and high-risk situations with family members",
+            "Maintain a stable place of residence"
           ],
           "objectives": [
-            "Client will identify supportive relationships",
-            "Client will practice effective communication strategies",
-            "Client will engage regularly with prosocial supports"
+            "Obtain evaluation and follow through with recommended counseling",
+            "Identify behaviors and characteristics found in pro-social individuals",
+            "Identify and contact sources of positive family and social supports",
+            "Identify and attend pro-social activities with family and friends",
+            "Learn and implement healthy communication skills with family and friends",
+            "Identify risky situations and practice pro-social skills in relationships",
+            "Learn and practice new skills to decrease interactions with negative family members",
+            "Learn and practice refusal skills",
+            "Obtain appropriate living space that can be a stable residence"
           ],
           "tasks": [
-            "Create map of current social support network",
-            "Identify at least 3 prosocial, supportive individuals",
-            "Practice communication skills in daily interactions",
-            "Schedule regular contact with supportive family/friends",
-            "Identify and plan participation in one community activity"
+            "Complete a family and social support assessment with a counselor",
+            "Attend counseling or therapy focused on family and relationship issues",
+            "Practice and document healthy communication and conflict resolution skills",
+            "Develop and follow a plan to address relationship challenges and boundaries",
+            "Identify and maintain regular contact with prosocial, supportive individuals",
+            "Participate in prosocial recreational or community activities weekly",
+            "Connect with community support groups or organizations",
+            "Create a plan to reduce or eliminate contact with negative peers or influences",
+            "Develop and implement a safety plan if domestic violence or high-risk conflict is present",
+            "Establish or maintain a structured plan for family reintegration when appropriate"
           ]
         },
         {
           "risk_level": "Medium",
           "goals": [
-            "Address relationship conflicts or challenges",
-            "Expand prosocial support network",
-            "Develop healthy relationship boundaries",
-            "Reduce negative social influences"
+            "Increase number of positive family and/or friend supports",
+            "Develop healthy relationships with family and/or social supports",
+            "Reduce conflict and high-risk situations with family members",
+            "Maintain a stable place of residence"
           ],
           "objectives": [
-            "Client will work to resolve family/social conflicts",
-            "Client will increase positive social connections",
-            "Client will establish boundaries with negative influences"
+            "Obtain evaluation and follow through with recommended counseling",
+            "Identify behaviors and characteristics found in pro-social individuals",
+            "Identify and contact sources of positive family and social supports",
+            "Identify and attend pro-social activities with family and friends",
+            "Learn and implement healthy communication skills with family and friends",
+            "Identify risky situations and practice pro-social skills in relationships",
+            "Learn and practice new skills to decrease interactions with negative family members",
+            "Learn and practice refusal skills",
+            "Obtain appropriate living space that can be a stable residence"
           ],
           "tasks": [
             "Attend family or relationship counseling as appropriate",
@@ -270,105 +390,120 @@
         {
           "risk_level": "High",
           "goals": [
-            "Address serious relationship dysfunction",
-            "Establish healthy relationship patterns",
-            "Develop essential interpersonal skills",
-            "Create functional support network",
-            "Reduce isolation or negative social influences"
+            "Increase number of positive family and/or friend supports",
+            "Develop healthy relationships with family and/or social supports",
+            "Reduce conflict and high-risk situations with family members",
+            "Maintain a stable place of residence"
           ],
           "objectives": [
-            "Client will participate in intensive relationship interventions",
-            "Client will establish boundaries with criminogenic relationships",
-            "Client will develop new prosocial connections",
-            "Client will practice healthy relationship skills"
+            "Obtain evaluation and follow through with recommended counseling",
+            "Identify behaviors and characteristics found in pro-social individuals",
+            "Identify and contact sources of positive family and social supports",
+            "Identify and attend pro-social activities with family and friends",
+            "Learn and implement healthy communication skills with family and friends",
+            "Identify risky situations and practice pro-social skills in relationships",
+            "Learn and practice new skills to decrease interactions with negative family members",
+            "Learn and practice refusal skills",
+            "Obtain appropriate living space that can be a stable residence"
           ],
           "tasks": [
-            "Attend weekly family/relationship therapy sessions",
-            "Complete comprehensive relationship assessment",
-            "Develop safety plan if domestic violence is present",
-            "Attend weekly interpersonal skills group",
-            "Identify and address family criminogenic factors",
-            "Practice communication skills daily with documentation",
-            "Create detailed plan for reducing contact with negative peers",
-            "Connect with at least 2 prosocial community organizations",
-            "Develop structured plan for family reintegration if appropriate"
+            "Complete a family and social support assessment with a counselor",
+            "Attend counseling or therapy focused on family and relationship issues",
+            "Practice and document healthy communication and conflict resolution skills",
+            "Develop and follow a plan to address relationship challenges and boundaries",
+            "Identify and maintain regular contact with prosocial, supportive individuals",
+            "Participate in prosocial recreational or community activities weekly",
+            "Connect with community support groups or organizations",
+            "Create a plan to reduce or eliminate contact with negative peers or influences",
+            "Develop and implement a safety plan if domestic violence or high-risk conflict is present",
+            "Establish or maintain a structured plan for family reintegration when appropriate"
           ]
         }
       ]
     },
     {
       "id": "neighborhood_problems",
-      "name": "Neighborhood Problems",
+      "name": "Neighborhood",
       "templates": [
         {
           "risk_level": "Low",
           "goals": [
-            "Navigate neighborhood challenges safely",
-            "Access available community resources",
-            "Maintain awareness of environmental risks"
+            "Safely navigate and mitigate neighborhood risks",
+            "Engage with positive community resources and activities",
+            "Access support and services despite environmental barriers",
+            "Explore relocation options if neighborhood risks are severe"
           ],
           "objectives": [
-            "Client will identify neighborhood resources and risks",
-            "Client will develop strategies for safely navigating community",
-            "Client will connect with positive community elements"
+            "Client will identify and minimize exposure to neighborhood risk factors",
+            "Client will develop and implement a neighborhood safety and navigation plan",
+            "Client will actively engage with prosocial and supportive community resources",
+            "Client will explore and utilize relocation or transportation resources when needed"
           ],
           "tasks": [
-            "Create map of neighborhood resources and risk areas",
-            "Identify 3 positive community resources or activities",
-            "Develop routine for safely navigating high-risk areas",
-            "Research one community improvement initiative",
-            "Connect with one positive neighborhood organization"
+            "Create a map or list of neighborhood resources, safe spaces, and risk areas",
+            "Develop and follow a personal safety plan for navigating daily activities",
+            "Identify and connect with at least two prosocial community organizations or activities",
+            "Document specific neighborhood challenges and coping or avoidance strategies",
+            "Meet regularly with a case manager to review neighborhood safety and resource access",
+            "Research and explore community improvement or involvement opportunities",
+            "Arrange transportation to access services or activities outside the immediate area",
+            "Develop emergency response strategies for neighborhood-specific threats",
+            "Explore and apply for relocation or housing assistance if appropriate",
+            "Schedule essential activities during low-risk times and in safe locations"
           ]
         },
         {
           "risk_level": "Medium",
           "goals": [
-            "Mitigate impact of high-risk neighborhood factors",
-            "Increase engagement with positive community elements",
-            "Develop comprehensive safety strategies",
-            "Access resources despite neighborhood limitations"
+            "Safely navigate and mitigate neighborhood risks",
+            "Engage with positive community resources and activities",
+            "Access support and services despite environmental barriers",
+            "Explore relocation options if neighborhood risks are severe"
           ],
           "objectives": [
-            "Client will implement neighborhood safety plan",
-            "Client will actively engage with prosocial community resources",
-            "Client will reduce exposure to neighborhood criminogenic factors"
+            "Client will identify and minimize exposure to neighborhood risk factors",
+            "Client will develop and implement a neighborhood safety and navigation plan",
+            "Client will actively engage with prosocial and supportive community resources",
+            "Client will explore and utilize relocation or transportation resources when needed"
           ],
           "tasks": [
-            "Develop detailed safety plan for daily activities",
-            "Identify alternative routes/times for necessary travel",
-            "Connect with at least 2 positive community resources",
-            "Research transportation options to access resources outside neighborhood",
-            "Document specific neighborhood risk factors and avoidance strategies",
-            "Schedule activities during lower-risk times",
-            "Explore options for community involvement or improvement",
-            "Meet with case manager to review neighborhood navigation strategies"
+            "Create a map or list of neighborhood resources, safe spaces, and risk areas",
+            "Develop and follow a personal safety plan for navigating daily activities",
+            "Identify and connect with at least two prosocial community organizations or activities",
+            "Document specific neighborhood challenges and coping or avoidance strategies",
+            "Meet regularly with a case manager to review neighborhood safety and resource access",
+            "Research and explore community improvement or involvement opportunities",
+            "Arrange transportation to access services or activities outside the immediate area",
+            "Develop emergency response strategies for neighborhood-specific threats",
+            "Explore and apply for relocation or housing assistance if appropriate",
+            "Schedule essential activities during low-risk times and in safe locations"
           ]
         },
         {
           "risk_level": "High",
           "goals": [
-            "Address critical safety concerns in current environment",
-            "Explore housing relocation options if appropriate",
-            "Minimize exposure to neighborhood criminogenic factors",
-            "Create robust safety and resource access plans",
-            "Develop strategies for resisting neighborhood pressures"
+            "Safely navigate and mitigate neighborhood risks",
+            "Engage with positive community resources and activities",
+            "Access support and services despite environmental barriers",
+            "Explore relocation options if neighborhood risks are severe"
           ],
           "objectives": [
-            "Client will implement comprehensive safety protocols",
-            "Client will access resources despite neighborhood barriers",
-            "Client will explore housing alternatives if appropriate",
-            "Client will minimize time in high-risk locations"
+            "Client will identify and minimize exposure to neighborhood risk factors",
+            "Client will develop and implement a neighborhood safety and navigation plan",
+            "Client will actively engage with prosocial and supportive community resources",
+            "Client will explore and utilize relocation or transportation resources when needed"
           ],
           "tasks": [
-            "Meet weekly with case manager to review neighborhood challenges",
-            "Create detailed daily schedule minimizing exposure to high-risk areas",
-            "Research housing relocation options and resources",
-            "Develop emergency response plans for neighborhood situations",
-            "Connect with resources outside immediate neighborhood",
-            "Arrange transportation to necessary services and prosocial activities",
-            "Document specific criminogenic pressures and resistance strategies",
-            "Apply for housing assistance or relocation programs if appropriate",
-            "Identify safe spaces and support contacts in neighborhood"
+            "Create a map or list of neighborhood resources, safe spaces, and risk areas",
+            "Develop and follow a personal safety plan for navigating daily activities",
+            "Identify and connect with at least two prosocial community organizations or activities",
+            "Document specific neighborhood challenges and coping or avoidance strategies",
+            "Meet regularly with a case manager to review neighborhood safety and resource access",
+            "Research and explore community improvement or involvement opportunities",
+            "Arrange transportation to access services or activities outside the immediate area",
+            "Develop emergency response strategies for neighborhood-specific threats",
+            "Explore and apply for relocation or housing assistance if appropriate",
+            "Schedule essential activities during low-risk times and in safe locations"
           ]
         }
       ]
@@ -380,77 +515,91 @@
         {
           "risk_level": "Low",
           "goals": [
-            "Maintain abstinence or moderate use within legal limits",
-            "Understand relationship between substance use and risk",
-            "Develop healthy coping alternatives"
+            "Eliminate Substance use", 
+            "Eliminate or significantly reduce substance use", 
+            "Develop skills to maintain a substance free lifestyle."
           ],
           "objectives": [
-            "Client will monitor substance use patterns",
-            "Client will identify triggers for problematic use",
-            "Client will develop healthy stress management techniques"
+            "Obtain evaluation and follow through with recommended counseling", 
+            "Attend self help meetings", 
+            "Identify and manage risky situations and thinking that lead to substance use",
+            "Learn and practice prosocial coping skills", 
+            "Identify triggers that lead to high risk situations", 
+            "Identify and utilize community resources", 
+            "Identify and practice refusal skills", 
+            "Identify and contact sources of positive social support"
           ],
           "tasks": [
-            "Complete substance use self-assessment",
-            "Maintain log of substance use patterns and triggers",
-            "Develop list of 3-5 healthy alternatives to substance use",
-            "Research connection between substance use and criminal behavior",
-            "Practice mindfulness or stress reduction techniques daily",
-            "Attend one educational session on substance use"
+            "Complete a comprehensive substance use and self-assessment", 
+            "Attend and follow through with recommended counseling or treatment (e.g., IOP, residential)", 
+            "Participate in recovery support groups regularly (1–3 times weekly based on need)", 
+            "Maintain a daily log of substance use triggers, coping responses, and progress", 
+            "Develop and update a written relapse prevention plan", 
+            "Practice prosocial coping, refusal, and recovery skills daily", 
+            "Submit to random substance testing as required", 
+            "Identify and engage with positive support systems (sponsor, mentor, supportive peers)", 
+            "Create and maintain a structured, recovery-oriented daily schedule", 
+            "Explore and engage in drug-free recreational and stress-reduction activities"
           ]
         },
         {
           "risk_level": "Medium",
           "goals": [
-            "Reduce substance use frequency and quantity",
-            "Address patterns of problematic substance use",
-            "Develop skills to manage cravings and triggers",
-            "Establish support for moderation or abstinence"
+            "Eliminate Substance use", 
+            "Eliminate or significantly reduce substance use", 
+            "Develop skills to maintain a substance free lifestyle."
           ],
           "objectives": [
-            "Client will participate in appropriate level of substance treatment",
-            "Client will identify and manage personal triggers",
-            "Client will develop relapse prevention strategies",
-            "Client will establish support network for recovery"
+            "Obtain evaluation and follow through with recommended counseling", 
+            "Attend self help meetings", 
+            "Identify and manage risky situations and thinking that lead to substance use",
+            "Learn and practice prosocial coping skills", 
+            "Identify triggers that lead to high risk situations", 
+            "Identify and utilize community resources", 
+            "Identify and practice refusal skills", 
+            "Identify and contact sources of positive social support"
           ],
           "tasks": [
-            "Complete comprehensive substance use assessment",
-            "Attend substance abuse counseling as recommended",
-            "Participate in one recovery support group weekly",
-            "Document daily triggers and coping responses",
-            "Develop written relapse prevention plan",
-            "Submit to random drug/alcohol testing as required",
-            "Practice refusal skills and trigger management",
-            "Identify 3 people who can provide recovery support",
-            "Create plan for managing high-risk situations"
+            "Complete a comprehensive substance use and self-assessment", 
+            "Attend and follow through with recommended counseling or treatment (e.g., IOP, residential)", 
+            "Participate in recovery support groups regularly (1–3 times weekly based on need)", 
+            "Maintain a daily log of substance use triggers, coping responses, and progress", 
+            "Develop and update a written relapse prevention plan", 
+            "Practice prosocial coping, refusal, and recovery skills daily", 
+            "Submit to random substance testing as required", 
+            "Identify and engage with positive support systems (sponsor, mentor, supportive peers)", 
+            "Create and maintain a structured, recovery-oriented daily schedule", 
+            "Explore and engage in drug-free recreational and stress-reduction activities"
           ]
         },
         {
           "risk_level": "High",
           "goals": [
-            "Establish abstinence or significant use reduction",
-            "Engage in appropriate intensive treatment",
-            "Address underlying factors contributing to use",
-            "Develop comprehensive recovery management plan",
-            "Establish strong recovery support system"
+            "Eliminate Substance use", 
+            "Eliminate or significantly reduce substance use", 
+            "Develop skills to maintain a substance free lifestyle."
           ],
           "objectives": [
-            "Client will participate in intensive substance use treatment",
-            "Client will demonstrate understanding of addiction patterns",
-            "Client will implement daily recovery management strategies",
-            "Client will establish recovery-focused social network"
+            "Obtain evaluation and follow through with recommended counseling", 
+            "Attend self help meetings", 
+            "Identify and manage risky situations and thinking that lead to substance use",
+            "Learn and practice prosocial coping skills", 
+            "Identify triggers that lead to high risk situations", 
+            "Identify and utilize community resources", 
+            "Identify and practice refusal skills", 
+            "Identify and contact sources of positive social support"
           ],
           "tasks": [
-            "Complete comprehensive substance use disorder assessment",
-            "Attend recommended level of treatment (IOP, residential, etc.)",
-            "Participate in recovery support groups 3x weekly",
-            "Meet with addictions counselor weekly",
-            "Develop detailed relapse prevention plan",
-            "Practice recovery skills daily with documentation",
-            "Submit to random substance testing as required",
-            "Connect with recovery mentor or sponsor",
-            "Address co-occurring issues (mental health, trauma, etc.)",
-            "Create structured daily schedule to support recovery",
-            "Identify and engage with drug-free recreational activities"
+            "Complete a comprehensive substance use and self-assessment", 
+            "Attend and follow through with recommended counseling or treatment (e.g., IOP, residential)", 
+            "Participate in recovery support groups regularly (1–3 times weekly based on need)", 
+            "Maintain a daily log of substance use triggers, coping responses, and progress", 
+            "Develop and update a written relapse prevention plan", 
+            "Practice prosocial coping, refusal, and recovery skills daily", 
+            "Submit to random substance testing as required", 
+            "Identify and engage with positive support systems (sponsor, mentor, supportive peers)", 
+            "Create and maintain a structured, recovery-oriented daily schedule", 
+            "Explore and engage in drug-free recreational and stress-reduction activities"
           ]
         }
       ]
@@ -462,155 +611,208 @@
         {
           "risk_level": "Low",
           "goals": [
-            "Maintain positive peer relationships",
-            "Strengthen boundaries with potentially negative influences",
-            "Increase time spent with prosocial peers"
+            "Reduce associations with anti-social peers",
+            "Increase interactions with pro-social peers",
+            "Increase pro-social activities",
+            "Reduce conflict and high-risk situations with peers"
           ],
           "objectives": [
-            "Client will identify characteristics of prosocial vs. antisocial peers",
-            "Client will evaluate current peer relationships",
-            "Client will increase engagement with positive peer influences"
+            "Develop a plan to reduce contact with anti-social peers",
+            "Practice skills to reduce contact with anti-social peers",
+            "Identify behaviors and characteristics found in pro-social individuals",
+            "Develop a plan to identify and associate with pro-social peers",
+            "Identify pro-social activities",
+            "Increase participation in pro-social activities",
+            "Identify and practice refusal skills",
+            "Identify and practice pro-social communication skills",
+            "Enroll and successfully complete program",
+            "Attend and participate in counseling",
+            "Obtain assessment/evaluation"
           ],
           "tasks": [
-            "Create inventory of current peer relationships",
-            "Identify 3 prosocial peers and plan regular contact",
-            "Document time spent with different peer groups",
-            "Develop strategies for maintaining boundaries with negative peers",
-            "Research one prosocial community activity or group"
+            "Create an inventory of current peer relationships and document time spent with each group",
+            "Develop and implement a plan to reduce contact with anti-social or criminal peers",
+            "Identify and regularly connect with at least 2 prosocial peers or mentors",
+            "Attend structured prosocial activities weekly to build positive peer connections",
+            "Practice refusal skills and role-play responses to negative peer pressure",
+            "Develop and follow a new daily routine that avoids high-risk peer contact",
+            "Create a crisis plan for managing unexpected encounters with negative peers",
+            "Research and engage with community groups or organizations that support prosocial goals",
+            "Work with a counselor to review peer interactions and make adjustments to support change",
+            "Develop communication strategies for explaining lifestyle changes and setting boundaries with former peers"
           ]
         },
         {
           "risk_level": "Medium",
           "goals": [
-            "Reduce association with criminally-involved peers",
-            "Establish new prosocial peer relationships",
-            "Develop skills to resist negative peer influence",
-            "Increase structured activities with positive peers"
+            "Reduce associations with anti-social peers",
+            "Increase interactions with pro-social peers",
+            "Increase pro-social activities",
+            "Reduce conflict and high-risk situations with peers"
           ],
           "objectives": [
-            "Client will reduce time spent with antisocial peers",
-            "Client will actively pursue prosocial relationships",
-            "Client will practice peer refusal and boundary-setting skills"
+            "Develop a plan to reduce contact with anti-social peers",
+            "Practice skills to reduce contact with anti-social peers",
+            "Identify behaviors and characteristics found in pro-social individuals",
+            "Develop a plan to identify and associate with pro-social peers",
+            "Identify pro-social activities",
+            "Increase participation in pro-social activities",
+            "Identify and practice refusal skills",
+            "Identify and practice pro-social communication skills",
+            "Enroll and successfully complete program",
+            "Attend and participate in counseling",
+            "Obtain assessment/evaluation"
           ],
           "tasks": [
-            "Document weekly peer interactions and time allocation",
-            "Develop specific plan for reducing contact with antisocial peers",
-            "Attend at least one structured prosocial activity weekly",
-            "Practice refusal skills for criminal opportunities",
-            "Identify and connect with one community group or activity",
-            "Role-play responses to negative peer pressure with counselor",
-            "Create schedule prioritizing time with prosocial individuals",
-            "Develop strategies for explaining lifestyle changes to current peers"
+            "Create an inventory of current peer relationships and document time spent with each group",
+            "Develop and implement a plan to reduce contact with anti-social or criminal peers",
+            "Identify and regularly connect with at least 2 prosocial peers or mentors",
+            "Attend structured prosocial activities weekly to build positive peer connections",
+            "Practice refusal skills and role-play responses to negative peer pressure",
+            "Develop and follow a new daily routine that avoids high-risk peer contact",
+            "Create a crisis plan for managing unexpected encounters with negative peers",
+            "Research and engage with community groups or organizations that support prosocial goals",
+            "Work with a counselor to review peer interactions and make adjustments to support change",
+            "Develop communication strategies for explaining lifestyle changes and setting boundaries with former peers"
           ]
         },
         {
           "risk_level": "High",
           "goals": [
-            "Establish significant boundaries with criminally-involved peers",
-            "Develop completely new prosocial peer network",
-            "Build skills to resist criminal peer influence",
-            "Create structured routine with minimal exposure to negative peers",
-            "Establish meaningful prosocial activities and relationships"
+            "Reduce associations with anti-social peers",
+            "Increase interactions with pro-social peers",
+            "Increase pro-social activities",
+            "Reduce conflict and high-risk situations with peers"
           ],
           "objectives": [
-            "Client will minimize or eliminate contact with antisocial peers",
-            "Client will establish relationships with entirely new peer groups",
-            "Client will develop strong skills to counter negative influences",
-            "Client will build identity separate from criminal peer network"
+            "Develop a plan to reduce contact with anti-social peers",
+            "Practice skills to reduce contact with anti-social peers",
+            "Identify behaviors and characteristics found in pro-social individuals",
+            "Develop a plan to identify and associate with pro-social peers",
+            "Identify pro-social activities",
+            "Increase participation in pro-social activities",
+            "Identify and practice refusal skills",
+            "Identify and practice pro-social communication skills",
+            "Enroll and successfully complete program",
+            "Attend and participate in counseling",
+            "Obtain assessment/evaluation"
           ],
           "tasks": [
-            "Meet weekly with counselor to review peer associations",
-            "Develop comprehensive plan for disengaging from criminal peers",
-            "Document daily peer interactions and influences",
-            "Attend structured prosocial activities 3x weekly",
-            "Participate in peer influence resistance skills group",
-            "Connect with at least 2 community organizations or groups",
-            "Develop new daily routine avoiding locations of negative peer contact",
-            "Practice explanation and boundary scripts for former peers",
-            "Create crisis plan for managing unexpected peer encounters",
-            "Identify mentor or role model for prosocial development"
+            "Create an inventory of current peer relationships and document time spent with each group",
+            "Develop and implement a plan to reduce contact with anti-social or criminal peers",
+            "Identify and regularly connect with at least 2 prosocial peers or mentors",
+            "Attend structured prosocial activities weekly to build positive peer connections",
+            "Practice refusal skills and role-play responses to negative peer pressure",
+            "Develop and follow a new daily routine that avoids high-risk peer contact",
+            "Create a crisis plan for managing unexpected encounters with negative peers",
+            "Research and engage with community groups or organizations that support prosocial goals",
+            "Work with a counselor to review peer interactions and make adjustments to support change",
+            "Develop communication strategies for explaining lifestyle changes and setting boundaries with former peers"
           ]
         }
       ]
     },
     {
       "id": "criminal_attitudes",
-      "name": "Criminal Attitudes and Behavioral Patterns",
+      "name": "Criminal Attitudes",
       "templates": [
         {
           "risk_level": "Low",
           "goals": [
-            "Strengthen prosocial thinking patterns",
-            "Increase awareness of cognitive distortions",
-            "Develop skills for responsible decision-making"
+            "Increase attitudes and behaviors supportive of prosocial lifestyle",
+            "Reduce attitudes and behaviors supportive of criminal lifestyles",
+            "Increase pro-social skills to handle risky situations",
+            "Improve anger management skills"
           ],
           "objectives": [
-            "Client will identify thinking patterns that contributed to past behavior",
-            "Client will practice prosocial thinking alternatives",
-            "Client will apply structured decision-making process"
+            "Obtain evaluation and follow through with recommended counseling",
+            "Identify risky thinking",
+            "Identify risky situations",
+            "Identify triggers that lead to high risk situations",
+            "Identify harmful behavior towards others",
+            "Learn and practice prosocial coping skills",
+            "Identify consequences of negative behaviors",
+            "Identify consequences of positive behaviors",
+            "Learn and practice skills to handle risky situations",
+            "Learn and practice skills to replace risky thinking with prosocial thoughts"
           ],
           "tasks": [
-            "Complete criminal thinking assessment",
-            "Identify 3 specific thinking errors from past situations",
-            "Practice cognitive self-monitoring daily",
-            "Document examples of prosocial thinking and choices",
-            "Complete decision-making worksheet for upcoming choices",
-            "Read materials on cognitive restructuring"
+            "Complete a cognitive assessment to identify thinking errors and risk factors",
+            "Attend cognitive behavioral therapy or structured treatment groups regularly",
+            "Maintain daily self-monitoring logs of thoughts, impulses, and behaviors",
+            "Practice impulse control techniques (e.g., STOP method, aggression interruption) daily",
+            "Complete thinking reports and decision-making exercises for real-life situations",
+            "Document and reflect on examples of cognitive distortions and prosocial alternatives",
+            "Role-play prosocial responses to high-risk or provocative situations",
+            "Participate in empathy-building or victim impact exercises",
+            "Develop and revise a comprehensive personal change plan, including prosocial values",
+            "Apply structured problem-solving and perspective-taking skills to current challenges"
           ]
         },
         {
           "risk_level": "Medium",
           "goals": [
-            "Modify established patterns of criminal thinking",
-            "Address impulsivity and poor decision-making",
-            "Develop prosocial attitudes and values",
-            "Establish patterns of responsible behavior"
+            "Increase attitudes and behaviors supportive of prosocial lifestyle",
+            "Reduce attitudes and behaviors supportive of criminal lifestyles",
+            "Increase pro-social skills to handle risky situations",
+            "Improve anger management skills"
           ],
           "objectives": [
-            "Client will participate in cognitive restructuring interventions",
-            "Client will practice impulse control techniques",
-            "Client will demonstrate prosocial thinking in various situations",
-            "Client will take responsibility for past criminal behavior"
+            "Obtain evaluation and follow through with recommended counseling",
+            "Identify risky thinking",
+            "Identify risky situations",
+            "Identify triggers that lead to high risk situations",
+            "Identify harmful behavior towards others",
+            "Learn and practice prosocial coping skills",
+            "Identify consequences of negative behaviors",
+            "Identify consequences of positive behaviors",
+            "Learn and practice skills to handle risky situations",
+            "Learn and practice skills to replace risky thinking with prosocial thoughts"
           ],
           "tasks": [
-            "Attend weekly cognitive behavioral therapy sessions",
-            "Complete thinking reports for challenging situations",
-            "Practice STOP technique for impulse control daily",
-            "Document examples of cognitive distortions and corrections",
-            "Role-play prosocial responses to provocative situations",
-            "Complete moral reasoning exercises with counselor",
-            "Develop personal prosocial value statement",
-            "Practice perspective-taking exercises weekly",
-            "Apply structured problem-solving model to current challenges"
+            "Complete a cognitive assessment to identify thinking errors and risk factors",
+            "Attend cognitive behavioral therapy or structured treatment groups regularly",
+            "Maintain daily self-monitoring logs of thoughts, impulses, and behaviors",
+            "Practice impulse control techniques (e.g., STOP method, aggression interruption) daily",
+            "Complete thinking reports and decision-making exercises for real-life situations",
+            "Document and reflect on examples of cognitive distortions and prosocial alternatives",
+            "Role-play prosocial responses to high-risk or provocative situations",
+            "Participate in empathy-building or victim impact exercises",
+            "Develop and revise a comprehensive personal change plan, including prosocial values",
+            "Apply structured problem-solving and perspective-taking skills to current challenges"
           ]
         },
         {
           "risk_level": "High",
           "goals": [
-            "Transform entrenched criminal thinking patterns",
-            "Develop comprehensive cognitive restructuring skills",
-            "Address deep-seated antisocial attitudes and values",
-            "Establish patterns of consistent prosocial behavior",
-            "Develop internal controls for aggression and impulsivity"
+            "Increase attitudes and behaviors supportive of prosocial lifestyle",
+            "Reduce attitudes and behaviors supportive of criminal lifestyles",
+            "Increase pro-social skills to handle risky situations",
+            "Improve anger management skills"
           ],
           "objectives": [
-            "Client will actively engage in intensive cognitive interventions",
-            "Client will demonstrate fundamental shifts in thinking patterns",
-            "Client will incorporate prosocial values into identity",
-            "Client will consistently apply self-regulation techniques"
+            "Obtain evaluation and follow through with recommended counseling",
+            "Identify risky thinking",
+            "Identify risky situations",
+            "Identify triggers that lead to high risk situations",
+            "Identify harmful behavior towards others",
+            "Learn and practice prosocial coping skills",
+            "Identify consequences of negative behaviors",
+            "Identify consequences of positive behaviors",
+            "Learn and practice skills to handle risky situations",
+            "Learn and practice skills to replace risky thinking with prosocial thoughts"
           ],
           "tasks": [
-            "Participate in intensive cognitive restructuring program",
-            "Attend specialized groups (anger management, criminal thinking)",
-            "Complete daily cognitive self-monitoring logs",
-            "Meet with cognitive behavioral specialist weekly",
-            "Practice aggression interruption techniques daily",
-            "Role-play high-risk situations with increasing difficulty",
-            "Develop comprehensive personal change plan",
-            "Complete victim impact or empathy development exercises",
-            "Practice prosocial problem-solving in various contexts",
-            "Identify and challenge core criminal beliefs and attitudes",
-            "Document evidence of cognitive and behavioral changes"
+            "Complete a cognitive assessment to identify thinking errors and risk factors",
+            "Attend cognitive behavioral therapy or structured treatment groups regularly",
+            "Maintain daily self-monitoring logs of thoughts, impulses, and behaviors",
+            "Practice impulse control techniques (e.g., STOP method, aggression interruption) daily",
+            "Complete thinking reports and decision-making exercises for real-life situations",
+            "Document and reflect on examples of cognitive distortions and prosocial alternatives",
+            "Role-play prosocial responses to high-risk or provocative situations",
+            "Participate in empathy-building or victim impact exercises",
+            "Develop and revise a comprehensive personal change plan, including prosocial values",
+            "Apply structured problem-solving and perspective-taking skills to current challenges"
           ]
         }
       ]
