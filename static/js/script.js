@@ -522,20 +522,106 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Function to export the case plan to PDF
-    // Assign exportToPDF to the global variable we defined at the top
-    exportToPDF = function() {
-        // Show a loading message
-        showAlert('Preparing PDF...', 'info');
+exportToPDF = function() {
+    showAlert('Preparing PDF...', 'info');
+    
+    // Get client name and plan title
+    let clientName = document.querySelector('h1.mb-1')?.textContent || 'Client';
+    let planTitle = document.getElementById('plan_title')?.value || 'Case Plan';
+    const currentDate = new Date().toLocaleDateString();
+    
+    // Create new PDF document
+    const pdf = new jspdf.jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
+    });
+    
+    // Set font and size
+    pdf.setFont('helvetica');
+    pdf.setFontSize(12);
+    
+    // Define margins (in mm)
+    const margin = 25;
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+    const textWidth = pageWidth - (2 * margin);
+    
+    // Start position
+    let yPos = margin;
+    
+    // Add header
+    pdf.setFontSize(16);
+    pdf.text(planTitle, margin, yPos);
+    yPos += 10;
+    
+    pdf.setFontSize(12);
+    pdf.text(`Client: ${clientName}`, margin, yPos);
+    yPos += 7;
+    pdf.text(`Date: ${currentDate}`, margin, yPos);
+    yPos += 15;
+    
+    // Get domains data
+    const domains = document.querySelectorAll('.domain-section');
+    domains.forEach(domain => {
+        const domainName = domain.querySelector('h4')?.textContent || '';
+        const riskLevel = domain.querySelector('.badge')?.textContent || '';
         
-        const planContent = document.getElementById('plan-content');
+        pdf.setFontSize(14);
+        pdf.text(`${domainName} - ${riskLevel}`, margin, yPos);
+        yPos += 10;
         
-        // Handle client name retrieval from any page format
-        let clientName = 'Client';
-        // Check from form input (create page)
-        const clientNameInput = document.getElementById('client-name');
-        if (clientNameInput && clientNameInput.value) {
-            clientName = clientNameInput.value;
-        } else {
+        pdf.setFontSize(12);
+        
+        // Goals
+        const goals = Array.from(domain.querySelectorAll('.goals-section li')).map(g => g.textContent);
+        if (goals.length) {
+            pdf.text('Goals:', margin, yPos);
+            yPos += 7;
+            goals.forEach(goal => {
+                const lines = pdf.splitTextToSize(`• ${goal}`, textWidth);
+                lines.forEach(line => {
+                    if (yPos > pageHeight - margin) {
+                        pdf.addPage();
+                        yPos = margin;
+                    }
+                    pdf.text(line, margin, yPos);
+                    yPos += 7;
+                });
+            });
+            yPos += 5;
+        }
+        
+        // Tasks
+        const tasks = Array.from(domain.querySelectorAll('.task-list li')).map(t => t.textContent);
+        if (tasks.length) {
+            pdf.text('Tasks:', margin, yPos);
+            yPos += 7;
+            tasks.forEach(task => {
+                const lines = pdf.splitTextToSize(`• ${task}`, textWidth);
+                lines.forEach(line => {
+                    if (yPos > pageHeight - margin) {
+                        pdf.addPage();
+                        yPos = margin;
+                    }
+                    pdf.text(line, margin, yPos);
+                    yPos += 7;
+                });
+            });
+            yPos += 10;
+        }
+        
+        if (yPos > pageHeight - margin) {
+            pdf.addPage();
+            yPos = margin;
+        }
+    });
+    
+    // Save the PDF
+    const fileName = `${planTitle.replace(/\s+/g, '_')}_${clientName.replace(/\s+/g, '_')}.pdf`;
+    pdf.save(fileName);
+    showAlert('PDF has been downloaded.', 'success');
+}
             // Check client name from dashboard form (index page)
             const clientNameField = document.getElementById('client_name');
             if (clientNameField && clientNameField.value) {
