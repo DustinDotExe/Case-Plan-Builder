@@ -598,7 +598,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get domains data
         const domains = document.querySelectorAll('.domain-section');
         domains.forEach(domain => {
-            const domainName = domain.querySelector('h4')?.textContent || '';
+            const domainName = domain.querySelector('h3')?.textContent || '';
             const riskLevel = domain.querySelector('.badge')?.textContent || '';
 
             pdf.setFontSize(14);
@@ -608,7 +608,7 @@ document.addEventListener('DOMContentLoaded', function() {
             pdf.setFontSize(12);
 
             // Goals
-            const goals = Array.from(domain.querySelectorAll('.goals-section li, ol li')).map(g => g.textContent);
+            const goals = Array.from(domain.querySelectorAll('.goals-section .editable, .goals-section .editable-text')).map(g => g.textContent);
             if (goals.length) {
                 pdf.text('Goals:', margin, yPos);
                 yPos += 7;
@@ -626,8 +626,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 yPos += 5;
             }
 
+            // Objectives
+            const objectives = Array.from(domain.querySelectorAll('.objectives-section .editable, .objectives-section .editable-text')).map(o => o.textContent);
+            if (objectives.length) {
+                pdf.text('Objectives:', margin, yPos);
+                yPos += 7;
+                objectives.forEach(objective => {
+                    const lines = pdf.splitTextToSize(`• ${objective}`, textWidth);
+                    lines.forEach(line => {
+                        if (yPos > pageHeight - margin) {
+                            pdf.addPage();
+                            yPos = margin;
+                        }
+                        pdf.text(line, margin, yPos);
+                        yPos += 7;
+                    });
+                });
+                yPos += 5;
+            }
+
             // Tasks
-            const tasks = Array.from(domain.querySelectorAll('.tasks-section li')).map(t => t.textContent);
+            const tasks = Array.from(domain.querySelectorAll('.tasks-section .editable, .tasks-section .editable-text')).map(t => t.textContent);
             if (tasks.length) {
                 pdf.text('Tasks:', margin, yPos);
                 yPos += 7;
