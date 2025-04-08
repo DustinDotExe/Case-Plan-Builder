@@ -599,63 +599,6 @@ document.addEventListener('DOMContentLoaded', function() {
         pdf.line(margin, yPos, pageWidth - margin, yPos);
         yPos += 10;
 
-        
-            if (goals.length) {
-                pdf.text('Goals:', margin, yPos);
-                yPos += 7;
-                goals.forEach(goal => {
-                    const lines = pdf.splitTextToSize(`• ${goal}`, textWidth);
-                    lines.forEach(line => {
-                        if (yPos > pageHeight - margin) {
-                            pdf.addPage();
-                            yPos = margin;
-                        }
-                        pdf.text(line, margin, yPos);
-                        yPos += 7;
-                    });
-                });
-                yPos += 5;
-            }
-
-            // Objectives
-            const objectives = Array.from(domain.querySelectorAll('.objectives-section .editable, .objectives-section .editable-text')).map(o => o.textContent);
-            if (objectives.length) {
-                pdf.text('Objectives:', margin, yPos);
-                yPos += 7;
-                objectives.forEach(objective => {
-                    const lines = pdf.splitTextToSize(`• ${objective}`, textWidth);
-                    lines.forEach(line => {
-                        if (yPos > pageHeight - margin) {
-                            pdf.addPage();
-                            yPos = margin;
-                        }
-                        pdf.text(line, margin, yPos);
-                        yPos += 7;
-                    });
-                });
-                yPos += 5;
-            }
-
-            // Tasks
-            const tasks = Array.from(domain.querySelectorAll('.tasks-section .editable, .tasks-section .editable-text')).map(t => t.textContent);
-            if (tasks.length) {
-                pdf.text('Tasks:', margin, yPos);
-                yPos += 7;
-                tasks.forEach(task => {
-                    const lines = pdf.splitTextToSize(`• ${task}`, textWidth);
-                    lines.forEach(line => {
-                        if (yPos > pageHeight - margin) {
-                            pdf.addPage();
-                            yPos = margin;
-                        }
-                        pdf.text(line, margin, yPos);
-                        yPos += 7;
-                    });
-                });
-            }
-            yPos += 15;
-        });
-
         // Get domains data
         const domainsToExport = document.querySelectorAll('.domain-section');
         domainsToExport.forEach(domain => {
@@ -724,6 +667,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
                 yPos += 10;
             }
+
+            if (yPos > pageHeight - margin) {
+                pdf.addPage();
+                yPos = margin;
+            }
+        });
 
             if (yPos > pageHeight - margin) {
                 pdf.addPage();
