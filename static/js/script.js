@@ -627,7 +627,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             // Tasks
-            const tasks = Array.from(domain.querySelectorAll('.task-list li')).map(t => t.textContent);
+            const tasks = Array.from(domain.querySelectorAll('.tasks-section li')).map(t => t.textContent);
             if (tasks.length) {
                 pdf.text('Tasks:', margin, yPos);
                 yPos += 7;
@@ -650,6 +650,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 yPos = margin;
             }
         });
+
+        // Add signature blocks
+        yPos += 20;
+
+        // Draw lines for signatures
+        const signatureWidth = 70;
+        const leftSignatureX = margin;
+        const rightSignatureX = pageWidth - margin - signatureWidth;
+
+        // Add signature lines and labels
+        pdf.line(leftSignatureX, yPos, leftSignatureX + signatureWidth, yPos);
+        pdf.line(rightSignatureX, yPos, rightSignatureX + signatureWidth, yPos);
+
+        yPos += 5;
+        pdf.setFontSize(10);
+
+        // Add participant signature block
+        pdf.text(clientName, leftSignatureX, yPos);
+        pdf.text("Participant", leftSignatureX, yPos + 5);
+        pdf.text(new Date().toLocaleDateString(), leftSignatureX, yPos + 10);
+
+        // Add probation officer signature block
+        pdf.text("", rightSignatureX, yPos);
+        pdf.text("Probation Officer", rightSignatureX, yPos + 5);
+        pdf.text(new Date().toLocaleDateString(), rightSignatureX, yPos + 10);
 
         // Save the PDF
         const fileName = `${planTitle.replace(/\s+/g, '_')}_${clientName.replace(/\s+/g, '_')}.pdf`;
