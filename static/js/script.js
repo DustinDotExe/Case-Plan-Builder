@@ -710,21 +710,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 pdf.setFont('helvetica', 'normal');
                 yPos += 7;
                 tasks.forEach(task => {
-                    // Create checkbox instead of bullet point
-                    pdf.rect(margin, yPos - 4, 4, 4); // Draw empty checkbox
-                    
                     // Add text with proper spacing after checkbox
                     const lines = pdf.splitTextToSize(`${task}`, textWidth - 8); // Reduce text width to account for checkbox
+                    
+                    // Track if we need to draw a checkbox (only for the first line of each task)
+                    let needCheckbox = true;
+                    
                     lines.forEach((line, index) => {
+                        // Check if we need to add a new page
                         if (yPos > pageHeight - margin) {
                             pdf.addPage();
                             yPos = margin;
-                            // If this is not the first line, draw checkbox on the new page
-                            if (index > 0) {
-                                pdf.rect(margin, yPos - 4, 4, 4);
-                            }
+                            // Don't draw checkbox on continuation pages
+                            needCheckbox = false;
                         }
-                        pdf.text(line, margin + 8, yPos); // Add padding after checkbox
+                        
+                        // Only draw checkbox on the first line of a task and not on a continuation page
+                        if (index === 0 && needCheckbox) {
+                            // Draw checkbox for the first line only
+                            pdf.rect(margin, yPos - 4, 4, 4);
+                        }
+                        
+                        // Always add the text with consistent indentation
+                        pdf.text(line, margin + 8, yPos); // Add padding for checkbox
+                        
                         yPos += 7;
                     });
                 });
