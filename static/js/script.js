@@ -598,8 +598,11 @@ document.addEventListener('DOMContentLoaded', function() {
         tempDiv.style.position = 'absolute';
         tempDiv.style.left = '-9999px';
         tempDiv.style.top = '0';
-        tempDiv.style.width = '800px'; // Fixed width for more consistent results
-        tempDiv.style.fontFamily = 'Arial, Helvetica, sans-serif';
+        tempDiv.style.width = '800px';
+        tempDiv.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+        tempDiv.style.textRendering = 'optimizeLegibility';
+        tempDiv.style.WebkitFontSmoothing = 'antialiased';
+        tempDiv.style.MozOsxFontSmoothing = 'grayscale';
         
         // Create header with title, client name, and date - center-aligned and larger text
         const header = document.createElement('div');
@@ -879,25 +882,38 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Use html2canvas and jsPDF to generate the PDF
         html2canvas(tempDiv, {
-            scale: 2,
+            scale: 1.5,
             logging: false,
             useCORS: true,
             allowTaint: true,
-            backgroundColor: '#ffffff'
+            backgroundColor: '#ffffff',
+            letterRendering: true,
+            windowWidth: 800,
+            width: 800,
+            height: tempDiv.offsetHeight,
+            onclone: function(clonedDoc) {
+                const clonedDiv = clonedDoc.querySelector('.pdf-export-container');
+                if (clonedDiv) {
+                    clonedDiv.style.width = '800px';
+                    clonedDiv.style.wordBreak = 'break-word';
+                    clonedDiv.style.whiteSpace = 'pre-wrap';
+                }
+            }
         }).then(canvas => {
             try {
-                const imgData = canvas.toDataURL('image/png');
+                const imgData = canvas.toDataURL('image/png', 1.0);
                 const pdf = new jspdf.jsPDF({
                     orientation: 'portrait',
                     unit: 'mm',
-                    format: 'a4'
+                    format: 'a4',
+                    compress: true
                 });
                 
                 const imgProps = pdf.getImageProperties(imgData);
-                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfWidth = pdf.internal.pageSize.getWidth() - 30; // Reduce width for better margins
                 const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
                 
-                const marginY = 20; // Top and bottom margin in mm
+                const marginY = 15; // Top and bottom margin in mm
                 const marginX = 15; // Left and right margin in mm
                 const pageHeight = pdf.internal.pageSize.getHeight();
                 const usablePageHeight = pageHeight - 2 * marginY;
