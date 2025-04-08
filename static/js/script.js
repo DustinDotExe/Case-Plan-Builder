@@ -1,7 +1,37 @@
-// Define exportToPDF function globally
+// Define global functions
 let exportToPDF;
+let showAlert;
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Function to show an alert message
+    showAlert = function(message, type = 'info') {
+        const alertsContainer = document.getElementById('alerts-container');
+        if (!alertsContainer) return;
+
+        const alert = document.createElement('div');
+        alert.classList.add('alert', `alert-${type}`, 'alert-dismissible', 'fade', 'show');
+        alert.setAttribute('role', 'alert');
+
+        alert.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
+
+        alertsContainer.appendChild(alert);
+
+        // Remove the alert after 5 seconds
+        setTimeout(() => {
+            if (alert.parentNode) {
+                alert.classList.remove('show');
+                setTimeout(() => {
+                    if (alert.parentNode) {
+                        alertsContainer.removeChild(alert);
+                    }
+                }, 150);
+            }
+        }, 5000);
+    };
+
     // Elements - safely get them as they may not exist on all pages
     const generateBtn = document.getElementById('generate-plan-btn');
     const riskForm = document.getElementById('risk-form');
@@ -14,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (planContainer && window.location.pathname === '/') {
         planContainer.classList.add('d-none');
     }
-    
+
     // Handle domain toggles
     const domainToggles = document.querySelectorAll('.domain-toggle');
     if (domainToggles.length > 0) {
@@ -22,13 +52,13 @@ document.addEventListener('DOMContentLoaded', function() {
             // Set initial state - domains are disabled by default
             const domainId = toggle.getAttribute('data-domain-id');
             const contentSection = document.getElementById(`domain_content_${domainId}`);
-            
+
             // Disable domain initially (since checkbox is unchecked by default)
             contentSection.classList.add('disabled');
             contentSection.querySelectorAll('input').forEach(input => {
                 input.disabled = true;
             });
-            
+
             // Handle toggle changes
             toggle.addEventListener('change', function() {
                 if (this.checked) {
@@ -47,28 +77,28 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
-    
+
     // Handle form submission to generate a case plan
     if (riskForm) {
         riskForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             // Show loading spinner
             generateBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Generating...';
             generateBtn.disabled = true;
-            
+
             // Get form data
             const formData = new FormData(riskForm);
-            
+
             // Add domain toggle states to the form data
             domainToggles.forEach(toggle => {
                 const domainId = toggle.getAttribute('data-domain-id');
                 formData.append(`include_${domainId}`, toggle.checked);
             });
-            
+
             // Get CSRF token from the form
             const csrfToken = document.querySelector('input[name="csrf_token"]')?.value;
-            
+
             // Send request to server
             fetch('/generate_plan', {
                 method: 'POST',
@@ -83,15 +113,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     showAlert('Error: ' + data.error, 'danger');
                 } else {
                     displayCasePlan(data);
-                    
+
                     // Only manipulate the DOM if these elements exist
                     if (planContainer) {
                         planContainer.classList.remove('d-none');
-                        
+
                         // Scroll to the plan container
                         planContainer.scrollIntoView({ behavior: 'smooth' });
                     }
-                    
+
                     const exportControls = document.getElementById('export-controls');
                     if (exportControls) {
                         exportControls.classList.remove('d-none');
@@ -109,16 +139,16 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
-    
+
     // Function to display the generated case plan
     function displayCasePlan(planData) {
         const planContent = document.getElementById('plan-content');
         planContent.innerHTML = '';
-        
+
         // Get client name and plan title from form
         const clientName = document.getElementById('client_name').value;
         const planTitle = document.getElementById('plan_title').value;
-        
+
         // Create header
         const header = document.createElement('div');
         header.classList.add('mb-4');
@@ -141,23 +171,23 @@ document.addEventListener('DOMContentLoaded', function() {
             <hr>
         `;
         planContent.appendChild(header);
-        
+
         // Create a container for the domains
         const domainsContainer = document.createElement('div');
         domainsContainer.classList.add('domains-container');
-        
+
         // Add each domain to the plan
         planData.domains.forEach(domain => {
             const domainEl = document.createElement('div');
             domainEl.classList.add('domain-section', 'mb-4', 'p-3', 'border', 'rounded');
-            
+
             // Domain header with risk level
             const domainHeader = document.createElement('div');
             domainHeader.classList.add('domain-header', 'mb-3');
-            
+
             // Get the appropriate badge class based on risk level
             let badgeClass = 'bg-secondary';
-            
+
             if (domain.risk_level === 'Low') {
                 badgeClass = 'bg-success';
             } else if (domain.risk_level === 'Medium') {
@@ -165,18 +195,18 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (domain.risk_level === 'High') {
                 badgeClass = 'bg-danger';
             }
-            
+
             domainHeader.innerHTML = `
                 <h3 class="editable" contenteditable="true">${domain.name}</h3>
                 <span class="badge ${badgeClass}">${domain.risk_level} Risk</span>
             `;
             domainEl.appendChild(domainHeader);
-            
+
             // Goals section
             if (domain.goals && domain.goals.length > 0) {
                 const goalsSection = document.createElement('div');
                 goalsSection.classList.add('goals-section', 'mb-3');
-                
+
                 goalsSection.innerHTML = `
                     <h4>Goals</h4>
                     <ul class="list-group list-group-flush">
@@ -194,12 +224,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 `;
                 domainEl.appendChild(goalsSection);
             }
-            
+
             // Objectives section
             if (domain.objectives && domain.objectives.length > 0) {
                 const objectivesSection = document.createElement('div');
                 objectivesSection.classList.add('objectives-section', 'mb-3');
-                
+
                 objectivesSection.innerHTML = `
                     <h4>Objectives</h4>
                     <ul class="list-group list-group-flush">
@@ -217,12 +247,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 `;
                 domainEl.appendChild(objectivesSection);
             }
-            
+
             // Tasks section
             if (domain.tasks && domain.tasks.length > 0) {
                 const tasksSection = document.createElement('div');
                 tasksSection.classList.add('tasks-section', 'mb-3');
-                
+
                 tasksSection.innerHTML = `
                     <h4>Tasks</h4>
                     <ul class="list-group list-group-flush">
@@ -230,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             // Extract task text if it's an object with a 'text' property, otherwise use as is
                             const taskText = typeof task === 'object' && task !== null && task.text ? task.text : task;
                             const isCompleted = typeof task === 'object' && task !== null && task.completed === true;
-                            
+
                             return `
                             <li class="list-group-item">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -249,11 +279,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 `;
                 domainEl.appendChild(tasksSection);
             }
-            
+
             // Add button to add custom items
             const addItemSection = document.createElement('div');
             addItemSection.classList.add('add-item-section', 'mt-3');
-            
+
             addItemSection.innerHTML = `
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-outline-secondary btn-sm add-goal-btn">
@@ -267,34 +297,34 @@ document.addEventListener('DOMContentLoaded', function() {
                     </button>
                 </div>
             `;
-            
+
             // Add event listeners to the buttons
             addItemSection.querySelector('.add-goal-btn').addEventListener('click', function() {
                 addItem(domainEl, 'goal');
             });
-            
+
             addItemSection.querySelector('.add-objective-btn').addEventListener('click', function() {
                 addItem(domainEl, 'objective');
             });
-            
+
             addItemSection.querySelector('.add-task-btn').addEventListener('click', function() {
                 addItem(domainEl, 'task');
             });
-            
+
             domainEl.appendChild(addItemSection);
             domainsContainer.appendChild(domainEl);
         });
-        
+
         planContent.appendChild(domainsContainer);
-        
+
         // Make the plan sections editable
         makeEditable();
     }
-    
+
     // Function to add a new item to a domain section
     function addItem(domainEl, itemType) {
         let sectionClass, headerText, sectionSelector;
-        
+
         switch (itemType) {
             case 'goal':
                 sectionClass = 'goals-section';
@@ -314,10 +344,10 @@ document.addEventListener('DOMContentLoaded', function() {
             default:
                 return;
         }
-        
+
         // Check if section already exists
         let section = domainEl.querySelector(sectionSelector);
-        
+
         if (!section) {
             // Create a new section if it doesn't exist
             section = document.createElement('div');
@@ -326,17 +356,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 <h4>${headerText}</h4>
                 <ul class="list-group list-group-flush"></ul>
             `;
-            
+
             // Insert the new section before the add item section
             domainEl.insertBefore(section, domainEl.querySelector('.add-item-section'));
         }
-        
+
         const listGroup = section.querySelector('.list-group');
-        
+
         // Create new item
         const newItem = document.createElement('li');
         newItem.classList.add('list-group-item');
-        
+
         if (itemType === 'task') {
             newItem.innerHTML = `
                 <div class="d-flex justify-content-between align-items-center">
@@ -359,13 +389,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             `;
         }
-        
+
         listGroup.appendChild(newItem);
-        
+
         // Focus on the new item
         const editableDiv = newItem.querySelector('.editable');
         editableDiv.focus();
-        
+
         // Select all text in the contenteditable div
         const selection = window.getSelection();
         const range = document.createRange();
@@ -373,7 +403,7 @@ document.addEventListener('DOMContentLoaded', function() {
         selection.removeAllRanges();
         selection.addRange(range);
     }
-    
+
     // Function to make the plan sections editable
     function makeEditable() {
         const editableElements = document.querySelectorAll('.editable');
@@ -386,38 +416,38 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
-    
+
     // Handle export to PDF button
     if (exportBtn) {
         exportBtn.addEventListener('click', function() {
             exportToPDF();
         });
     }
-    
+
     // Handle print button
     if (printBtn) {
         printBtn.addEventListener('click', function() {
             window.print();
         });
     }
-    
+
     // Handle save plan button
     if (savePlanBtn) {
         savePlanBtn.addEventListener('click', function() {
             saveCasePlan();
         });
     }
-    
+
     // Function to save the case plan to the database
     function saveCasePlan() {
         showAlert('Saving case plan...', 'info');
-        
+
         // Collect plan data
         const planData = collectPlanData();
-        
+
         // Get the CSRF token from the meta tag
         const csrfToken = document.querySelector('input[name="csrf_token"]')?.value;
-        
+
         // Send request to server to save the plan
         fetch('/case_plan/' + (planData.id || '0') + '/edit', {
             method: 'POST',
@@ -431,7 +461,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             if (data.success) {
                 showAlert('Case plan saved successfully!', 'success');
-                
+
                 // Always redirect to the main page after saving
                 setTimeout(() => {
                     window.location.href = '/';
@@ -445,17 +475,17 @@ document.addEventListener('DOMContentLoaded', function() {
             showAlert('An error occurred while saving the case plan', 'danger');
         });
     }
-    
+
     // Function to collect all plan data from the DOM
     function collectPlanData() {
         const planContent = document.getElementById('plan-content');
         const clientNameInput = document.getElementById('client-name');
         const planDateInput = document.getElementById('plan-date');
         const planTitleElement = planContent.querySelector('h2.editable');
-        
+
         // Get the plan ID if it exists (for editing existing plans)
         const planId = planContent.getAttribute('data-plan-id');
-        
+
         // Basic plan info
         const planData = {
             plan_title: planTitleElement ? planTitleElement.textContent : 'Case Plan',
@@ -464,14 +494,14 @@ document.addEventListener('DOMContentLoaded', function() {
             domains: [],
             id: planId || null
         };
-        
+
         // Get all domains
         const domainSections = planContent.querySelectorAll('.domain-section');
         domainSections.forEach(domainSection => {
             const domainName = domainSection.querySelector('h3.editable').textContent;
             const riskLevelBadge = domainSection.querySelector('.badge');
             const riskLevel = riskLevelBadge ? riskLevelBadge.textContent.replace(' Risk', '') : 'Medium';
-            
+
             // Create domain object
             const domain = {
                 name: domainName,
@@ -481,7 +511,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 objectives: [],
                 tasks: []
             };
-            
+
             // Collect goals
             const goalsSection = domainSection.querySelector('.goals-section');
             if (goalsSection) {
@@ -490,7 +520,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     domain.goals.push(goal.textContent);
                 });
             }
-            
+
             // Collect objectives
             const objectivesSection = domainSection.querySelector('.objectives-section');
             if (objectivesSection) {
@@ -499,7 +529,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     domain.objectives.push(objective.textContent);
                 });
             }
-            
+
             // Collect tasks
             const tasksSection = domainSection.querySelector('.tasks-section');
             if (tasksSection) {
@@ -507,566 +537,123 @@ document.addEventListener('DOMContentLoaded', function() {
                 taskItems.forEach(taskItem => {
                     const taskText = taskItem.querySelector('.editable').textContent;
                     const isCompleted = taskItem.querySelector('input[type="checkbox"]').checked;
-                    
+
                     domain.tasks.push({
                         text: taskText,
                         completed: isCompleted
                     });
                 });
             }
-            
+
             planData.domains.push(domain);
         });
-        
+
         return planData;
     }
-    
+
     // Function to export the case plan to PDF
-exportToPDF = function() {
-    showAlert('Preparing PDF...', 'info');
-    
-    // Get client name and plan title
-    let clientName = document.querySelector('h1.mb-1')?.textContent || 'Client';
-    let planTitle = document.getElementById('plan_title')?.value || 'Case Plan';
-    const currentDate = new Date().toLocaleDateString();
-    
-    // Create new PDF document
-    const pdf = new jspdf.jsPDF({
-        orientation: 'portrait',
-        unit: 'mm',
-        format: 'a4'
-    });
-    
-    // Set font and size
-    pdf.setFont('helvetica');
-    pdf.setFontSize(12);
-    
-    // Define margins (in mm)
-    const margin = 25;
-    const pageWidth = pdf.internal.pageSize.getWidth();
-    const pageHeight = pdf.internal.pageSize.getHeight();
-    const textWidth = pageWidth - (2 * margin);
-    
-    // Start position
-    let yPos = margin;
-    
-    // Add header
-    pdf.setFontSize(16);
-    pdf.text(planTitle, margin, yPos);
-    yPos += 10;
-    
-    pdf.setFontSize(12);
-    pdf.text(`Client: ${clientName}`, margin, yPos);
-    yPos += 7;
-    pdf.text(`Date: ${currentDate}`, margin, yPos);
-    yPos += 15;
-    
-    // Get domains data
-    const domains = document.querySelectorAll('.domain-section');
-    domains.forEach(domain => {
-        const domainName = domain.querySelector('h4')?.textContent || '';
-        const riskLevel = domain.querySelector('.badge')?.textContent || '';
-        
-        pdf.setFontSize(14);
-        pdf.text(`${domainName} - ${riskLevel}`, margin, yPos);
-        yPos += 10;
-        
-        pdf.setFontSize(12);
-        
-        // Goals
-        const goals = Array.from(domain.querySelectorAll('.goals-section li')).map(g => g.textContent);
-        if (goals.length) {
-            pdf.text('Goals:', margin, yPos);
-            yPos += 7;
-            goals.forEach(goal => {
-                const lines = pdf.splitTextToSize(`• ${goal}`, textWidth);
-                lines.forEach(line => {
-                    if (yPos > pageHeight - margin) {
-                        pdf.addPage();
-                        yPos = margin;
-                    }
-                    pdf.text(line, margin, yPos);
-                    yPos += 7;
-                });
-            });
-            yPos += 5;
-        }
-        
-        // Tasks
-        const tasks = Array.from(domain.querySelectorAll('.task-list li')).map(t => t.textContent);
-        if (tasks.length) {
-            pdf.text('Tasks:', margin, yPos);
-            yPos += 7;
-            tasks.forEach(task => {
-                const lines = pdf.splitTextToSize(`• ${task}`, textWidth);
-                lines.forEach(line => {
-                    if (yPos > pageHeight - margin) {
-                        pdf.addPage();
-                        yPos = margin;
-                    }
-                    pdf.text(line, margin, yPos);
-                    yPos += 7;
-                });
-            });
-            yPos += 10;
-        }
-        
-        if (yPos > pageHeight - margin) {
-            pdf.addPage();
-            yPos = margin;
-        }
-    });
-    
-    // Save the PDF
-    const fileName = `${planTitle.replace(/\s+/g, '_')}_${clientName.replace(/\s+/g, '_')}.pdf`;
-    pdf.save(fileName);
-    showAlert('PDF has been downloaded.', 'success');
-}
-            // Check client name from dashboard form (index page)
-            const clientNameField = document.getElementById('client_name');
-            if (clientNameField && clientNameField.value) {
-                clientName = clientNameField.value;
-            } else {
-                // Check from view page format (view_plan page)
-                const clientInfoText = document.querySelector('p.text-muted');
-                if (clientInfoText && clientInfoText.textContent.includes('Client:')) {
-                    const clientMatch = clientInfoText.textContent.match(/Client:\s*([^|]+)/);
-                    if (clientMatch && clientMatch[1]) {
-                        clientName = clientMatch[1].trim();
-                    }
-                } else {
-                    // Check from edit page input field (edit_plan page)
-                    const editClientName = document.getElementById('clientName');
-                    if (editClientName && editClientName.value) {
-                        clientName = editClientName.value;
-                    }
-                }
-            }
-        }
-        
-        // Handle plan title retrieval from any page format
-        let planTitle = 'Case Plan';
-        // Check from plan-content h2 (create page)
-        const planContentTitle = document.querySelector('#plan-content h2');
-        if (planContentTitle) {
-            planTitle = planContentTitle.textContent;
-        } else {
-            // Check from h1.mb-1 (view_plan page)
-            const viewTitle = document.querySelector('h1.mb-1');
-            if (viewTitle) {
-                planTitle = viewTitle.textContent;
-            } else {
-                // Check from plan title field (index page)
-                const planTitleField = document.getElementById('plan_title');
-                if (planTitleField && planTitleField.value) {
-                    planTitle = planTitleField.value;
-                } else {
-                    // Check from edit page input field (edit_plan page)
-                    const editPlanTitle = document.getElementById('planTitle');
-                    if (editPlanTitle && editPlanTitle.value) {
-                        planTitle = editPlanTitle.value;
-                    }
-                }
-            }
-        }
-        
-        // Get current date
+    exportToPDF = function() {
+        showAlert('Preparing PDF...', 'info');
+
+        // Get client name and plan title
+        let clientName = document.querySelector('#client-name')?.value || 
+                        document.querySelector('p.text-muted')?.textContent.match(/Client:\s*([^|]+)/)?.[ 1]?.trim() || 
+                        'Client';
+        let planTitle = document.querySelector('h1.mb-1')?.textContent || 
+                       document.querySelector('#plan-content h2')?.textContent || 
+                       'Case Plan';
         const currentDate = new Date().toLocaleDateString();
-        
-        const fileName = `${planTitle.replace(/\s+/g, '_')}_${clientName.replace(/\s+/g, '_')}.pdf`;
-        
-        // Create a clean simplified div for PDF export
-        const tempDiv = document.createElement('div');
-        tempDiv.className = 'pdf-export-container';
-        tempDiv.style.padding = '20px';
-        tempDiv.style.backgroundColor = '#fff';
-        tempDiv.style.color = '#000';
-        tempDiv.style.position = 'absolute';
-        tempDiv.style.left = '-9999px';
-        tempDiv.style.top = '0';
-        tempDiv.style.width = '800px';
-        tempDiv.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
-        tempDiv.style.textRendering = 'optimizeLegibility';
-        tempDiv.style.WebkitFontSmoothing = 'antialiased';
-        tempDiv.style.MozOsxFontSmoothing = 'grayscale';
-        
-        // Create header with title, client name, and date - center-aligned and larger text
-        const header = document.createElement('div');
-        header.style.textAlign = 'center';
-        header.style.marginBottom = '25px';
-        header.innerHTML = `
-            <h1 style="font-size: 28px; margin-bottom: 20px; font-weight: bold;">${planTitle}</h1>
-            <p style="margin-bottom: 8px; font-size: 18px;"><strong>Client Name:</strong> ${clientName}</p>
-            <p style="margin-bottom: 25px; font-size: 18px;"><strong>Date:</strong> ${currentDate}</p>
-            <hr style="margin-bottom: 30px; border: none; border-top: 1px solid #000;">
-        `;
-        tempDiv.appendChild(header);
-        
-        // Create a clean container for domains
-        const domainContainer = document.createElement('div');
-        
-        // Get all domains from any plan structure (view_plan, edit_plan, or landing page)
-        // First try the standard selector from the landing page
-        let renderedDomains = document.querySelectorAll('.domain-section');
-        
-        // If no domains found, try the view_plan page format
-        if (!renderedDomains.length) {
-            // In view_plan page, domains might be in #plan-container
-            const planContainer = document.getElementById('plan-container');
-            if (planContainer) {
-                renderedDomains = planContainer.querySelectorAll('.card');
-            }
-        }
-        
-        // Process each domain
-        renderedDomains.forEach(originalDomain => {
-            const domainEl = document.createElement('div');
-            domainEl.style.marginBottom = '30px';
-            
-            // Get domain name and risk level
-            let domainName, riskLevel;
-            
-            // Try formats from different pages
-            
-            // Format from main page (domain-section with h3)
-            const domainTitle = originalDomain.querySelector('h3, .card-header');
-            if (domainTitle) {
-                domainName = domainTitle.textContent.trim();
-                
-                // Clean up domain title if it contains risk level (view_plan format)
-                if (domainName.includes('(') && domainName.includes(')')) {
-                    const parts = domainName.split('(');
-                    domainName = parts[0].trim();
-                    riskLevel = parts[1].replace(')', '').trim();
-                } else {
-                    // Try to get risk level from badge
-                    const badge = originalDomain.querySelector('.badge');
-                    riskLevel = badge ? badge.textContent.trim() : '';
-                }
-            } else {
-                domainName = 'Domain';
-                riskLevel = '';
-            }
-            
-            // Create domain header
-            domainEl.innerHTML = `
-                <h2 style="font-size: 20px; margin-bottom: 10px; font-weight: bold;">${domainName} <span style="font-size: 16px; font-weight: normal;">(${riskLevel})</span></h2>
-            `;
-            
-            // Process goals if present
-            let goalsSection = originalDomain.querySelector('.goals-section');
-            let goals = [];
-            
-            // Different formats for goals depending on the page
-            if (goalsSection) {
-                // Main page format
-                goals = goalsSection.querySelectorAll('.list-group-item .editable');
-            } else {
-                // View_plan format - look for headers and lists
-                const headers = originalDomain.querySelectorAll('h5, .card-title');
-                
-                headers.forEach(header => {
-                    if (header.textContent.toLowerCase().includes('goal')) {
-                        // Get the next list if it exists
-                        let nextElement = header.nextElementSibling;
-                        if (nextElement && (nextElement.tagName === 'UL' || nextElement.tagName === 'OL')) {
-                            goals = nextElement.querySelectorAll('li');
-                        }
-                    }
-                });
-            }
-            
-            if (goals.length > 0) {
-                const goalsTitle = document.createElement('h3');
-                goalsTitle.textContent = 'Goals';
-                goalsTitle.style.fontSize = '16px';
-                goalsTitle.style.marginTop = '15px';
-                goalsTitle.style.marginBottom = '10px';
-                goalsTitle.style.fontWeight = 'bold';
-                domainEl.appendChild(goalsTitle);
-                
-                const goalsList = document.createElement('ul');
-                goalsList.style.listStyleType = 'disc';
-                goalsList.style.paddingLeft = '20px';
-                goalsList.style.marginBottom = '15px';
-                
+
+        // Create new PDF document
+        const pdf = new jspdf.jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: 'a4'
+        });
+
+        // Set font and size
+        pdf.setFont('helvetica');
+        pdf.setFontSize(12);
+
+        // Define margins (in mm)
+        const margin = 25;
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        const textWidth = pageWidth - (2 * margin);
+
+        // Start position
+        let yPos = margin;
+
+        // Add header
+        pdf.setFontSize(16);
+        pdf.text(planTitle, margin, yPos);
+        yPos += 10;
+
+        pdf.setFontSize(12);
+        pdf.text(`Client: ${clientName}`, margin, yPos);
+        yPos += 7;
+        pdf.text(`Date: ${currentDate}`, margin, yPos);
+        yPos += 15;
+
+        // Get domains data
+        const domains = document.querySelectorAll('.domain-section');
+        domains.forEach(domain => {
+            const domainName = domain.querySelector('h4')?.textContent || '';
+            const riskLevel = domain.querySelector('.badge')?.textContent || '';
+
+            pdf.setFontSize(14);
+            pdf.text(`${domainName} - ${riskLevel}`, margin, yPos);
+            yPos += 10;
+
+            pdf.setFontSize(12);
+
+            // Goals
+            const goals = Array.from(domain.querySelectorAll('.goals-section li, ol li')).map(g => g.textContent);
+            if (goals.length) {
+                pdf.text('Goals:', margin, yPos);
+                yPos += 7;
                 goals.forEach(goal => {
-                    const listItem = document.createElement('li');
-                    listItem.textContent = goal.textContent;
-                    listItem.style.marginBottom = '5px';
-                    goalsList.appendChild(listItem);
-                });
-                
-                domainEl.appendChild(goalsList);
-            }
-            
-            // Process objectives if present
-            let objectivesSection = originalDomain.querySelector('.objectives-section');
-            let objectives = [];
-            
-            // Different formats for objectives depending on the page
-            if (objectivesSection) {
-                // Main page format
-                objectives = objectivesSection.querySelectorAll('.list-group-item .editable');
-            } else {
-                // View_plan format - look for headers and lists
-                const headers = originalDomain.querySelectorAll('h5, .card-title');
-                
-                headers.forEach(header => {
-                    if (header.textContent.toLowerCase().includes('objective')) {
-                        // Get the next list if it exists
-                        let nextElement = header.nextElementSibling;
-                        if (nextElement && (nextElement.tagName === 'UL' || nextElement.tagName === 'OL')) {
-                            objectives = nextElement.querySelectorAll('li');
+                    const lines = pdf.splitTextToSize(`• ${goal}`, textWidth);
+                    lines.forEach(line => {
+                        if (yPos > pageHeight - margin) {
+                            pdf.addPage();
+                            yPos = margin;
                         }
-                    }
+                        pdf.text(line, margin, yPos);
+                        yPos += 7;
+                    });
                 });
+                yPos += 5;
             }
-            
-            if (objectives.length > 0) {
-                const objectivesTitle = document.createElement('h3');
-                objectivesTitle.textContent = 'Objectives';
-                objectivesTitle.style.fontSize = '16px';
-                objectivesTitle.style.marginTop = '15px';
-                objectivesTitle.style.marginBottom = '10px';
-                objectivesTitle.style.fontWeight = 'bold';
-                domainEl.appendChild(objectivesTitle);
-                
-                const objectivesList = document.createElement('ul');
-                objectivesList.style.listStyleType = 'disc';
-                objectivesList.style.paddingLeft = '20px';
-                objectivesList.style.marginBottom = '15px';
-                
-                objectives.forEach(objective => {
-                    const listItem = document.createElement('li');
-                    listItem.textContent = objective.textContent;
-                    listItem.style.marginBottom = '5px';
-                    objectivesList.appendChild(listItem);
-                });
-                
-                domainEl.appendChild(objectivesList);
-            }
-            
-            // Process tasks if present
-            let tasksSection = originalDomain.querySelector('.tasks-section');
-            let taskItems = [];
-            
-            // Different formats for tasks depending on the page
-            if (tasksSection) {
-                // Main page format
-                taskItems = tasksSection.querySelectorAll('.list-group-item');
-            } else {
-                // View_plan format - look for headers and lists
-                const headers = originalDomain.querySelectorAll('h5, .card-title');
-                
-                headers.forEach(header => {
-                    if (header.textContent.toLowerCase().includes('task')) {
-                        // Get the next list if it exists
-                        let nextElement = header.nextElementSibling;
-                        if (nextElement && (nextElement.tagName === 'UL' || nextElement.tagName === 'OL')) {
-                            taskItems = nextElement.querySelectorAll('li');
+
+            // Tasks
+            const tasks = Array.from(domain.querySelectorAll('.task-list li')).map(t => t.textContent);
+            if (tasks.length) {
+                pdf.text('Tasks:', margin, yPos);
+                yPos += 7;
+                tasks.forEach(task => {
+                    const lines = pdf.splitTextToSize(`• ${task}`, textWidth);
+                    lines.forEach(line => {
+                        if (yPos > pageHeight - margin) {
+                            pdf.addPage();
+                            yPos = margin;
                         }
-                    }
+                        pdf.text(line, margin, yPos);
+                        yPos += 7;
+                    });
                 });
+                yPos += 10;
             }
-            
-            if (taskItems.length > 0) {
-                const tasksTitle = document.createElement('h3');
-                tasksTitle.textContent = 'Tasks';
-                tasksTitle.style.fontSize = '16px';
-                tasksTitle.style.marginTop = '15px';
-                tasksTitle.style.marginBottom = '10px';
-                tasksTitle.style.fontWeight = 'bold';
-                domainEl.appendChild(tasksTitle);
-                
-                const tasksList = document.createElement('ul');
-                tasksList.style.listStyleType = 'none';
-                tasksList.style.paddingLeft = '5px';
-                tasksList.style.marginBottom = '15px';
-                
-                taskItems.forEach(taskItem => {
-                    const listItem = document.createElement('li');
-                    // Handle different formats of tasks
-                    let taskText = '';
-                    let isChecked = false;
-                    
-                    // Check for checkbox in main page format
-                    const checkbox = taskItem.querySelector('input[type="checkbox"]');
-                    if (checkbox) {
-                        isChecked = checkbox.checked;
-                    } else {
-                        // Check for completed status in view_plan format
-                        isChecked = taskItem.textContent.toLowerCase().includes('(completed)');
-                    }
-                    
-                    // Get task text from different formats
-                    const taskTextElement = taskItem.querySelector('.editable');
-                    if (taskTextElement) {
-                        // Main page format
-                        taskText = taskTextElement.textContent.trim();
-                    } else {
-                        // View_plan format
-                        taskText = taskItem.textContent.trim()
-                            .replace('(Completed)', '')
-                            .replace('(Not Completed)', '')
-                            .trim();
-                    }
-                    
-                    // Handle tasks stored as JSON objects
-                    if (taskText.startsWith('{') && taskText.includes('text')) {
-                        try {
-                            const taskObj = JSON.parse(taskText.replace(/'/g, '"'));
-                            if (taskObj && taskObj.text) {
-                                taskText = taskObj.text;
-                            }
-                        } catch (e) {
-                            // Keep the original text if parsing fails
-                        }
-                    }
-                    
-                    listItem.innerHTML = isChecked 
-                        ? `<span style="margin-right: 10px;">✓</span>${taskText}`
-                        : `<span style="margin-right: 10px;">☐</span>${taskText}`;
-                    
-                    listItem.style.marginBottom = '5px';
-                    tasksList.appendChild(listItem);
-                });
-                
-                domainEl.appendChild(tasksList);
+
+            if (yPos > pageHeight - margin) {
+                pdf.addPage();
+                yPos = margin;
             }
-            
-            domainContainer.appendChild(domainEl);
         });
-        
-        tempDiv.appendChild(domainContainer);
-        
-        // Add signature blocks at the end
-        const signatureSection = document.createElement('div');
-        signatureSection.style.marginTop = '30px';
-        signatureSection.style.pageBreakInside = 'avoid';
-        signatureSection.innerHTML = `
-            <h3 style="margin-top: 50px; margin-bottom: 20px; font-size: 18px; font-weight: bold;">Agreement Signatures</h3>
-            <div style="display: flex; justify-content: space-between;">
-                <div style="width: 45%;">
-                    <div style="border-bottom: 1px solid #000; height: 40px;"></div>
-                    <p style="margin-top: 5px; font-weight: bold;">Client Signature</p>
-                    <div style="border-bottom: 1px solid #000; height: 40px; margin-top: 20px;"></div>
-                    <p style="margin-top: 5px; font-weight: bold;">Date</p>
-                </div>
-                <div style="width: 45%;">
-                    <div style="border-bottom: 1px solid #000; height: 40px;"></div>
-                    <p style="margin-top: 5px; font-weight: bold;">Probation Officer Signature</p>
-                    <div style="border-bottom: 1px solid #000; height: 40px; margin-top: 20px;"></div>
-                    <p style="margin-top: 5px; font-weight: bold;">Date</p>
-                </div>
-            </div>
-        `;
-        tempDiv.appendChild(signatureSection);
-        
-        // Append to body temporarily
-        document.body.appendChild(tempDiv);
-        
-        // Use html2canvas and jsPDF to generate the PDF
-        html2canvas(tempDiv, {
-            scale: 1.5,
-            logging: false,
-            useCORS: true,
-            allowTaint: true,
-            backgroundColor: '#ffffff',
-            letterRendering: true,
-            windowWidth: 800,
-            width: 800,
-            height: tempDiv.offsetHeight,
-            onclone: function(clonedDoc) {
-                const clonedDiv = clonedDoc.querySelector('.pdf-export-container');
-                if (clonedDiv) {
-                    clonedDiv.style.width = '800px';
-                    clonedDiv.style.wordBreak = 'break-word';
-                    clonedDiv.style.whiteSpace = 'pre-wrap';
-                }
-            }
-        }).then(canvas => {
-            try {
-                const imgData = canvas.toDataURL('image/png', 1.0);
-                const pdf = new jspdf.jsPDF({
-                    orientation: 'portrait',
-                    unit: 'mm',
-                    format: 'a4',
-                    compress: true
-                });
-                
-                const imgProps = pdf.getImageProperties(imgData);
-                const pdfWidth = pdf.internal.pageSize.getWidth() - 30; // Reduce width for better margins
-                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-                
-                const marginY = 15; // Top and bottom margin in mm
-                const marginX = 15; // Left and right margin in mm
-                const pageHeight = pdf.internal.pageSize.getHeight();
-                const usablePageHeight = pageHeight - 2 * marginY;
 
-                // If content fits on a single page
-                if (pdfHeight <= usablePageHeight) {
-                    pdf.addImage(imgData, 'PNG', marginX, marginY, pdfWidth - 2 * marginX, pdfHeight);
-                } else {
-                    let position = marginY;
-                    let heightLeft = pdfHeight;
-
-                    // Add first page
-                    pdf.addImage(imgData, 'PNG', marginX, position, pdfWidth - 2 * marginX, pdfHeight);
-                    heightLeft -= usablePageHeight;
-
-                    // Add additional pages
-                    while (heightLeft > 0) {
-                        pdf.addPage();
-                        position -= pageHeight;
-                        pdf.addImage(imgData, 'PNG', marginX, position + marginY, pdfWidth - 2 * marginX, pdfHeight);
-                        heightLeft -= usablePageHeight;
-                    }
-                }
-                
-                pdf.save(fileName);
-                showAlert('PDF has been downloaded.', 'success');
-            } catch (error) {
-                console.error('Error in PDF generation:', error);
-                showAlert('Error creating PDF. Please try again.', 'danger');
-            } finally {
-                // Remove the temporary element
-                document.body.removeChild(tempDiv);
-            }
-        }).catch(err => {
-            console.error('Error generating PDF:', err);
-            document.body.removeChild(tempDiv);
-            showAlert('Error generating PDF. Please try again.', 'danger');
-        });
-    }
-    
-    // Function to show an alert message
-    function showAlert(message, type = 'info') {
-        const alertsContainer = document.getElementById('alerts-container');
-        
-        if (!alertsContainer) return;
-        
-        const alert = document.createElement('div');
-        alert.classList.add('alert', `alert-${type}`, 'alert-dismissible', 'fade', 'show');
-        alert.setAttribute('role', 'alert');
-        
-        alert.innerHTML = `
-            ${message}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        `;
-        
-        alertsContainer.appendChild(alert);
-        
-        // Remove the alert after 5 seconds
-        setTimeout(() => {
-            if (alert.parentNode) {
-                alert.classList.remove('show');
-                setTimeout(() => {
-                    if (alert.parentNode) {
-                        alertsContainer.removeChild(alert);
-                    }
-                }, 150);
-            }
-        }, 5000);
-    }
+        // Save the PDF
+        const fileName = `${planTitle.replace(/\s+/g, '_')}_${clientName.replace(/\s+/g, '_')}.pdf`;
+        pdf.save(fileName);
+        showAlert('PDF has been downloaded.', 'success');
+    };
 });
