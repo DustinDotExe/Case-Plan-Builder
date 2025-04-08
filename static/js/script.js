@@ -749,7 +749,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Add signature blocks at the end
         yPos += 20;
-
+        
+        // Calculate the space needed for the acknowledgment text and signatures
+        const acknowledgmentText = "By signing below, I acknowledge that I have reviewed this plan, understand what is expected of me, and agree to fulfill the outlined goals, objectives, and tasks to the best of my ability.";
+        const acknowledgmentLines = pdf.splitTextToSize(acknowledgmentText, textWidth);
+        const acknowledgmentHeight = acknowledgmentLines.length * 5 + 40; // Height for acknowledgment plus signatures
+        
+        // Check if we need to add a new page before acknowledgment and signatures
+        if (yPos + acknowledgmentHeight > pageHeight - margin) {
+            pdf.addPage();
+            yPos = margin;
+        }
+        
+        // Add acknowledgment text in italics and centered
+        pdf.setFont('helvetica', 'italic');
+        pdf.setFontSize(10); // Slightly smaller font for the acknowledgment text
+        
+        // Center each line of the acknowledgment text
+        acknowledgmentLines.forEach(line => {
+            pdf.text(line, pageWidth / 2, yPos, { align: 'center' });
+            yPos += 5; // Less spacing for acknowledgment lines
+        });
+        
+        // Reset font to normal
+        pdf.setFont('helvetica', 'normal');
+        pdf.setFontSize(12);
+        
+        yPos += 10; // Add space after acknowledgment
+        
         // Draw lines for signatures
         const signatureWidth = 70;
         const leftSignatureX = margin;
