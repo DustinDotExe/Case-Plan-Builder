@@ -900,7 +900,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const marginY = 20; // Top and bottom margin in mm
                 const marginX = 15; // Left and right margin in mm
                 const pageHeight = pdf.internal.pageSize.getHeight();
-                const usablePageHeight = pageHeight - 2 * marginY;inY;
+                const usablePageHeight = pageHeight - 2 * marginY;
 
                 // If content fits on a single page
                 if (pdfHeight <= usablePageHeight) {
@@ -917,7 +917,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     while (heightLeft > 0) {
                         pdf.addPage();
                         position -= pageHeight;
-                        pdf.addImage(imgData, 'PNG', 0, position + marginY, pdfWidth, pdfHeight);
+                        pdf.addImage(imgData, 'PNG', marginX, position + marginY, pdfWidth - 2 * marginX, pdfHeight);
                         heightLeft -= usablePageHeight;
                     }
                 }
