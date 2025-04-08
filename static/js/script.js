@@ -682,13 +682,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 pdf.text('Tasks:', margin, yPos);
                 yPos += 7;
                 tasks.forEach(task => {
-                    const lines = pdf.splitTextToSize(`• ${task}`, textWidth);
-                    lines.forEach(line => {
+                    // Create checkbox instead of bullet point
+                    pdf.rect(margin, yPos - 4, 4, 4); // Draw empty checkbox
+                    
+                    // Add text with proper spacing after checkbox
+                    const lines = pdf.splitTextToSize(`${task}`, textWidth - 8); // Reduce text width to account for checkbox
+                    lines.forEach((line, index) => {
                         if (yPos > pageHeight - margin) {
                             pdf.addPage();
                             yPos = margin;
+                            // If this is not the first line, draw checkbox on the new page
+                            if (index > 0) {
+                                pdf.rect(margin, yPos - 4, 4, 4);
+                            }
                         }
-                        pdf.text(line, margin, yPos);
+                        pdf.text(line, margin + 8, yPos); // Add padding after checkbox
                         yPos += 7;
                     });
                 });
@@ -718,12 +726,10 @@ document.addEventListener('DOMContentLoaded', function() {
         pdf.setFontSize(10);
 
         // Add participant signature block
-        pdf.text(clientName, leftSignatureX, yPos);
         pdf.text("Participant", leftSignatureX, yPos + 5);
         pdf.text(currentDate, leftSignatureX, yPos + 10);
 
         // Add probation officer signature block
-        pdf.text("__________________", rightSignatureX, yPos);
         pdf.text("Probation Officer", rightSignatureX, yPos + 5);
         pdf.text(currentDate, rightSignatureX, yPos + 10);
 
