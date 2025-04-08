@@ -556,8 +556,42 @@ document.addEventListener('DOMContentLoaded', function() {
         showAlert('Preparing PDF...', 'info');
 
         // Get client name and plan title
-        let clientName = document.querySelector('#client_name').value || 'Client';
-        let planTitle = document.querySelector('#plan_title').value || 'Case Plan';
+        // First try to get the values from the form on the index page
+        let clientNameInput = document.querySelector('#client_name') || document.querySelector('#client-name');
+        let planTitleInput = document.querySelector('#plan_title');
+        let clientName, planTitle;
+        
+        // Check if inputs exist and get values
+        if (clientNameInput) {
+            clientName = clientNameInput.value || 'Client';
+        } else {
+            // Try to get from the header on the view/edit page
+            const planHeader = document.querySelector('.plan-header h2, .plan-header h1');
+            if (planHeader) {
+                const headerParts = planHeader.textContent.split(' - ');
+                if (headerParts.length > 1) {
+                    clientName = headerParts[1].trim();
+                } else {
+                    clientName = 'Client';
+                }
+            } else {
+                clientName = 'Client';
+            }
+        }
+        
+        if (planTitleInput) {
+            planTitle = planTitleInput.value || 'Case Plan';
+        } else {
+            // Try to get from the header on the view/edit page
+            const planHeader = document.querySelector('.plan-header h2, .plan-header h1');
+            if (planHeader) {
+                const headerParts = planHeader.textContent.split(' - ');
+                planTitle = headerParts[0].trim() || 'Case Plan';
+            } else {
+                planTitle = 'Case Plan';
+            }
+        }
+        
         const currentDate = new Date().toLocaleDateString();
 
         // Create new PDF document
@@ -668,12 +702,15 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
+        // Add signature blocks at the end
+        yPos += 20;
+
         // Draw lines for signatures
         const signatureWidth = 70;
         const leftSignatureX = margin;
         const rightSignatureX = pageWidth - margin - signatureWidth;
-        yPos += 20; // Spacing before signatures
 
+        // Add signature lines and labels
         pdf.line(leftSignatureX, yPos, leftSignatureX + signatureWidth, yPos);
         pdf.line(rightSignatureX, yPos, rightSignatureX + signatureWidth, yPos);
         
@@ -689,178 +726,6 @@ document.addEventListener('DOMContentLoaded', function() {
         pdf.text("__________________", rightSignatureX, yPos);
         pdf.text("Probation Officer", rightSignatureX, yPos + 5);
         pdf.text(currentDate, rightSignatureX, yPos + 10);
-
-        // Save the PDF
-        const fileName = `${planTitle.replace(/\s+/g, '_')}_${clientName.replace(/\s+/g, '_')}.pdf`;
-        pdf.save(fileName);
-        showAlert('PDF has been downloaded.', 'success');
-    };
-        const currentDate = new Date().toLocaleDateString();
-
-        // Create new PDF document
-        const pdf = new jspdf.jsPDF({
-            orientation: 'portrait',
-            unit: 'mm',
-            format: 'a4'
-        });
-
-        // Set font and size
-        pdf.setFont('helvetica');
-        pdf.setFontSize(12);
-
-        // Define margins (in mm)
-        const margin = 25;
-        const pageWidth = pdf.internal.pageSize.getWidth();
-        const pageHeight = pdf.internal.pageSize.getHeight();
-        const textWidth = pageWidth - (2 * margin);
-
-        // Start position
-        let yPos = margin;
-
-        // Center align header
-        pdf.setFontSize(16);
-        pdf.text(planTitle, pageWidth / 2, yPos, { align: 'center' });
-        yPos += 10;
-
-        pdf.setFontSize(12);
-        pdf.text(clientName, pageWidth / 2, yPos, { align: 'center' });
-        yPos += 7;
-        pdf.text(currentDate, pageWidth / 2, yPos, { align: 'center' });
-        yPos += 15;
-
-        // Add line break
-        pdf.line(margin, yPos, pageWidth - margin, yPos);
-        yPos += 10;
-
-        // Get domains data
-        const domainsToExport = document.querySelectorAll('.domain-section');
-        domainsToExport.forEach(domain => {
-            const domainName = domain.querySelector('h3')?.textContent || '';
-            const riskLevel = domain.querySelector('.badge')?.textContent || '';
-
-            pdf.setFontSize(14);
-            pdf.text(`${domainName} - ${riskLevel}`, margin, yPos);
-            yPos += 10;
-
-            pdf.setFontSize(12);
-
-            // Goals
-            const goals = Array.from(domain.querySelectorAll('.goals-section .editable, .goals-section .editable-text')).map(g => g.textContent);
-            if (goals.length) {
-                pdf.text('Goals:', margin, yPos);
-                yPos += 7;
-                goals.forEach(goal => {
-                    const lines = pdf.splitTextToSize(`• ${goal}`, textWidth);
-                    lines.forEach(line => {
-                        if (yPos > pageHeight - margin) {
-                            pdf.addPage();
-                            yPos = margin;
-                        }
-                        pdf.text(line, margin, yPos);
-                        yPos += 7;
-                    });
-                });
-                yPos += 5;
-            }
-
-            // Objectives
-            const objectives = Array.from(domain.querySelectorAll('.objectives-section .editable, .objectives-section .editable-text')).map(o => o.textContent);
-            if (objectives.length) {
-                pdf.text('Objectives:', margin, yPos);
-                yPos += 7;
-                objectives.forEach(objective => {
-                    const lines = pdf.splitTextToSize(`• ${objective}`, textWidth);
-                    lines.forEach(line => {
-                        if (yPos > pageHeight - margin) {
-                            pdf.addPage();
-                            yPos = margin;
-                        }
-                        pdf.text(line, margin, yPos);
-                        yPos += 7;
-                    });
-                });
-                yPos += 5;
-            }
-
-            // Tasks
-            const tasks = Array.from(domain.querySelectorAll('.tasks-section .editable, .tasks-section .editable-text')).map(t => t.textContent);
-            if (tasks.length) {
-                pdf.text('Tasks:', margin, yPos);
-                yPos += 7;
-                tasks.forEach(task => {
-                    const lines = pdf.splitTextToSize(`• ${task}`, textWidth);
-                    lines.forEach(line => {
-                        if (yPos > pageHeight - margin) {
-                            pdf.addPage();
-                            yPos = margin;
-                        }
-                        pdf.text(line, margin, yPos);
-                        yPos += 7;
-                    });
-                });
-                yPos += 10;
-            }
-
-            if (yPos > pageHeight - margin) {
-                pdf.addPage();
-                yPos = margin;
-            }
-        });
-
-        // Add signature blocks
-        yPos += 20;
-
-        // Draw lines for signatures
-        const signatureWidth = 70;
-        const leftSignatureX = margin;
-        const rightSignatureX = pageWidth - margin - signatureWidth;
-
-        // Add signature lines and labels
-        pdf.line(leftSignatureX, yPos, leftSignatureX + signatureWidth, yPos);
-        pdf.line(rightSignatureX, yPos, rightSignatureX + signatureWidth, yPos);
-
-        yPos += 5;
-        pdf.setFontSize(10);
-
-        // Add participant signature block
-        pdf.text(clientName, leftSignatureX, yPos);
-        pdf.text("Participant", leftSignatureX, yPos + 5);
-        pdf.text(new Date().toLocaleDateString(), leftSignatureX, yPos + 10);
-
-        // Add probation officer signature block
-        pdf.text("", rightSignatureX, yPos);
-        pdf.text("Probation Officer", rightSignatureX, yPos + 5);
-        pdf.text(new Date().toLocaleDateString(), rightSignatureX, yPos + 10);
-
-        // Save the PDF
-        const fileName = `${planTitle.replace(/\s+/g, '_')}_${clientName.replace(/\s+/g, '_')}.pdf`;
-        pdf.save(fileName);
-        showAlert('PDF has been downloaded.', 'success');
-
-        // Add signature blocks
-        yPos += 20;
-
-        // Draw lines for signatures
-        const signatureWidth = 70;
-        const leftSignatureX = margin;
-        const rightSignatureX = pageWidth - margin - signatureWidth;
-
-        // Add signature lines and labels
-        pdf.line(leftSignatureX, yPos, leftSignatureX + signatureWidth, yPos);
-        pdf.line(rightSignatureX, yPos, rightSignatureX + signatureWidth, yPos);
-
-        yPos += 5;
-        pdf.setFontSize(10);
-
-        // Add participant signature block
-        pdf.text(clientName, leftSignatureX, yPos);
-        pdf.text("Participant", leftSignatureX, yPos + 5);
-        pdf.text(new Date().toLocaleDateString(), leftSignatureX, yPos + 10);
-
-        // Add probation officer signature block
-        pdf.text("", rightSignatureX, yPos);
-        pdf.text("Probation Officer", rightSignatureX, yPos + 5);
-        pdf.text(new Date().toLocaleDateString(), rightSignatureX, yPos + 10);
 
         // Save the PDF
         const fileName = `${planTitle.replace(/\s+/g, '_')}_${clientName.replace(/\s+/g, '_')}.pdf`;
