@@ -612,13 +612,25 @@ document.addEventListener('DOMContentLoaded', function() {
         const textWidth = pageWidth - (2 * margin);
         let yPos = margin;
 
-        // Center align header
+        // Center align header with bold styling
         pdf.setFontSize(16);
+        
+        // Set font to bold
+        pdf.setFont('helvetica', 'bold');
+        
+        // Add plan title in bold
         pdf.text(planTitle, pageWidth / 2, yPos, { align: 'center' });
         yPos += 10;
+        
+        // Add client name in bold
         pdf.text(clientName, pageWidth / 2, yPos, { align: 'center' });
         yPos += 7;
+        
+        // Add date in bold
         pdf.text(currentDate, pageWidth / 2, yPos, { align: 'center' });
+        
+        // Reset to normal font
+        pdf.setFont('helvetica', 'normal');
         yPos += 15;
 
         // Add line break
@@ -633,7 +645,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const riskLevel = domain.querySelector('.badge')?.textContent || '';
 
             pdf.setFontSize(14);
+            // Set font to bold for domain headers
+            pdf.setFont('helvetica', 'bold');
             pdf.text(`${domainName} - ${riskLevel}`, margin, yPos);
+            // Reset to normal font
+            pdf.setFont('helvetica', 'normal');
             yPos += 10;
 
             pdf.setFontSize(12);
@@ -641,7 +657,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // Goals
             const goals = Array.from(domain.querySelectorAll('.goals-section .editable, .goals-section .editable-text')).map(g => g.textContent);
             if (goals.length) {
+                // Set font to bold for "Goals:" header
+                pdf.setFont('helvetica', 'bold');
                 pdf.text('Goals:', margin, yPos);
+                // Reset to normal font
+                pdf.setFont('helvetica', 'normal');
                 yPos += 7;
                 goals.forEach(goal => {
                     const lines = pdf.splitTextToSize(`• ${goal}`, textWidth);
@@ -660,7 +680,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // Objectives
             const objectives = Array.from(domain.querySelectorAll('.objectives-section .editable, .objectives-section .editable-text')).map(o => o.textContent);
             if (objectives.length) {
+                // Set font to bold for "Objectives:" header
+                pdf.setFont('helvetica', 'bold');
                 pdf.text('Objectives:', margin, yPos);
+                // Reset to normal font
+                pdf.setFont('helvetica', 'normal');
                 yPos += 7;
                 objectives.forEach(objective => {
                     const lines = pdf.splitTextToSize(`• ${objective}`, textWidth);
@@ -679,7 +703,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // Tasks
             const tasks = Array.from(domain.querySelectorAll('.tasks-section .editable, .tasks-section .editable-text')).map(t => t.textContent);
             if (tasks.length) {
+                // Set font to bold for "Tasks:" header
+                pdf.setFont('helvetica', 'bold');
                 pdf.text('Tasks:', margin, yPos);
+                // Reset to normal font
+                pdf.setFont('helvetica', 'normal');
                 yPos += 7;
                 tasks.forEach(task => {
                     // Create checkbox instead of bullet point
@@ -725,12 +753,16 @@ document.addEventListener('DOMContentLoaded', function() {
         yPos += 5; // Reduced from 10 to 5
         pdf.setFontSize(12);
 
-        // Add participant signature block
+        // Add participant signature block with bold label
+        pdf.setFont('helvetica', 'bold');
         pdf.text("Participant", leftSignatureX, yPos);
+        pdf.setFont('helvetica', 'normal');
         pdf.text(currentDate, leftSignatureX, yPos + 5);
 
-        // Add probation officer signature block
+        // Add probation officer signature block with bold label
+        pdf.setFont('helvetica', 'bold');
         pdf.text("Probation Officer", rightSignatureX, yPos);
+        pdf.setFont('helvetica', 'normal');
         pdf.text(currentDate, rightSignatureX, yPos + 5);
 
         // Save the PDF
