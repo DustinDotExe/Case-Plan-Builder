@@ -556,12 +556,145 @@ document.addEventListener('DOMContentLoaded', function() {
         showAlert('Preparing PDF...', 'info');
 
         // Get client name and plan title
-        let clientName = document.querySelector('#client-name')?.value || 
-                        document.querySelector('p.text-muted')?.textContent.match(/Client:\s*([^|]+)/)?.[ 1]?.trim() || 
-                        'Client';
-        let planTitle = document.querySelector('h1.mb-1')?.textContent || 
-                       document.querySelector('#plan-content h2')?.textContent || 
-                       'Case Plan';
+        let clientName = document.querySelector('#client_name').value || 'Client';
+        let planTitle = document.querySelector('#plan_title').value || 'Case Plan';
+        const currentDate = new Date().toLocaleDateString();
+
+        // Create new PDF document
+        const pdf = new jspdf.jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: 'a4'
+        });
+
+        // Set font and size
+        pdf.setFont('helvetica');
+        pdf.setFontSize(12);
+
+        // Define margins (in mm)
+        const margin = 25;
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        const textWidth = pageWidth - (2 * margin);
+        let yPos = margin;
+
+        // Center align header
+        pdf.setFontSize(16);
+        pdf.text(planTitle, pageWidth / 2, yPos, { align: 'center' });
+        yPos += 10;
+        pdf.text(clientName, pageWidth / 2, yPos, { align: 'center' });
+        yPos += 7;
+        pdf.text(currentDate, pageWidth / 2, yPos, { align: 'center' });
+        yPos += 15;
+
+        // Add line break
+        pdf.line(margin, yPos, pageWidth - margin, yPos);
+        yPos += 10;
+
+        // Get domains data
+        const domainsToExport = document.querySelectorAll('.domain-section');
+
+        domainsToExport.forEach(domain => {
+            const domainName = domain.querySelector('h3')?.textContent || '';
+            const riskLevel = domain.querySelector('.badge')?.textContent || '';
+
+            pdf.setFontSize(14);
+            pdf.text(`${domainName} - ${riskLevel}`, margin, yPos);
+            yPos += 10;
+
+            pdf.setFontSize(12);
+            
+            // Goals
+            const goals = Array.from(domain.querySelectorAll('.goals-section .editable, .goals-section .editable-text')).map(g => g.textContent);
+            if (goals.length) {
+                pdf.text('Goals:', margin, yPos);
+                yPos += 7;
+                goals.forEach(goal => {
+                    const lines = pdf.splitTextToSize(`• ${goal}`, textWidth);
+                    lines.forEach(line => {
+                        if (yPos > pageHeight - margin) {
+                            pdf.addPage();
+                            yPos = margin;
+                        }
+                        pdf.text(line, margin, yPos);
+                        yPos += 7;
+                    });
+                });
+                yPos += 5;
+            }
+
+            // Objectives
+            const objectives = Array.from(domain.querySelectorAll('.objectives-section .editable, .objectives-section .editable-text')).map(o => o.textContent);
+            if (objectives.length) {
+                pdf.text('Objectives:', margin, yPos);
+                yPos += 7;
+                objectives.forEach(objective => {
+                    const lines = pdf.splitTextToSize(`• ${objective}`, textWidth);
+                    lines.forEach(line => {
+                        if (yPos > pageHeight - margin) {
+                            pdf.addPage();
+                            yPos = margin;
+                        }
+                        pdf.text(line, margin, yPos);
+                        yPos += 7;
+                    });
+                });
+                yPos += 5;
+            }
+
+            // Tasks
+            const tasks = Array.from(domain.querySelectorAll('.tasks-section .editable, .tasks-section .editable-text')).map(t => t.textContent);
+            if (tasks.length) {
+                pdf.text('Tasks:', margin, yPos);
+                yPos += 7;
+                tasks.forEach(task => {
+                    const lines = pdf.splitTextToSize(`• ${task}`, textWidth);
+                    lines.forEach(line => {
+                        if (yPos > pageHeight - margin) {
+                            pdf.addPage();
+                            yPos = margin;
+                        }
+                        pdf.text(line, margin, yPos);
+                        yPos += 7;
+                    });
+                });
+                yPos += 10;
+            }
+
+            // Ensuring there's space for signature blocks
+            if (yPos > pageHeight - margin) {
+                pdf.addPage();
+                yPos = margin;
+            }
+        });
+
+        // Draw lines for signatures
+        const signatureWidth = 70;
+        const leftSignatureX = margin;
+        const rightSignatureX = pageWidth - margin - signatureWidth;
+        yPos += 20; // Spacing before signatures
+
+        pdf.line(leftSignatureX, yPos, leftSignatureX + signatureWidth, yPos);
+        pdf.line(rightSignatureX, yPos, rightSignatureX + signatureWidth, yPos);
+        
+        yPos += 5;
+        pdf.setFontSize(10);
+
+        // Add participant signature block
+        pdf.text(clientName, leftSignatureX, yPos);
+        pdf.text("Participant", leftSignatureX, yPos + 5);
+        pdf.text(currentDate, leftSignatureX, yPos + 10);
+
+        // Add probation officer signature block
+        pdf.text("__________________", rightSignatureX, yPos);
+        pdf.text("Probation Officer", rightSignatureX, yPos + 5);
+        pdf.text(currentDate, rightSignatureX, yPos + 10);
+
+        // Save the PDF
+        const fileName = `${planTitle.replace(/\s+/g, '_')}_${clientName.replace(/\s+/g, '_')}.pdf`;
+        pdf.save(fileName);
+        showAlert('PDF has been downloaded.', 'success');
+    };
         const currentDate = new Date().toLocaleDateString();
 
         // Create new PDF document
