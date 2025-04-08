@@ -194,30 +194,50 @@ def generate_plan():
             if not selected_risk:
                 continue
                 
-            # Find the plan template for this domain and risk level
-            domain_plan = None
-            for template in domain.get('templates', []):
-                if template['risk_level'] == selected_risk:
-                    domain_plan = template
-                    break
+            # Combine all plan templates for this domain, regardless of risk level
+            combined_goals = []
+            combined_objectives = []
+            combined_tasks = []
             
-            if domain_plan:
-                # Add the domain plan to the generated plan
-                generated_plan['domains'].append({
-                    "name": domain_name,
-                    "id": domain_id,
-                    "risk_level": selected_risk,
-                    "goals": domain_plan.get('goals', []),
-                    "objectives": domain_plan.get('objectives', []),
-                    "tasks": domain_plan.get('tasks', [])
-                })
-                
-                # Track selected domain for database storage
-                selected_domains.append({
-                    "domain_id": domain_id,
-                    "domain_name": domain_name,
-                    "risk_level": selected_risk
-                })
+            # First, gather all goals, objectives, and tasks from all risk levels
+            for template in domain.get('templates', []):
+                combined_goals.extend(template.get('goals', []))
+                combined_objectives.extend(template.get('objectives', []))
+                combined_tasks.extend(template.get('tasks', []))
+            
+            # Remove duplicates while preserving order
+            unique_goals = []
+            unique_objectives = []
+            unique_tasks = []
+            
+            for goal in combined_goals:
+                if goal not in unique_goals:
+                    unique_goals.append(goal)
+                    
+            for objective in combined_objectives:
+                if objective not in unique_objectives:
+                    unique_objectives.append(objective)
+                    
+            for task in combined_tasks:
+                if task not in unique_tasks:
+                    unique_tasks.append(task)
+            
+            # Add the domain plan to the generated plan
+            generated_plan['domains'].append({
+                "name": domain_name,
+                "id": domain_id,
+                "risk_level": selected_risk,
+                "goals": unique_goals,
+                "objectives": unique_objectives,
+                "tasks": unique_tasks
+            })
+            
+            # Track selected domain for database storage
+            selected_domains.append({
+                "domain_id": domain_id,
+                "domain_name": domain_name,
+                "risk_level": selected_risk
+            })
         
         # Save to database if user is authenticated and requested
         if current_user.is_authenticated and form_data.get('save_to_database') == 'true':
