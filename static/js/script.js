@@ -261,8 +261,6 @@ document.addEventListener('DOMContentLoaded', function() {
             // Add event listeners for goals section
             const goalSelect = goalsSection.querySelector('.goal-select');
             const addSelectedGoalBtn = goalsSection.querySelector('.add-selected-goal');
-            const customGoalInput = goalsSection.querySelector('.custom-goal-input');
-            const addCustomGoalBtn = goalsSection.querySelector('.add-custom-goal');
             const selectedGoalsList = goalsSection.querySelector('.selected-goals-list');
             const noGoalsMessage = goalsSection.querySelector('.no-items-message');
             const goalsCountBadge = goalsSection.querySelector('.selected-count');
@@ -276,21 +274,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (selectedGoal) {
                     addGoalToList(selectedGoal, selectedGoalsList);
                     goalSelect.value = ''; // Reset dropdown
-                    
-                    // Update the counter and hide "no items" message
-                    goalsCountBadge.textContent = selectedGoalsList.querySelectorAll('li').length;
-                    if (parseInt(goalsCountBadge.textContent) > 0) {
-                        noGoalsMessage.style.display = 'none';
-                    }
-                }
-            });
-            
-            // Add custom goal
-            addCustomGoalBtn.addEventListener('click', function() {
-                const customGoal = customGoalInput.value.trim();
-                if (customGoal) {
-                    addGoalToList(customGoal, selectedGoalsList);
-                    customGoalInput.value = ''; // Clear input
                     
                     // Update the counter and hide "no items" message
                     goalsCountBadge.textContent = selectedGoalsList.querySelectorAll('li').length;
@@ -357,8 +340,6 @@ document.addEventListener('DOMContentLoaded', function() {
             // Add event listeners for objectives section
             const objectiveSelect = objectivesSection.querySelector('.objective-select');
             const addSelectedObjectiveBtn = objectivesSection.querySelector('.add-selected-objective');
-            const customObjectiveInput = objectivesSection.querySelector('.custom-objective-input');
-            const addCustomObjectiveBtn = objectivesSection.querySelector('.add-custom-objective');
             const selectedObjectivesList = objectivesSection.querySelector('.selected-objectives-list');
             const noObjectivesMessage = objectivesSection.querySelector('.no-items-message');
             const objectivesCountBadge = objectivesSection.querySelector('.selected-count');
@@ -372,21 +353,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (selectedObjective) {
                     addObjectiveToList(selectedObjective, selectedObjectivesList);
                     objectiveSelect.value = ''; // Reset dropdown
-                    
-                    // Update the counter and hide "no items" message
-                    objectivesCountBadge.textContent = selectedObjectivesList.querySelectorAll('li').length;
-                    if (parseInt(objectivesCountBadge.textContent) > 0) {
-                        noObjectivesMessage.style.display = 'none';
-                    }
-                }
-            });
-            
-            // Add custom objective
-            addCustomObjectiveBtn.addEventListener('click', function() {
-                const customObjective = customObjectiveInput.value.trim();
-                if (customObjective) {
-                    addObjectiveToList(customObjective, selectedObjectivesList);
-                    customObjectiveInput.value = ''; // Clear input
                     
                     // Update the counter and hide "no items" message
                     objectivesCountBadge.textContent = selectedObjectivesList.querySelectorAll('li').length;
@@ -462,8 +428,6 @@ document.addEventListener('DOMContentLoaded', function() {
             // Add event listeners for tasks section
             const taskSelect = tasksSection.querySelector('.task-select');
             const addSelectedTaskBtn = tasksSection.querySelector('.add-selected-task');
-            const customTaskInput = tasksSection.querySelector('.custom-task-input');
-            const addCustomTaskBtn = tasksSection.querySelector('.add-custom-task');
             const selectedTasksList = tasksSection.querySelector('.selected-tasks-list');
             const noTasksMessage = tasksSection.querySelector('.no-items-message');
             const tasksCountBadge = tasksSection.querySelector('.selected-count');
@@ -477,21 +441,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (selectedTask) {
                     addTaskToList(selectedTask, selectedTasksList);
                     taskSelect.value = ''; // Reset dropdown
-                    
-                    // Update the counter and hide "no items" message
-                    tasksCountBadge.textContent = selectedTasksList.querySelectorAll('li').length;
-                    if (parseInt(tasksCountBadge.textContent) > 0) {
-                        noTasksMessage.style.display = 'none';
-                    }
-                }
-            });
-            
-            // Add custom task
-            addCustomTaskBtn.addEventListener('click', function() {
-                const customTask = customTaskInput.value.trim();
-                if (customTask) {
-                    addTaskToList(customTask, selectedTasksList);
-                    customTaskInput.value = ''; // Clear input
                     
                     // Update the counter and hide "no items" message
                     tasksCountBadge.textContent = selectedTasksList.querySelectorAll('li').length;
