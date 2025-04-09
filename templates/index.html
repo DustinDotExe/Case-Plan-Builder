@@ -36,15 +36,18 @@
                         <div class="bg-white border rounded-lg shadow-sm overflow-hidden h-full">
                             <div class="flex justify-between items-center bg-gray-50 px-4 py-3 border-b border-gray-200">
                                 <h5 class="font-medium text-gray-900">{{ domain.name }}</h5>
-                                <div class="flex items-center">
-                                    <label for="domain_toggle_{{ domain.id }}" class="relative inline-flex items-center cursor-pointer">
+                                <div class="relative inline-flex items-center">
+                                    <div class="relative inline-block h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent 
+                                                transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 
+                                                domain-toggle-container">
                                         <input type="checkbox" 
+                                               class="absolute h-0 w-0 opacity-0 domain-toggle"
                                                id="domain_toggle_{{ domain.id }}" 
-                                               data-domain-id="{{ domain.id }}"
-                                               class="sr-only peer domain-toggle">
-                                        <div class="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
-                                        <span class="ms-3 text-sm font-medium text-gray-700 peer-checked:text-primary-600">Include</span>
-                                    </label>
+                                               data-domain-id="{{ domain.id }}">
+                                        <span class="pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 
+                                                    transition duration-200 ease-in-out toggle-dot"></span>
+                                    </div>
+                                    <span class="ml-2 text-sm font-medium text-gray-700">Include</span>
                                 </div>
                             </div>
                             <div class="p-4">
@@ -154,4 +157,43 @@
     </div>
 </div>
 
+<style>
+/* Custom toggle switch styling */
+.domain-toggle-container {
+    background-color: rgba(156, 163, 175, 0.5);
+}
+
+.domain-toggle:checked + .toggle-dot {
+    transform: translateX(100%);
+}
+
+.domain-toggle:checked ~ .domain-toggle-container {
+    background-color: #0ea5e9;
+}
+
+.toggle-dot {
+    left: 0;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Set up custom toggle switches
+    const toggleContainers = document.querySelectorAll('.domain-toggle-container');
+    toggleContainers.forEach(container => {
+        const toggle = container.previousElementSibling;
+        if (toggle && toggle.classList.contains('domain-toggle')) {
+            toggle.addEventListener('change', function() {
+                if (this.checked) {
+                    container.style.backgroundColor = '#0ea5e9';
+                    container.nextElementSibling.style.transform = 'translateX(100%)';
+                } else {
+                    container.style.backgroundColor = 'rgba(156, 163, 175, 0.5)';
+                    container.nextElementSibling.style.transform = 'translateX(0)';
+                }
+            });
+        }
+    });
+});
+</script>
 {% endblock %}
