@@ -179,11 +179,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Add each domain to the plan
         planData.domains.forEach(domain => {
             const domainEl = document.createElement('div');
-            domainEl.classList.add('domain-section', 'mb-4', 'p-3', 'border', 'rounded');
+            domainEl.classList.add('domain-section', 'mb-5', 'p-4', 'border', 'rounded', 'shadow-sm');
 
             // Domain header with risk level
             const domainHeader = document.createElement('div');
-            domainHeader.classList.add('domain-header', 'mb-3');
+            domainHeader.classList.add('domain-header', 'mb-4', 'border-bottom', 'pb-2');
 
             // Get the appropriate badge class based on risk level
             let badgeClass = 'bg-secondary';
@@ -197,46 +197,72 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             domainHeader.innerHTML = `
-                <h3 class="editable" contenteditable="true">${domain.name}</h3>
-                <span class="badge ${badgeClass}">${domain.risk_level} Risk</span>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3 class="editable fw-bold mb-0" contenteditable="true">${domain.name}</h3>
+                    <span class="badge ${badgeClass} fs-6">${domain.risk_level} Risk</span>
+                </div>
             `;
             domainEl.appendChild(domainHeader);
 
             // Goals section with dropdown
             const goalsSection = document.createElement('div');
-            goalsSection.classList.add('goals-section', 'mb-3');
+            goalsSection.classList.add('goals-section', 'mb-4', 'p-3', 'border', 'rounded', 'bg-light');
             goalsSection.innerHTML = `
-                <h4>Goals</h4>
-                <div class="mb-2">
-                    <div class="input-group">
-                        <select class="form-select goal-select" data-domain-id="${domain.id}">
-                            <option value="">-- Select a goal to add --</option>
-                            ${domain.available_goals.map(goal => 
-                                `<option value="${goal}">${goal}</option>`
-                            ).join('')}
-                        </select>
-                        <button class="btn btn-outline-secondary add-selected-goal" type="button">Add</button>
+                <h4 class="mb-3">Goals</h4>
+                <div class="card mb-3">
+                    <div class="card-header bg-primary text-white">
+                        <strong>1. Select from recommended goals</strong>
                     </div>
-                    <div class="form-text">Select goals from the dropdown or add your own below</div>
-                </div>
-                <div class="mt-2">
-                    <div class="input-group">
-                        <input type="text" class="form-control custom-goal-input" placeholder="Enter a custom goal">
-                        <button class="btn btn-outline-secondary add-custom-goal" type="button">Add</button>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <select class="form-select goal-select" data-domain-id="${domain.id}">
+                                <option value="">-- Select a goal to add --</option>
+                                ${domain.available_goals.map(goal => 
+                                    `<option value="${goal}">${goal}</option>`
+                                ).join('')}
+                            </select>
+                            <button class="btn btn-primary add-selected-goal" type="button">Add</button>
+                        </div>
+                        <div class="form-text mt-1">Choose from pre-defined goals appropriate for this domain</div>
                     </div>
                 </div>
-                <ul class="list-group list-group-flush mt-3 selected-goals-list">
-                    ${(domain.selected_goals || []).map(goal => `
-                        <li class="list-group-item">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="editable" contenteditable="true">${goal}</div>
-                                <button class="btn btn-sm btn-outline-danger remove-btn" title="Remove goal" onclick="event.preventDefault(); this.closest('li').remove();">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </div>
-                        </li>
-                    `).join('')}
-                </ul>
+                
+                <div class="card mb-3">
+                    <div class="card-header bg-success text-white">
+                        <strong>2. Add your own custom goal</strong>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input type="text" class="form-control custom-goal-input" placeholder="Enter a custom goal">
+                            <button class="btn btn-success add-custom-goal" type="button">Add</button>
+                        </div>
+                        <div class="form-text mt-1">Or create your own custom goal for this domain</div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header bg-dark text-white">
+                        <strong>Selected Goals</strong>
+                        <span class="badge bg-secondary float-end selected-count">0</span>
+                    </div>
+                    <div class="card-body p-0">
+                        <ul class="list-group list-group-flush selected-goals-list">
+                            ${(domain.selected_goals || []).map(goal => `
+                                <li class="list-group-item">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="editable" contenteditable="true">${goal}</div>
+                                        <button class="btn btn-sm btn-outline-danger remove-btn" title="Remove goal" onclick="event.preventDefault(); this.closest('li').remove();">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
+                                </li>
+                            `).join('')}
+                        </ul>
+                        <div class="no-items-message p-3 text-center text-muted" ${(domain.selected_goals || []).length > 0 ? 'style="display:none;"' : ''}>
+                            No goals selected yet. Add goals from the options above.
+                        </div>
+                    </div>
+                </div>
             `;
             domainEl.appendChild(goalsSection);
             
@@ -246,6 +272,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const customGoalInput = goalsSection.querySelector('.custom-goal-input');
             const addCustomGoalBtn = goalsSection.querySelector('.add-custom-goal');
             const selectedGoalsList = goalsSection.querySelector('.selected-goals-list');
+            const noGoalsMessage = goalsSection.querySelector('.no-items-message');
+            const goalsCountBadge = goalsSection.querySelector('.selected-count');
+            
+            // Initialize the goals count badge with the correct count
+            goalsCountBadge.textContent = selectedGoalsList.querySelectorAll('li').length;
             
             // Add selected goal from dropdown
             addSelectedGoalBtn.addEventListener('click', function() {
@@ -253,6 +284,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (selectedGoal) {
                     addGoalToList(selectedGoal, selectedGoalsList);
                     goalSelect.value = ''; // Reset dropdown
+                    
+                    // Update the counter and hide "no items" message
+                    goalsCountBadge.textContent = selectedGoalsList.querySelectorAll('li').length;
+                    if (parseInt(goalsCountBadge.textContent) > 0) {
+                        noGoalsMessage.style.display = 'none';
+                    }
                 }
             });
             
@@ -262,44 +299,74 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (customGoal) {
                     addGoalToList(customGoal, selectedGoalsList);
                     customGoalInput.value = ''; // Clear input
+                    
+                    // Update the counter and hide "no items" message
+                    goalsCountBadge.textContent = selectedGoalsList.querySelectorAll('li').length;
+                    if (parseInt(goalsCountBadge.textContent) > 0) {
+                        noGoalsMessage.style.display = 'none';
+                    }
                 }
             });
 
             // Objectives section with dropdown
             const objectivesSection = document.createElement('div');
-            objectivesSection.classList.add('objectives-section', 'mb-3');
+            objectivesSection.classList.add('objectives-section', 'mb-4', 'p-3', 'border', 'rounded', 'bg-light');
             objectivesSection.innerHTML = `
-                <h4>Objectives</h4>
-                <div class="mb-2">
-                    <div class="input-group">
-                        <select class="form-select objective-select" data-domain-id="${domain.id}">
-                            <option value="">-- Select an objective to add --</option>
-                            ${domain.available_objectives.map(objective => 
-                                `<option value="${objective}">${objective}</option>`
-                            ).join('')}
-                        </select>
-                        <button class="btn btn-outline-secondary add-selected-objective" type="button">Add</button>
+                <h4 class="mb-3">Objectives</h4>
+                <div class="card mb-3">
+                    <div class="card-header bg-primary text-white">
+                        <strong>1. Select from recommended objectives</strong>
                     </div>
-                    <div class="form-text">Select objectives from the dropdown or add your own below</div>
-                </div>
-                <div class="mt-2">
-                    <div class="input-group">
-                        <input type="text" class="form-control custom-objective-input" placeholder="Enter a custom objective">
-                        <button class="btn btn-outline-secondary add-custom-objective" type="button">Add</button>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <select class="form-select objective-select" data-domain-id="${domain.id}">
+                                <option value="">-- Select an objective to add --</option>
+                                ${domain.available_objectives.map(objective => 
+                                    `<option value="${objective}">${objective}</option>`
+                                ).join('')}
+                            </select>
+                            <button class="btn btn-primary add-selected-objective" type="button">Add</button>
+                        </div>
+                        <div class="form-text mt-1">Choose from pre-defined objectives appropriate for this domain</div>
                     </div>
                 </div>
-                <ul class="list-group list-group-flush mt-3 selected-objectives-list">
-                    ${(domain.selected_objectives || []).map(objective => `
-                        <li class="list-group-item">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="editable" contenteditable="true">${objective}</div>
-                                <button class="btn btn-sm btn-outline-danger remove-btn" title="Remove objective" onclick="event.preventDefault(); this.closest('li').remove();">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </div>
-                        </li>
-                    `).join('')}
-                </ul>
+                
+                <div class="card mb-3">
+                    <div class="card-header bg-success text-white">
+                        <strong>2. Add your own custom objective</strong>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input type="text" class="form-control custom-objective-input" placeholder="Enter a custom objective">
+                            <button class="btn btn-success add-custom-objective" type="button">Add</button>
+                        </div>
+                        <div class="form-text mt-1">Or create your own custom objective for this domain</div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header bg-dark text-white">
+                        <strong>Selected Objectives</strong>
+                        <span class="badge bg-secondary float-end selected-count">0</span>
+                    </div>
+                    <div class="card-body p-0">
+                        <ul class="list-group list-group-flush selected-objectives-list">
+                            ${(domain.selected_objectives || []).map(objective => `
+                                <li class="list-group-item">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="editable" contenteditable="true">${objective}</div>
+                                        <button class="btn btn-sm btn-outline-danger remove-btn" title="Remove objective" onclick="event.preventDefault(); this.closest('li').remove();">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
+                                </li>
+                            `).join('')}
+                        </ul>
+                        <div class="no-items-message p-3 text-center text-muted" ${(domain.selected_objectives || []).length > 0 ? 'style="display:none;"' : ''}>
+                            No objectives selected yet. Add objectives from the options above.
+                        </div>
+                    </div>
+                </div>
             `;
             domainEl.appendChild(objectivesSection);
             
@@ -309,6 +376,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const customObjectiveInput = objectivesSection.querySelector('.custom-objective-input');
             const addCustomObjectiveBtn = objectivesSection.querySelector('.add-custom-objective');
             const selectedObjectivesList = objectivesSection.querySelector('.selected-objectives-list');
+            const noObjectivesMessage = objectivesSection.querySelector('.no-items-message');
+            const objectivesCountBadge = objectivesSection.querySelector('.selected-count');
+            
+            // Initialize the objectives count badge with the correct count
+            objectivesCountBadge.textContent = selectedObjectivesList.querySelectorAll('li').length;
             
             // Add selected objective from dropdown
             addSelectedObjectiveBtn.addEventListener('click', function() {
@@ -316,6 +388,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (selectedObjective) {
                     addObjectiveToList(selectedObjective, selectedObjectivesList);
                     objectiveSelect.value = ''; // Reset dropdown
+                    
+                    // Update the counter and hide "no items" message
+                    objectivesCountBadge.textContent = selectedObjectivesList.querySelectorAll('li').length;
+                    if (parseInt(objectivesCountBadge.textContent) > 0) {
+                        noObjectivesMessage.style.display = 'none';
+                    }
                 }
             });
             
@@ -325,53 +403,83 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (customObjective) {
                     addObjectiveToList(customObjective, selectedObjectivesList);
                     customObjectiveInput.value = ''; // Clear input
+                    
+                    // Update the counter and hide "no items" message
+                    objectivesCountBadge.textContent = selectedObjectivesList.querySelectorAll('li').length;
+                    if (parseInt(objectivesCountBadge.textContent) > 0) {
+                        noObjectivesMessage.style.display = 'none';
+                    }
                 }
             });
 
             // Tasks section with dropdown
             const tasksSection = document.createElement('div');
-            tasksSection.classList.add('tasks-section', 'mb-3');
+            tasksSection.classList.add('tasks-section', 'mb-4', 'p-3', 'border', 'rounded', 'bg-light');
             tasksSection.innerHTML = `
-                <h4>Tasks</h4>
-                <div class="mb-2">
-                    <div class="input-group">
-                        <select class="form-select task-select" data-domain-id="${domain.id}">
-                            <option value="">-- Select a task to add --</option>
-                            ${domain.available_tasks.map(task => {
+                <h4 class="mb-3">Tasks</h4>
+                <div class="card mb-3">
+                    <div class="card-header bg-primary text-white">
+                        <strong>1. Select from recommended tasks</strong>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <select class="form-select task-select" data-domain-id="${domain.id}">
+                                <option value="">-- Select a task to add --</option>
+                                ${domain.available_tasks.map(task => {
+                                    const taskText = typeof task === 'object' && task !== null && task.text ? task.text : task;
+                                    return `<option value="${taskText}">${taskText}</option>`;
+                                }).join('')}
+                            </select>
+                            <button class="btn btn-primary add-selected-task" type="button">Add</button>
+                        </div>
+                        <div class="form-text mt-1">Choose from pre-defined tasks appropriate for this domain</div>
+                    </div>
+                </div>
+                
+                <div class="card mb-3">
+                    <div class="card-header bg-success text-white">
+                        <strong>2. Add your own custom task</strong>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input type="text" class="form-control custom-task-input" placeholder="Enter a custom task">
+                            <button class="btn btn-success add-custom-task" type="button">Add</button>
+                        </div>
+                        <div class="form-text mt-1">Or create your own custom task for this domain</div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header bg-dark text-white">
+                        <strong>Selected Tasks</strong>
+                        <span class="badge bg-secondary float-end selected-count">0</span>
+                    </div>
+                    <div class="card-body p-0">
+                        <ul class="list-group list-group-flush selected-tasks-list">
+                            ${(domain.selected_tasks || []).map(task => {
                                 const taskText = typeof task === 'object' && task !== null && task.text ? task.text : task;
-                                return `<option value="${taskText}">${taskText}</option>`;
+                                const isCompleted = typeof task === 'object' && task !== null && task.completed === true;
+                                
+                                return `
+                                <li class="list-group-item">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center flex-grow-1">
+                                            <input class="form-check-input me-3" type="checkbox" ${isCompleted ? 'checked' : ''}>
+                                            <div class="editable" contenteditable="true">${taskText}</div>
+                                        </div>
+                                        <button class="btn btn-sm btn-outline-danger remove-btn ms-2" title="Remove task" onclick="event.preventDefault(); this.closest('li').remove();">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
+                                </li>
+                                `;
                             }).join('')}
-                        </select>
-                        <button class="btn btn-outline-secondary add-selected-task" type="button">Add</button>
-                    </div>
-                    <div class="form-text">Select tasks from the dropdown or add your own below</div>
-                </div>
-                <div class="mt-2">
-                    <div class="input-group">
-                        <input type="text" class="form-control custom-task-input" placeholder="Enter a custom task">
-                        <button class="btn btn-outline-secondary add-custom-task" type="button">Add</button>
+                        </ul>
+                        <div class="no-items-message p-3 text-center text-muted" ${(domain.selected_tasks || []).length > 0 ? 'style="display:none;"' : ''}>
+                            No tasks selected yet. Add tasks from the options above.
+                        </div>
                     </div>
                 </div>
-                <ul class="list-group list-group-flush mt-3 selected-tasks-list">
-                    ${(domain.selected_tasks || []).map(task => {
-                        const taskText = typeof task === 'object' && task !== null && task.text ? task.text : task;
-                        const isCompleted = typeof task === 'object' && task !== null && task.completed === true;
-                        
-                        return `
-                        <li class="list-group-item">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="d-flex align-items-center flex-grow-1">
-                                    <input class="form-check-input me-3" type="checkbox" ${isCompleted ? 'checked' : ''}>
-                                    <div class="editable" contenteditable="true">${taskText}</div>
-                                </div>
-                                <button class="btn btn-sm btn-outline-danger remove-btn ms-2" title="Remove task" onclick="event.preventDefault(); this.closest('li').remove();">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </div>
-                        </li>
-                        `;
-                    }).join('')}
-                </ul>
             `;
             domainEl.appendChild(tasksSection);
             
@@ -381,6 +489,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const customTaskInput = tasksSection.querySelector('.custom-task-input');
             const addCustomTaskBtn = tasksSection.querySelector('.add-custom-task');
             const selectedTasksList = tasksSection.querySelector('.selected-tasks-list');
+            const noTasksMessage = tasksSection.querySelector('.no-items-message');
+            const tasksCountBadge = tasksSection.querySelector('.selected-count');
+            
+            // Initialize the tasks count badge with the correct count
+            tasksCountBadge.textContent = selectedTasksList.querySelectorAll('li').length;
             
             // Add selected task from dropdown
             addSelectedTaskBtn.addEventListener('click', function() {
@@ -388,6 +501,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (selectedTask) {
                     addTaskToList(selectedTask, selectedTasksList);
                     taskSelect.value = ''; // Reset dropdown
+                    
+                    // Update the counter and hide "no items" message
+                    tasksCountBadge.textContent = selectedTasksList.querySelectorAll('li').length;
+                    if (parseInt(tasksCountBadge.textContent) > 0) {
+                        noTasksMessage.style.display = 'none';
+                    }
                 }
             });
             
@@ -397,6 +516,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (customTask) {
                     addTaskToList(customTask, selectedTasksList);
                     customTaskInput.value = ''; // Clear input
+                    
+                    // Update the counter and hide "no items" message
+                    tasksCountBadge.textContent = selectedTasksList.querySelectorAll('li').length;
+                    if (parseInt(tasksCountBadge.textContent) > 0) {
+                        noTasksMessage.style.display = 'none';
+                    }
                 }
             });
 
@@ -931,12 +1056,38 @@ document.addEventListener('DOMContentLoaded', function() {
         newItem.innerHTML = `
             <div class="d-flex justify-content-between align-items-center">
                 <div class="editable" contenteditable="true">${goalText}</div>
-                <button class="btn btn-sm btn-outline-danger remove-btn" title="Remove goal" onclick="event.preventDefault(); this.closest('li').remove();">
+                <button class="btn btn-sm btn-outline-danger remove-btn" title="Remove goal" onclick="event.preventDefault(); 
+                    const li = this.closest('li');
+                    const ul = li.closest('ul');
+                    li.remove();
+                    
+                    // Update the count badge
+                    const card = ul.closest('.card');
+                    const countBadge = card.querySelector('.selected-count');
+                    if (countBadge) {
+                        countBadge.textContent = ul.querySelectorAll('li').length;
+                    }
+                    
+                    // Show 'no items' message if needed
+                    const noItemsMsg = card.querySelector('.no-items-message');
+                    if (noItemsMsg && ul.querySelectorAll('li').length === 0) {
+                        noItemsMsg.style.display = 'block';
+                    }
+                ">
                     <i class="bi bi-trash"></i>
                 </button>
             </div>
         `;
         listElement.appendChild(newItem);
+        
+        // Initialize the newly added item with editable behavior
+        const editableDiv = newItem.querySelector('.editable');
+        editableDiv.addEventListener('focus', function() {
+            editableDiv.classList.add('editing');
+        });
+        editableDiv.addEventListener('blur', function() {
+            editableDiv.classList.remove('editing');
+        });
     }
     
     function addObjectiveToList(objectiveText, listElement) {
@@ -945,12 +1096,38 @@ document.addEventListener('DOMContentLoaded', function() {
         newItem.innerHTML = `
             <div class="d-flex justify-content-between align-items-center">
                 <div class="editable" contenteditable="true">${objectiveText}</div>
-                <button class="btn btn-sm btn-outline-danger remove-btn" title="Remove objective" onclick="event.preventDefault(); this.closest('li').remove();">
+                <button class="btn btn-sm btn-outline-danger remove-btn" title="Remove objective" onclick="event.preventDefault(); 
+                    const li = this.closest('li');
+                    const ul = li.closest('ul');
+                    li.remove();
+                    
+                    // Update the count badge
+                    const card = ul.closest('.card');
+                    const countBadge = card.querySelector('.selected-count');
+                    if (countBadge) {
+                        countBadge.textContent = ul.querySelectorAll('li').length;
+                    }
+                    
+                    // Show 'no items' message if needed
+                    const noItemsMsg = card.querySelector('.no-items-message');
+                    if (noItemsMsg && ul.querySelectorAll('li').length === 0) {
+                        noItemsMsg.style.display = 'block';
+                    }
+                ">
                     <i class="bi bi-trash"></i>
                 </button>
             </div>
         `;
         listElement.appendChild(newItem);
+        
+        // Initialize the newly added item with editable behavior
+        const editableDiv = newItem.querySelector('.editable');
+        editableDiv.addEventListener('focus', function() {
+            editableDiv.classList.add('editing');
+        });
+        editableDiv.addEventListener('blur', function() {
+            editableDiv.classList.remove('editing');
+        });
     }
     
     function addTaskToList(taskText, listElement) {
@@ -962,11 +1139,37 @@ document.addEventListener('DOMContentLoaded', function() {
                     <input class="form-check-input me-3" type="checkbox">
                     <div class="editable" contenteditable="true">${taskText}</div>
                 </div>
-                <button class="btn btn-sm btn-outline-danger remove-btn ms-2" title="Remove task" onclick="event.preventDefault(); this.closest('li').remove();">
+                <button class="btn btn-sm btn-outline-danger remove-btn ms-2" title="Remove task" onclick="event.preventDefault(); 
+                    const li = this.closest('li');
+                    const ul = li.closest('ul');
+                    li.remove();
+                    
+                    // Update the count badge
+                    const card = ul.closest('.card');
+                    const countBadge = card.querySelector('.selected-count');
+                    if (countBadge) {
+                        countBadge.textContent = ul.querySelectorAll('li').length;
+                    }
+                    
+                    // Show 'no items' message if needed
+                    const noItemsMsg = card.querySelector('.no-items-message');
+                    if (noItemsMsg && ul.querySelectorAll('li').length === 0) {
+                        noItemsMsg.style.display = 'block';
+                    }
+                ">
                     <i class="bi bi-trash"></i>
                 </button>
             </div>
         `;
         listElement.appendChild(newItem);
+        
+        // Initialize the newly added item with editable behavior
+        const editableDiv = newItem.querySelector('.editable');
+        editableDiv.addEventListener('focus', function() {
+            editableDiv.classList.add('editing');
+        });
+        editableDiv.addEventListener('blur', function() {
+            editableDiv.classList.remove('editing');
+        });
     }
 });
