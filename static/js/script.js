@@ -228,22 +228,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 
                 <div class="card mb-3">
-                    <div class="card-header bg-success text-white">
+                    <div class="card-header bg-primary text-white">
                         <strong>2. Add your own custom goal</strong>
                     </div>
                     <div class="card-body">
                         <div class="input-group">
                             <input type="text" class="form-control custom-goal-input" placeholder="Enter a custom goal">
-                            <button class="btn btn-success add-custom-goal" type="button">Add</button>
+                            <button class="btn btn-primary add-custom-goal" type="button">Add</button>
                         </div>
                         <div class="form-text mt-1">Or create your own custom goal for this domain</div>
                     </div>
                 </div>
                 
                 <div class="card">
-                    <div class="card-header bg-dark text-white">
+                    <div class="card-header bg-primary text-white">
                         <strong>Selected Goals</strong>
-                        <span class="badge bg-secondary float-end selected-count">0</span>
+                        <span class="badge bg-light text-dark float-end selected-count">0</span>
                     </div>
                     <div class="card-body p-0">
                         <ul class="list-group list-group-flush selected-goals-list">
@@ -332,22 +332,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 
                 <div class="card mb-3">
-                    <div class="card-header bg-success text-white">
+                    <div class="card-header bg-primary text-white">
                         <strong>2. Add your own custom objective</strong>
                     </div>
                     <div class="card-body">
                         <div class="input-group">
                             <input type="text" class="form-control custom-objective-input" placeholder="Enter a custom objective">
-                            <button class="btn btn-success add-custom-objective" type="button">Add</button>
+                            <button class="btn btn-primary add-custom-objective" type="button">Add</button>
                         </div>
                         <div class="form-text mt-1">Or create your own custom objective for this domain</div>
                     </div>
                 </div>
                 
                 <div class="card">
-                    <div class="card-header bg-dark text-white">
+                    <div class="card-header bg-primary text-white">
                         <strong>Selected Objectives</strong>
-                        <span class="badge bg-secondary float-end selected-count">0</span>
+                        <span class="badge bg-light text-dark float-end selected-count">0</span>
                     </div>
                     <div class="card-body p-0">
                         <ul class="list-group list-group-flush selected-objectives-list">
@@ -437,22 +437,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 
                 <div class="card mb-3">
-                    <div class="card-header bg-success text-white">
+                    <div class="card-header bg-primary text-white">
                         <strong>2. Add your own custom task</strong>
                     </div>
                     <div class="card-body">
                         <div class="input-group">
                             <input type="text" class="form-control custom-task-input" placeholder="Enter a custom task">
-                            <button class="btn btn-success add-custom-task" type="button">Add</button>
+                            <button class="btn btn-primary add-custom-task" type="button">Add</button>
                         </div>
                         <div class="form-text mt-1">Or create your own custom task for this domain</div>
                     </div>
                 </div>
                 
                 <div class="card">
-                    <div class="card-header bg-dark text-white">
+                    <div class="card-header bg-primary text-white">
                         <strong>Selected Tasks</strong>
-                        <span class="badge bg-secondary float-end selected-count">0</span>
+                        <span class="badge bg-light text-dark float-end selected-count">0</span>
                     </div>
                     <div class="card-body p-0">
                         <ul class="list-group list-group-flush selected-tasks-list">
