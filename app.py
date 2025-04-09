@@ -194,42 +194,36 @@ def generate_plan():
             if not selected_risk:
                 continue
                 
-            # Combine all plan templates for this domain, regardless of risk level
-            combined_goals = []
-            combined_objectives = []
-            combined_tasks = []
+            # Get all available options for this domain
+            available_goals = []
+            available_objectives = []
+            available_tasks = []
             
             # First, gather all goals, objectives, and tasks from all risk levels
             for template in domain.get('templates', []):
-                combined_goals.extend(template.get('goals', []))
-                combined_objectives.extend(template.get('objectives', []))
-                combined_tasks.extend(template.get('tasks', []))
+                for goal in template.get('goals', []):
+                    if goal not in available_goals:
+                        available_goals.append(goal)
+                
+                for objective in template.get('objectives', []):
+                    if objective not in available_objectives:
+                        available_objectives.append(objective)
+                
+                for task in template.get('tasks', []):
+                    if task not in available_tasks:
+                        available_tasks.append(task)
             
-            # Remove duplicates while preserving order
-            unique_goals = []
-            unique_objectives = []
-            unique_tasks = []
-            
-            for goal in combined_goals:
-                if goal not in unique_goals:
-                    unique_goals.append(goal)
-                    
-            for objective in combined_objectives:
-                if objective not in unique_objectives:
-                    unique_objectives.append(objective)
-                    
-            for task in combined_tasks:
-                if task not in unique_tasks:
-                    unique_tasks.append(task)
-            
-            # Add the domain plan to the generated plan
+            # Add the domain plan to the generated plan with empty selected items and all available options
             generated_plan['domains'].append({
                 "name": domain_name,
                 "id": domain_id,
                 "risk_level": selected_risk,
-                "goals": unique_goals,
-                "objectives": unique_objectives,
-                "tasks": unique_tasks
+                "selected_goals": [],
+                "selected_objectives": [],
+                "selected_tasks": [],
+                "available_goals": available_goals,
+                "available_objectives": available_objectives,
+                "available_tasks": available_tasks
             })
             
             # Track selected domain for database storage
