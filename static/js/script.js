@@ -214,44 +214,49 @@ document.addEventListener('DOMContentLoaded', function() {
                         <i class="bi bi-plus-circle"></i> Add Goal
                     </button>
                 </div>
-                <div class="card mb-3">
-                    <div class="card-header bg-dark text-white">
-                        <strong>Select from recommended goals</strong>
-                    </div>
-                    <div class="card-body">
-                        <div class="input-group">
-                            <select class="form-select goal-select" data-domain-id="${domain.id}">
-                                <option value="">-- Select a goal to add --</option>
-                                ${domain.available_goals.map(goal => 
-                                    `<option value="${goal}">${goal}</option>`
-                                ).join('')}
-                            </select>
-                            <button class="btn btn-dark add-selected-goal" type="button">Add</button>
+                <div class="row">
+                    <div class="col-lg-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header bg-dark text-white">
+                                <strong>Select from recommended goals</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="input-group">
+                                    <select class="form-select goal-select" data-domain-id="${domain.id}">
+                                        <option value="">-- Select a goal to add --</option>
+                                        ${domain.available_goals.map(goal => 
+                                            `<option value="${goal}">${goal}</option>`
+                                        ).join('')}
+                                    </select>
+                                    <button class="btn btn-dark add-selected-goal" type="button">Add</button>
+                                </div>
+                                <div class="form-text mt-1">Choose from pre-defined goals appropriate for this domain</div>
+                            </div>
                         </div>
-                        <div class="form-text mt-1">Choose from pre-defined goals appropriate for this domain</div>
                     </div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-header bg-dark text-white">
-                        <strong>Selected Goals</strong>
-                        <span class="badge bg-light text-dark float-end selected-count">0</span>
-                    </div>
-                    <div class="card-body p-0">
-                        <ul class="list-group list-group-flush selected-goals-list">
-                            ${(domain.selected_goals || []).map(goal => `
-                                <li class="list-group-item">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="editable" contenteditable="true">${goal}</div>
-                                        <button class="btn btn-sm btn-outline-danger remove-btn" title="Remove goal" onclick="event.preventDefault(); this.closest('li').remove();">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </div>
-                                </li>
-                            `).join('')}
-                        </ul>
-                        <div class="no-items-message p-3 text-center text-muted" ${(domain.selected_goals || []).length > 0 ? 'style="display:none;"' : ''}>
-                            No goals selected yet. Add goals from the options above.
+                    <div class="col-lg-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header bg-success text-white">
+                                <strong>Selected Goals</strong>
+                                <span class="badge bg-light text-dark float-end selected-count">0</span>
+                            </div>
+                            <div class="card-body p-0">
+                                <ul class="list-group list-group-flush selected-goals-list">
+                                    ${(domain.selected_goals || []).map(goal => `
+                                        <li class="list-group-item">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="editable" contenteditable="true">${goal}</div>
+                                                <button class="btn btn-sm btn-outline-danger remove-btn" title="Remove goal" onclick="event.preventDefault(); this.closest('li').remove();">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </div>
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                                <div class="no-items-message p-3 text-center text-muted" ${(domain.selected_goals || []).length > 0 ? 'style="display:none;"' : ''}>
+                                    No goals selected yet. Add goals from the options above.
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -293,44 +298,49 @@ document.addEventListener('DOMContentLoaded', function() {
                         <i class="bi bi-plus-circle"></i> Add Objective
                     </button>
                 </div>
-                <div class="card mb-3">
-                    <div class="card-header bg-dark text-white">
-                        <strong>Select from recommended objectives</strong>
-                    </div>
-                    <div class="card-body">
-                        <div class="input-group">
-                            <select class="form-select objective-select" data-domain-id="${domain.id}">
-                                <option value="">-- Select an objective to add --</option>
-                                ${domain.available_objectives.map(objective => 
-                                    `<option value="${objective}">${objective}</option>`
-                                ).join('')}
-                            </select>
-                            <button class="btn btn-dark add-selected-objective" type="button">Add</button>
+                <div class="row">
+                    <div class="col-lg-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header bg-dark text-white">
+                                <strong>Select from recommended objectives</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="input-group">
+                                    <select class="form-select objective-select" data-domain-id="${domain.id}">
+                                        <option value="">-- Select an objective to add --</option>
+                                        ${domain.available_objectives.map(objective => 
+                                            `<option value="${objective}">${objective}</option>`
+                                        ).join('')}
+                                    </select>
+                                    <button class="btn btn-dark add-selected-objective" type="button">Add</button>
+                                </div>
+                                <div class="form-text mt-1">Choose from pre-defined objectives appropriate for this domain</div>
+                            </div>
                         </div>
-                        <div class="form-text mt-1">Choose from pre-defined objectives appropriate for this domain</div>
                     </div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-header bg-dark text-white">
-                        <strong>Selected Objectives</strong>
-                        <span class="badge bg-light text-dark float-end selected-count">0</span>
-                    </div>
-                    <div class="card-body p-0">
-                        <ul class="list-group list-group-flush selected-objectives-list">
-                            ${(domain.selected_objectives || []).map(objective => `
-                                <li class="list-group-item">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="editable" contenteditable="true">${objective}</div>
-                                        <button class="btn btn-sm btn-outline-danger remove-btn" title="Remove objective" onclick="event.preventDefault(); this.closest('li').remove();">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </div>
-                                </li>
-                            `).join('')}
-                        </ul>
-                        <div class="no-items-message p-3 text-center text-muted" ${(domain.selected_objectives || []).length > 0 ? 'style="display:none;"' : ''}>
-                            No objectives selected yet. Add objectives from the options above.
+                    <div class="col-lg-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header bg-success text-white">
+                                <strong>Selected Objectives</strong>
+                                <span class="badge bg-light text-dark float-end selected-count">0</span>
+                            </div>
+                            <div class="card-body p-0">
+                                <ul class="list-group list-group-flush selected-objectives-list">
+                                    ${(domain.selected_objectives || []).map(objective => `
+                                        <li class="list-group-item">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="editable" contenteditable="true">${objective}</div>
+                                                <button class="btn btn-sm btn-outline-danger remove-btn" title="Remove objective" onclick="event.preventDefault(); this.closest('li').remove();">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </div>
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                                <div class="no-items-message p-3 text-center text-muted" ${(domain.selected_objectives || []).length > 0 ? 'style="display:none;"' : ''}>
+                                    No objectives selected yet. Add objectives from the options above.
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -372,53 +382,58 @@ document.addEventListener('DOMContentLoaded', function() {
                         <i class="bi bi-plus-circle"></i> Add Task
                     </button>
                 </div>
-                <div class="card mb-3">
-                    <div class="card-header bg-dark text-white">
-                        <strong>Select from recommended tasks</strong>
-                    </div>
-                    <div class="card-body">
-                        <div class="input-group">
-                            <select class="form-select task-select" data-domain-id="${domain.id}">
-                                <option value="">-- Select a task to add --</option>
-                                ${domain.available_tasks.map(task => {
-                                    const taskText = typeof task === 'object' && task !== null && task.text ? task.text : task;
-                                    return `<option value="${taskText}">${taskText}</option>`;
-                                }).join('')}
-                            </select>
-                            <button class="btn btn-dark add-selected-task" type="button">Add</button>
+                <div class="row">
+                    <div class="col-lg-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header bg-dark text-white">
+                                <strong>Select from recommended tasks</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="input-group">
+                                    <select class="form-select task-select" data-domain-id="${domain.id}">
+                                        <option value="">-- Select a task to add --</option>
+                                        ${domain.available_tasks.map(task => {
+                                            const taskText = typeof task === 'object' && task !== null && task.text ? task.text : task;
+                                            return `<option value="${taskText}">${taskText}</option>`;
+                                        }).join('')}
+                                    </select>
+                                    <button class="btn btn-dark add-selected-task" type="button">Add</button>
+                                </div>
+                                <div class="form-text mt-1">Choose from pre-defined tasks appropriate for this domain</div>
+                            </div>
                         </div>
-                        <div class="form-text mt-1">Choose from pre-defined tasks appropriate for this domain</div>
                     </div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-header bg-dark text-white">
-                        <strong>Selected Tasks</strong>
-                        <span class="badge bg-light text-dark float-end selected-count">0</span>
-                    </div>
-                    <div class="card-body p-0">
-                        <ul class="list-group list-group-flush selected-tasks-list">
-                            ${(domain.selected_tasks || []).map(task => {
-                                const taskText = typeof task === 'object' && task !== null && task.text ? task.text : task;
-                                const isCompleted = typeof task === 'object' && task !== null && task.completed === true;
-                                
-                                return `
-                                <li class="list-group-item">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="d-flex align-items-center flex-grow-1">
-                                            <input class="form-check-input me-3" type="checkbox" ${isCompleted ? 'checked' : ''}>
-                                            <div class="editable" contenteditable="true">${taskText}</div>
-                                        </div>
-                                        <button class="btn btn-sm btn-outline-danger remove-btn ms-2" title="Remove task" onclick="event.preventDefault(); this.closest('li').remove();">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </div>
-                                </li>
-                                `;
-                            }).join('')}
-                        </ul>
-                        <div class="no-items-message p-3 text-center text-muted" ${(domain.selected_tasks || []).length > 0 ? 'style="display:none;"' : ''}>
-                            No tasks selected yet. Add tasks from the options above.
+                    <div class="col-lg-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header bg-success text-white">
+                                <strong>Selected Tasks</strong>
+                                <span class="badge bg-light text-dark float-end selected-count">0</span>
+                            </div>
+                            <div class="card-body p-0">
+                                <ul class="list-group list-group-flush selected-tasks-list">
+                                    ${(domain.selected_tasks || []).map(task => {
+                                        const taskText = typeof task === 'object' && task !== null && task.text ? task.text : task;
+                                        const isCompleted = typeof task === 'object' && task !== null && task.completed === true;
+                                        
+                                        return `
+                                        <li class="list-group-item">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="d-flex align-items-center flex-grow-1">
+                                                    <input class="form-check-input me-3" type="checkbox" ${isCompleted ? 'checked' : ''}>
+                                                    <div class="editable" contenteditable="true">${taskText}</div>
+                                                </div>
+                                                <button class="btn btn-sm btn-outline-danger remove-btn ms-2" title="Remove task" onclick="event.preventDefault(); this.closest('li').remove();">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </div>
+                                        </li>
+                                        `;
+                                    }).join('')}
+                                </ul>
+                                <div class="no-items-message p-3 text-center text-muted" ${(domain.selected_tasks || []).length > 0 ? 'style="display:none;"' : ''}>
+                                    No tasks selected yet. Add tasks from the options above.
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
