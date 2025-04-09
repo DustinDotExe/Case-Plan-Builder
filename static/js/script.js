@@ -208,10 +208,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const goalsSection = document.createElement('div');
             goalsSection.classList.add('goals-section', 'mb-4', 'p-3', 'border', 'rounded', 'bg-light');
             goalsSection.innerHTML = `
-                <h4 class="mb-3">Goals</h4>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="mb-0">Goals</h4>
+                    <button type="button" class="btn btn-outline-secondary btn-sm add-goal-btn">
+                        <i class="bi bi-plus-circle"></i> Add Goal
+                    </button>
+                </div>
                 <div class="card mb-3">
-                    <div class="card-header bg-primary text-white">
-                        <strong>1. Select from recommended goals</strong>
+                    <div class="card-header bg-dark text-white">
+                        <strong>Select from recommended goals</strong>
                     </div>
                     <div class="card-body">
                         <div class="input-group">
@@ -221,27 +226,14 @@ document.addEventListener('DOMContentLoaded', function() {
                                     `<option value="${goal}">${goal}</option>`
                                 ).join('')}
                             </select>
-                            <button class="btn btn-primary add-selected-goal" type="button">Add</button>
+                            <button class="btn btn-dark add-selected-goal" type="button">Add</button>
                         </div>
                         <div class="form-text mt-1">Choose from pre-defined goals appropriate for this domain</div>
                     </div>
                 </div>
                 
-                <div class="card mb-3">
-                    <div class="card-header bg-primary text-white">
-                        <strong>2. Add your own custom goal</strong>
-                    </div>
-                    <div class="card-body">
-                        <div class="input-group">
-                            <input type="text" class="form-control custom-goal-input" placeholder="Enter a custom goal">
-                            <button class="btn btn-primary add-custom-goal" type="button">Add</button>
-                        </div>
-                        <div class="form-text mt-1">Or create your own custom goal for this domain</div>
-                    </div>
-                </div>
-                
                 <div class="card">
-                    <div class="card-header bg-primary text-white">
+                    <div class="card-header bg-dark text-white">
                         <strong>Selected Goals</strong>
                         <span class="badge bg-light text-dark float-end selected-count">0</span>
                     </div>
@@ -312,10 +304,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const objectivesSection = document.createElement('div');
             objectivesSection.classList.add('objectives-section', 'mb-4', 'p-3', 'border', 'rounded', 'bg-light');
             objectivesSection.innerHTML = `
-                <h4 class="mb-3">Objectives</h4>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="mb-0">Objectives</h4>
+                    <button type="button" class="btn btn-outline-secondary btn-sm add-objective-btn">
+                        <i class="bi bi-plus-circle"></i> Add Objective
+                    </button>
+                </div>
                 <div class="card mb-3">
-                    <div class="card-header bg-primary text-white">
-                        <strong>1. Select from recommended objectives</strong>
+                    <div class="card-header bg-dark text-white">
+                        <strong>Select from recommended objectives</strong>
                     </div>
                     <div class="card-body">
                         <div class="input-group">
@@ -325,27 +322,14 @@ document.addEventListener('DOMContentLoaded', function() {
                                     `<option value="${objective}">${objective}</option>`
                                 ).join('')}
                             </select>
-                            <button class="btn btn-primary add-selected-objective" type="button">Add</button>
+                            <button class="btn btn-dark add-selected-objective" type="button">Add</button>
                         </div>
                         <div class="form-text mt-1">Choose from pre-defined objectives appropriate for this domain</div>
                     </div>
                 </div>
                 
-                <div class="card mb-3">
-                    <div class="card-header bg-primary text-white">
-                        <strong>2. Add your own custom objective</strong>
-                    </div>
-                    <div class="card-body">
-                        <div class="input-group">
-                            <input type="text" class="form-control custom-objective-input" placeholder="Enter a custom objective">
-                            <button class="btn btn-primary add-custom-objective" type="button">Add</button>
-                        </div>
-                        <div class="form-text mt-1">Or create your own custom objective for this domain</div>
-                    </div>
-                </div>
-                
                 <div class="card">
-                    <div class="card-header bg-primary text-white">
+                    <div class="card-header bg-dark text-white">
                         <strong>Selected Objectives</strong>
                         <span class="badge bg-light text-dark float-end selected-count">0</span>
                     </div>
@@ -416,10 +400,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const tasksSection = document.createElement('div');
             tasksSection.classList.add('tasks-section', 'mb-4', 'p-3', 'border', 'rounded', 'bg-light');
             tasksSection.innerHTML = `
-                <h4 class="mb-3">Tasks</h4>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="mb-0">Tasks</h4>
+                    <button type="button" class="btn btn-outline-secondary btn-sm add-task-btn">
+                        <i class="bi bi-plus-circle"></i> Add Task
+                    </button>
+                </div>
                 <div class="card mb-3">
-                    <div class="card-header bg-primary text-white">
-                        <strong>1. Select from recommended tasks</strong>
+                    <div class="card-header bg-dark text-white">
+                        <strong>Select from recommended tasks</strong>
                     </div>
                     <div class="card-body">
                         <div class="input-group">
@@ -430,27 +419,14 @@ document.addEventListener('DOMContentLoaded', function() {
                                     return `<option value="${taskText}">${taskText}</option>`;
                                 }).join('')}
                             </select>
-                            <button class="btn btn-primary add-selected-task" type="button">Add</button>
+                            <button class="btn btn-dark add-selected-task" type="button">Add</button>
                         </div>
                         <div class="form-text mt-1">Choose from pre-defined tasks appropriate for this domain</div>
                     </div>
                 </div>
                 
-                <div class="card mb-3">
-                    <div class="card-header bg-primary text-white">
-                        <strong>2. Add your own custom task</strong>
-                    </div>
-                    <div class="card-body">
-                        <div class="input-group">
-                            <input type="text" class="form-control custom-task-input" placeholder="Enter a custom task">
-                            <button class="btn btn-primary add-custom-task" type="button">Add</button>
-                        </div>
-                        <div class="form-text mt-1">Or create your own custom task for this domain</div>
-                    </div>
-                </div>
-                
                 <div class="card">
-                    <div class="card-header bg-primary text-white">
+                    <div class="card-header bg-dark text-white">
                         <strong>Selected Tasks</strong>
                         <span class="badge bg-light text-dark float-end selected-count">0</span>
                     </div>
@@ -525,38 +501,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
 
-            // Add button to add custom items
-            const addItemSection = document.createElement('div');
-            addItemSection.classList.add('add-item-section', 'mt-3');
-
-            addItemSection.innerHTML = `
-                <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-outline-secondary btn-sm add-goal-btn">
-                        <i class="bi bi-plus-circle"></i> Add Goal
-                    </button>
-                    <button type="button" class="btn btn-outline-secondary btn-sm add-objective-btn">
-                        <i class="bi bi-plus-circle"></i> Add Objective
-                    </button>
-                    <button type="button" class="btn btn-outline-secondary btn-sm add-task-btn">
-                        <i class="bi bi-plus-circle"></i> Add Task
-                    </button>
-                </div>
-            `;
-
-            // Add event listeners to the buttons
-            addItemSection.querySelector('.add-goal-btn').addEventListener('click', function() {
+            // Add event listeners to the add buttons 
+            const goalAddBtn = goalsSection.querySelector('.add-goal-btn');
+            const objectiveAddBtn = objectivesSection.querySelector('.add-objective-btn');
+            const taskAddBtn = tasksSection.querySelector('.add-task-btn');
+            
+            goalAddBtn.addEventListener('click', function() {
                 addItem(domainEl, 'goal');
             });
-
-            addItemSection.querySelector('.add-objective-btn').addEventListener('click', function() {
+            
+            objectiveAddBtn.addEventListener('click', function() {
                 addItem(domainEl, 'objective');
             });
-
-            addItemSection.querySelector('.add-task-btn').addEventListener('click', function() {
+            
+            taskAddBtn.addEventListener('click', function() {
                 addItem(domainEl, 'task');
             });
-
-            domainEl.appendChild(addItemSection);
             domainsContainer.appendChild(domainEl);
         });
 
@@ -602,8 +562,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 <ul class="list-group list-group-flush"></ul>
             `;
 
-            // Insert the new section before the add item section
-            domainEl.insertBefore(section, domainEl.querySelector('.add-item-section'));
+            // Append the new section to domain
+            domainEl.appendChild(section);
         }
 
         const listGroup = section.querySelector('.list-group');
