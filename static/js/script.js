@@ -746,9 +746,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 yPos = margin;
             }
         });
-
-        // Add signature blocks at the end
-        yPos += 20;
         
         // Calculate the space needed for the acknowledgment text and signatures
         const acknowledgmentText = "By signing below, I acknowledge that I have reviewed this plan, understand what is expected of me, and agree to fulfill the outlined goals, objectives, and tasks to the best of my ability.";
